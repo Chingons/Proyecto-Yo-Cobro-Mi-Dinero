@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='actualizar.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='yocobro.png') }}" type="image/x-icon">
+    <title>Recuperar Contraseña</title>
+</head>
+<body>
+<section class="todo-contenido">
+    <div class="mensaje-actualizar">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    
+                  <div class="{{category }}">{{message}}</div>  
+               
+                 {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div> 
+
+    
+    <div class="contenido-actualizar">
+        <div class="item-actualizar">
+            <div class="formulario-actualizar">
+                
+                <div class="contenido-formulario">
+                    <form action="{{ url_for('actualizar')}}" method="post" id="formularioactualizar">
+                        
+                        <div class="form-group">
+                            <h3 class="YO-COBRO">YO COBRO <span class="MI-DINERO">MI DINERO</span></h3>
+                            <H5>Recuperación de Contraseña</H5>
+                            <hr class="form-group" color="#bebed2" width="100%"/>
+                        </div>
+                        
+                            <div class="form-group">
+                                <label for="codigo">INGRESAR CODIGO</label>
+                                <p><input type="number" minlength="6" name="codigo" id="codigo" placeholder="Ingresa un codigo" required></input></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contraseña-actualizar">NUEVA CONTRASEÑA</label>
+                                <p><input type="password" minlength="6"  name="contraseña-actualizar" id="contraseña-actualizar" placeholder="Minimo 6 caracteres" required></input></p>
+                            </div> 
+
+                            <div class="form-group">
+                                <label for="confirmar-contraseña">CONFIRMAR CONTRASEÑA</label>
+                                <p><input type="password" minlength="6"  name="confirmar-contraseña" id="confirmar-contraseña" placeholder="Favor repetir la Contraseña" required></input></p>
+                            </div> 
+                            
+                          
+                          
+                        <div class="botones">
+                            <a href="{{ url_for('actualizar')}}">
+                            <input type="submit" value="CAMBIAR CONTRASEÑA" class="button-cambiar"></input></a>
+                        </div>
+                        <hr class="form-group" color="#bebed2" width="100%"/>
+                        <div class="botones">
+                            <a href="{{ url_for('recuperar')}}">
+                            <input type="button" value="VOLVER" class="button-atras"></input></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>
+<script>
+    setTimeout(function () {
+        const messagesContainer = document.querySelector('.mensaje-actualizar')
+
+        if (!messagesContainer) return;
+        messagesContainer.style.display = 'none'
+
+    }, 4000)
+</script>
+</body>
+</html>

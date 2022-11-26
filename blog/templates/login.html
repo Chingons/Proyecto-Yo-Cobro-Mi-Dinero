@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='yocobro.png') }}" type="image/x-icon">
+    <!-- CSS only -->
+    <title>Login</title>
+</head>
+<body>
+    <div class="mensaje-registro">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                
+              <div class="mensaje {{category }}">{{message}}</div>  
+           
+             {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+<div class="todocontenido">
+  
+
+
+    <div class="primero">
+        <div id="frases_login">
+        <img class="imagen_login" src="{{ url_for('static', filename='yocobro.png')}}" alt="yocobro">
+        <H2 id="primera_frase">Yo Cobro, te ayuda a llevar un apunte de las personas que tienen una deuda contigo.
+        </H2>
+        <p id="segunda_frase">"No necesitas ser grande para actuar, pero necesitas actuar para ser grande."</p>
+        </div>
+    </div>
+    <div class="segundo">
+        <div id="contenido_login">
+            <form action="{{ url_for('login')}}" method="post" id="formulariologin">
+                <div class="form-group">
+                    <label for="email">CORREO ELECTRONICO</label>
+
+                    <p><input type="email" name="user_email" id="user_email" placeholder="Ingrese su Correo Electronico"></input></p>
+                </div>
+                    <div class="form-group">
+
+                    
+                    <label for="password">CONTRASEÑA</label>
+                
+                    <p><input type="password" name="user_password" id="user_password" placeholder="Ingrese su Contraseña"></input></p>
+                </div>
+                
+
+                <div class="conectado">
+                    <input type="checkbox" value="checked"><b>Mantenerme Conectado</b>
+                </div>
+                
+                <div class="from-group">
+                    <a href="{{ url_for('home')}}">
+                        <input type="submit" value="INICIAR SESIÓN" class="button_login"></input>
+                    </a>
+             
+                    
+                </div>
+                <div class="recuperar_contraseña">
+                    <a href="{{ url_for('recuperar')}}">¿Olvidaste tu Contraseña?</a>
+                </div>
+                <hr size="1px" color="#979A9A" width="100%"/>
+                <div class="from-group">
+                    <a href="{{ url_for('registro')}}">
+                        <input type="button" value="CREAR CUENTA NUEVA" class="button_register">
+                    </a>
+                </div>
+                <hr class="form-group" size="1px" color="#979A9A" width="100%"/>
+                <div class="from-group">
+                    <a href="{{ url_for('home')}}">
+                        <input type="button" value="REGISTRATE CON GOOGLE" class="google">
+                    </a>
+                </div>
+            </form>   
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(function () {
+        const messagesContainer = document.querySelector('.mensaje-registro')
+
+        if (!messagesContainer) return;
+        messagesContainer.style.display = 'none'
+
+    }, 4000)
+</script>
+</body>
+</html>

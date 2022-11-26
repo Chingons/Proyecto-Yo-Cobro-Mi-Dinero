@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='recuperar.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='yocobro.png') }}" type="image/x-icon">
+    <title>Recuperación</title>
+</head>
+<body>
+<section class="todo-contenido">
+    <div class="mensaje-error">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                
+              <div class="{{category }}">{{message}}</div>  
+           
+             {% endfor %}
+        {% endif %}
+    {% endwith %}
+    </div>
+    <div class="contenido-rec">
+        <div class="item-rec">
+            <div class="formulario-rec">
+                <div class="contenido-formulario">
+                    <form action="{{ url_for('recuperar')}}" method="post" id="formulario-rec">
+                        <div class="form-group">
+                            <h3 class="YO-COBRO">YO COBRO <span class="MI-DINERO">MI DINERO</span></h3>
+                            <H5>RECUPERACION DE CUENTA</H5>
+                            <hr class="form-group" color="#bebed2" width="100%"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="recuperacion">Por Favor ingresa tu Correo Electronico</label>
+                            <p><input type="email" name="recuperacion" id="recuperacion" placeholder="Favor ingresar tu correo electronico" required></input></p>
+                        </div>
+                          
+                        <div class="botones">
+                            <a href="{{ url_for('recuperar')}}">
+                            <input type="submit" value="ENVIAR" class="button-enviar"></input></a>
+                        </div>
+                      
+
+                        <hr class="from-group" color="#bebed2" width="100%"/>
+                        <div class="botones">
+                            <a href="{{ url_for('login')}}">
+                            <input type="button" value="VOLVER AL LOGIN" class="button-atras"></input></a>
+                        </div>
+                
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>
+<script>
+    setTimeout(function () {
+        const messagesContainer = document.querySelector('.mensaje-error')
+
+        if (!messagesContainer) return;
+        messagesContainer.style.display = 'none'
+
+    }, 4000)
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+html, body{
+    background-color: #f0f2f5;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+	min-height: 100vh;
+    width: 100%;
+    height: 100%;
+
+}
+
+*{
+    box-sizing: border-box;
+    font-family: verdana;
+    margin: 0;
+    padding: 0;
+    }
+
+.todocontenido{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-areas: "primero segundo";
+    padding-top: 100px;
+
+    
+}
+
+.contenido .segundo{
+
+    grid-area: segundo;
+}
+
+.contenido .primero{
+    grid-area: primero;
+}
+
+.primero, .segundo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.primero{
+    padding-left: 20%;
+}
+
+.segundo{
+    padding-right: 20%;
+}
+
+
+
+
+.imagen_login{
+    width: 100%;
+}
+
+#frases_login{
+    color: black;
+    max-width: 500px;
+    
+}
+
+#contenido_login{
+    width: 350px;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 350px;
+
+}
+
+
+
+#formulariologin{
+    display: flex;
+    color: black;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 0 20px 0px;
+    padding: 22px;
+
+    
+    
+
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin: 10px ;
+    line-height: 1.8em;
+    font-size: 1.2em;
+}
+
+#user_email, #user_password{
+    width: 300px;
+    height: 30px;
+    margin-top: 7px;
+    box-sizing:border-box;
+    background:none;
+    outline:none;
+    resize:none;
+    border:0;
+    border-bottom:2px solid #bebed2;
+    
+}
+
+.mensaje-registro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    position:absolute;
+    padding-top: 30px;
+    font-size: 1.6em;
+}
+
+.rellenar{
+    background-color: #ff9900d3;
+    color: white;
+    max-width: 500px;
+}
+
+.aprobado{
+    background-color: #28c913d8;
+    color: white;
+    max-width: 500px;
+
+}
+
+.error{
+    background-color: #ff0000dc;
+    color: white;
+    max-width: 500px;
+}
+
+
+.button_login{
+    font-size: 1em;
+    height: 2em;
+    border-radius: 5px;
+    background-color: #3f3f3f;
+    color: white;
+    margin-top: 15px;
+    cursor: pointer;
+    width: 300px;
+    border: none;
+    
+    
+}
+
+
+.recuperar_contraseña{
+    margin: 20px;
+    font-size: 15px;
+    
+}
+
+.recuperar_contraseña a:link, a:visited, a:active {
+    text-decoration:none;
+}
+
+
+
+.button_register{
+    font-size: 1em;
+    height: 2em;
+    border-color: transparent;
+    border-radius: 5px;
+    background-color:#3f3f3f;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    width: 300px;
+}
+
+.google{
+    font-size: 1em;
+    height: 2em;
+    border-color: transparent;
+    border-radius: 5px;
+    background-color: #3f3f3f;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+    width: 300px;
+    background-image:url(./google.png);
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 800px){
+    .todocontenido{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        grid-template-rows: repeat(2);
+        grid-template-areas: "primero"
+                              "segundo";
+        gap: 0%;
+        margin: auto;
+        padding-top: 5px;
+        
+       
+
+        
+    }
+    #frases_login{
+        width: 70%;
+    }
+    #contenido_login{
+        max-width: 100%;
+    }
+
+    .primero, .segundo{
+        margin: 0;
+        padding: 0;
+        
+    }
+
+    #primera_frase, #segunda_frase{
+        display: none;
+    }
+    
+    .mensaje-registro{
+        line-height: 1.2em;
+        font-size: 1.2em;
+        padding-top: 180px;
+    }
+
+    .rellenar, .aprobado, .error{
+        max-width: 350px;
+    }
+
+}
+
+@media (max-width: 1200px){
+    .primero{
+        padding: 30px;
+    }
+}

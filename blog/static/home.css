@@ -1,0 +1,511 @@
+body{
+    margin: 0;
+    background-color: #f0f2f5;
+    font-family: sans-serif;
+}
+
+img{
+    max-width: 100%;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: verdana;
+  }
+
+  header .brand img{
+    height: 60px;
+    
+  }
+
+
+  header{
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+    transition: 0.6s;
+  }
+  
+  header.down{
+    background: white;
+    padding: 15px 80px;
+  }
+  
+  header .brand{
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 2px;
+  }
+  
+  header .menu{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  header .menu ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  header .menu ul li{
+      list-style: none;
+  }
+  
+  header .menu a{
+    color: black;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 0 30px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    transition: 0.3s;
+    transition-property: color, background;
+   
+  }
+ 
+  
+  header .menu a:hover{
+    color: white;
+    background: #0d9eff;
+    
+  }
+  
+
+  
+  header .btn{
+    font-size: 25px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .contenido{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding-top: 150px;
+    width: 100%;
+  }
+
+.contenidoinicio{
+  padding-top: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.datosinicio{
+  width: 80%;
+  background-color: white;
+}
+
+.parrafoagregar{
+font-size: 30px;
+width: 100%;
+background-color: #0d9eff;
+color: white;
+border-radius: 10px;
+
+}
+
+  .fncliente{
+    margin-top: 20px;
+    width: 100%;
+
+  }
+
+  .uncliente{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 250px;
+    
+  }
+
+  .addcliente{
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    padding: 30px;
+    position: absolute;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+
+   
+  }
+  
+  .cncliente{
+    width: 600px;
+    height: 50px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 20px;
+    box-sizing:border-box;
+    background:none;
+    outline:none;
+    resize:none;
+    border:0;
+    border-bottom:2px solid #bebed2;
+  }
+
+  .mensaje-registro{
+    position: absolute;
+    width: 90%;
+    line-height: 1.5em;
+    font-size: 1.2em;
+    
+}
+
+
+
+.rellenar{
+    background-color: #ff9900d3;
+    color: white;
+}
+
+.aprobado{
+    background-color: #28c913d8;
+    color: white;
+
+}
+
+.error{
+    background-color: #ff0000dc;
+    color: white;
+}
+
+
+.enviarcliente, .borrardatos{
+  padding: 10px;
+  font-size: 18px;
+}
+
+
+.enviarcliente{
+  background-color: #0d9eff;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+}
+
+.enviarcliente:hover{
+  background-color: #0e86d6;
+  content: "agregar xd";
+  animation: enviar 1s infinite alternate;
+  cursor: pointer;
+}
+.cerrartabla{
+  background-color: red;
+  font-size: 35px;
+  color: white;
+  text-decoration: none;
+  border: none;
+}
+
+.cerrartabla:hover{
+  cursor: pointer;
+}
+
+@keyframes enviar{
+  from{
+    transform: translateY(-5px);
+  }
+  to{
+    transform: translateY(-10px);
+  }
+}
+
+     
+
+.borrardatos{
+  background-color: #e40808;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  
+}
+
+.borrardatos:hover{
+  background-color: #c20d0d;
+  animation: borrar 1s infinite alternate;
+  cursor: pointer;
+}
+
+@keyframes borrar{
+  from{
+    transform: translateY(-5px);
+  }
+  to{
+    transform: translateY(-10px);
+  }
+}
+
+
+.botonesaddclientes{
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.botonenviar{
+  padding-right: 40px;
+}
+
+.lupa{
+  width: 20px;
+}
+
+.lupa:hover{
+  cursor: pointer;
+}
+
+#tablacompleta{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding-top: 300px;
+}
+
+#tabladatos{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.tabladatos, th, td{
+  border: solid black 1px;
+  border-collapse: collapse;
+  font-size: 18px;
+  
+}
+
+
+
+.cabezatabla{
+  background-color: #0d9eff;
+  color: white;
+}
+
+.cuerpotabla{
+  background-color: white;
+}
+
+.cabezatabla, .cuerpotabla{
+  padding: 7px;
+
+}
+
+.referenciaid:link, .referenciaid:visited, .referenciaid:active{
+  text-decoration: none;
+  text-decoration-line: none;
+  color: black;
+
+}
+
+.referenciaid:hover{
+  color: #c20d0d;
+  cursor: pointer;
+
+}
+
+
+.datosadmin{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 10px;
+  margin: 30px;
+  height: 40px;
+}
+
+#facturador{
+  border-radius: 10px;
+  border-color: #0d9eff;
+  height: 25px;
+  width: 350px;
+  font-size: 17px;
+}
+
+#inputbuscador{
+  width: 600px;
+  border-radius: 10px;
+  border-color: #0d9eff;
+  font-size: 17px;
+}
+
+.titulo-datos-cliente{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  color:#003785;
+
+}
+
+#inputbuscador:hover{
+  cursor: pointer;
+}
+
+.datoscliente{
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+}
+
+.facturacion{
+  height: 30px;
+  font-size: 17px;
+  border-radius: 10px;
+  border-color: #a6cbff;
+}
+
+.facturacion-id{
+  width:80px;
+  padding: 5px;
+}
+
+.facturacion-nombre{
+  padding: 5px;
+}
+
+.facturacion-telefono{
+  width: 150px;
+  padding: 5px;
+}
+
+.facturacion-identificacion{
+  width: 200px;
+  padding: 5px;
+}
+
+.facturacion-ubicacion{
+  width: 400px;
+  padding: 5px;
+}
+
+.fc-id, .fc-nombre, .fc-telefono, .fc-identificacion{
+  padding-right: 20px;
+}
+
+.ubicacion{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-fc{
+  font-size: large;
+  color: #003785;
+}
+
+
+
+.formulario-facturacion{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #0d9eff;
+  padding-top: 20px;
+  
+}
+
+.facturación{
+  border-radius: 6px;
+  border-bottom: none;
+  height: 70px;
+  background-color: #f0f2f5;
+}
+
+
+
+  @media (max-width: 991px){
+    header, header.down{
+        padding: 20px 40px;
+    }
+    header .btn{
+      display: block;
+    }
+  
+    header .menu{
+      position: fixed;
+      background: white;
+      min-width: 330px;
+      height: 100vh;
+      top: 0;
+      right: -150%;
+      padding: 80px 50px;
+      transition: 0.5s;
+      transition-property: right;
+    }
+  
+    header .menu ul{
+        flex-direction: column;
+      }
+  
+    header .menu.active{
+      right: 0;
+    }
+  
+    header .menu .close-btn{
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 25px;
+    }
+  
+    header .menu a{
+      display: block;
+      font-size: 20px;
+      margin: 20px;
+      padding: 0 15px;
+    }
+  }
+  
+ 
+  @media (max-width: 600px){
+    .cncliente{
+      width: 100%;
+      height: 40px;
+      font-size: 18px;
+    }
+    .uncliente{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 200px;
+    }
+    .parrafoagregar{
+      font-size: 20px;
+      padding: 4px;
+
+      
+      }
+
+  }

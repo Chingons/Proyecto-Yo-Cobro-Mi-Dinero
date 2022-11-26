@@ -1,0 +1,138 @@
+{% extends "home.html"%}
+{% block content %}
+
+
+<div class="contenidoinicio">
+    
+    <div class="datosinicio">
+        <div class="formulario-facturacion">
+            FACTURACIÓN
+        </div>
+        <form action="{{ url_for('inicio', id=0)}}" method="get">
+            <div class="datosadmin">
+                <div >
+                    <p class="facturacion u-facturador">USUARIO: <input type="text"  name="facturador" id="facturador" value="{{nombre}} {{apellido}}" readonly="readonly"> </p>
+                </div>
+                <div>
+                    <p style="display:inline-flex;" class="facturacion"><input   type="text" id="inputbuscador" onclick="mostrartabla();" onkeyup="Buscarentabla()" placeholder="Ingrese Nombre Cliente">  <button type="button" onclick="mostrartabla();"> <img class="lupa"  src="{{ url_for('static', filename='lupa.png')}}" alt="lupa"></button>   </p>
+                </div>
+
+            </div>
+            
+            
+            <div class="titulo-datos-cliente">
+                <h3>DATOS DE CLIENTE</h3>
+            </div>
+            <div class="datoscliente">
+                
+                <div class="fc-id">
+                    <p class="p-fc">ID: <input type="text" class="facturacion facturacion-id"  readonly="readonly" value="{{facturarclientes['id']}}">    </p>
+                </div>
+                <div class="fc-nombre" >
+                    <p class="p-fc">NOMBRE: <input type="text" class="facturacion facturacion-nombre"  readonly="readonly" value="{{facturarclientes['nombrecompleto']}}">     </p>
+                </div>
+                <div class="fc-telefono" >
+                    <p class="p-fc">TELEFONO: <input type="text" class="facturacion facturacion-telefono"  readonly="readonly" value="{{facturarclientes['telefono']}}">     </p>
+                </div>
+                <div class="fc-identificacion">
+                    <p class="p-fc">IDENTIFICACION: <input type="text" class="facturacion facturacion-identificacion"  readonly="readonly" value="{{facturarclientes['identificacion']}}">    </p>
+                </div>
+            </div>
+            
+            <div class="ubicacion" >
+                <p class="p-fc">UBICACION: <input type="text" class="facturacion facturacion-ubicacion"  readonly="readonly" value="{{facturarclientes['ubicacion']}}">     </p>
+            </div>
+            
+            
+        </form>
+        
+
+    </div>
+    <div class="tablacompleta" id="tablacompleta">
+        
+            
+            
+                <table class="tabladatos" id="tabladatos" >
+                    
+                    <tr>
+                        <th class="cabezatabla">Id</th>
+                        <th class="cabezatabla">Nombre Completo</th>
+                        <th class="cabezatabla">Telefono</th>
+                        <th class="cabezatabla">Identificación</th>
+                        <th class="cabezatabla">Dirección</th>
+                        <th> <button class="cerrartabla" onclick="cerrartabla();">X</button> </th>
+                    </tr>
+                    
+                     
+                    {% for c in cliente %}
+                        
+                        <tr class="sombreado" >
+                                
+                           
+                            <td class="cuerpotabla"  onclick="cerrartabla();"> <a class="referenciaid" href="{{ url_for('inicio', id=c[0]) }}"> {{c[0]}} </a> </td>
+                            <td class="cuerpotabla"  onclick="cerrartabla();"> <a class="referenciaid" href="{{ url_for('inicio', id=c[0]) }}"> {{c[2] + " " + c[3]}} </td>
+                            <td class="cuerpotabla"  onclick="cerrartabla();"> <a class="referenciaid" href="{{ url_for('inicio', id=c[0]) }}"> {{c[4]}} </a> </td>
+                            <td class="cuerpotabla"  onclick="cerrartabla();"> <a class="referenciaid" href="{{ url_for('inicio', id=c[0]) }}"> {{c[5]}} </a> </td>
+                            <td class="cuerpotabla"  onclick="cerrartabla();"> <a class="referenciaid" href="{{ url_for('inicio', id=c[0]) }}"> {{c[6]}} </a> </td> 
+                        
+    
+                        </tr>
+                    
+                        
+                    {% endfor %}
+                
+        
+    </form>
+</div>
+
+</div>
+
+<script>
+    var a=1;
+ function mostrartabla() {
+    
+    if (a===1) {
+        document.querySelector('#tablacompleta').style.display = "flex";
+        return a=0;
+  } else{
+    document.querySelector('#tablacompleta').style.display = "none"
+    return a=1;
+  } 
+  
+
+}
+
+function cerrartabla(){
+    document.querySelector('#tablacompleta').style.display = "none"
+    return a=1;
+    
+}
+
+function Buscarentabla() {
+
+  let input, filter, table, tr, td, txtValue;
+  
+  input = document.getElementById("inputbuscador");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tabladatos");
+  tr = table.getElementsByTagName("tr");
+
+  for(let i = 0; i<tr.length; i++){
+    td = tr[i].getElementsByTagName("td")[1];
+    if(td) {
+        txtValue = td.textContent || td.innerText;
+        if(txtValue.toUpperCase().indexOf(filter)> -1){
+            tr[i].style.display = "";
+        }
+        else{
+            tr[i].style.display = "none";
+        }
+    }
+  }
+  
+
+}
+</script>
+
+{% endblock %}
+

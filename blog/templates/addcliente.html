@@ -1,0 +1,76 @@
+{% extends "home.html"%}
+{% block content %}
+
+
+
+<section class="contenido">
+  
+    <div class="uncliente" data-aos="zoom-in" data-aos-duration="2000">
+        <div class="addcliente">
+            <div class="mensaje-registro">
+                {% with messages = get_flashed_messages(with_categories = true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            
+                            <div class="{{category }}">{{message}}</div>  
+                       
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div> 
+            <form action="{{url_for('nuevocliente')}}" method="post" id="formulario-nuevocliente">
+                <p class="parrafoagregar">AGREGAR NUEVO CLIENTE</p>
+                <div class="fncliente" data-aos="fade-left" data-aos-duration="2000">
+                    <p><input type="text" class="cncliente" name="nombres" id="nombres" placeholder="Ingresar Nombres" required pattern="\D+"></p>
+                </div>
+                <div class="fncliente" data-aos="fade-left" data-aos-duration="2000">
+                    <p><input type="text" class="cncliente" name="apellidos" id="apellidos" placeholder="Ingresar Apellidos" required pattern="\D+"></p>
+                </div>
+                <div class="fncliente" data-aos="fade-left" data-aos-duration="2000">
+                    <p><input type="text" class="cncliente" maxlength="15" name="telefono" id="telefono" placeholder="Numero Telefonico" required pattern="[0-9]{10}"></p>
+                </div>
+                <div class="fncliente" data-aos="fade-left" data-aos-duration="2000">
+                    <p><input type="text" class="cncliente" name="identificacion" id="identificacion" placeholder="Documento de Identificacion" required></p>
+                </div>
+                <div class="fncliente" data-aos="fade-left" data-aos-duration="2000">
+                    <p><input type="text" class="cncliente" maxlength="249" name="direccion" id="direccion" placeholder="Ingresar Direccion" required></p>
+                </div>
+                
+                
+    
+                <div class="botonesaddclientes">
+                    
+                        <div class="botonenviar">
+                            <a href="{{url_for('nuevocliente')}}"></a>
+                            <input type="submit" value="AGREGAR" class="enviarcliente"></a></input>
+                        </div>
+                    
+                    <div class="botonborrar">
+                        <input type="reset" value="BORRAR TODO" class="borrardatos" ></input>
+                    </div>
+                    
+                </div>
+    
+        
+                    
+            
+            
+    
+    
+    
+             </form>
+        </div>
+
+    </div>
+        
+
+    
+    
+</section>
+
+
+                 
+
+
+{% endblock %}
+

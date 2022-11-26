@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='verificar.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='yocobro.png') }}" type="image/x-icon">
+    <title>Verificacion</title>
+</head>
+<body>
+<section class="todo-contenido">
+    <div class="mensaje-final">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    
+                                  <div class="{{category }}">{{message}}</div>  
+                               
+                                 {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+    </div>
+    <div class="contenido-vef">
+     
+       
+    
+        <div class="item-vef">
+            <div class="formulario-vef">
+                <div class="contenido-formulario">
+                    <form action="{{ url_for('verificar')}}" method="post" id="formulario-vef">
+                        <div class="form-group">
+                       
+                            <h3 class="YO-COBRO">YO COBRO <span class="MI-DINERO">MI DINERO</span></h3>
+                            <H5>ACTIVACIÓN DE CUENTA</H5>
+                            <hr class="form-group" color="#bebed2" width="100%"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="ing-codigo">INGRESAR CODIGO</label>
+                            <p><input type="number" minlength="6" name="ing-codigo" id="ing-codigo" placeholder="Ingresar Codigo"></input></p>
+                        </div>
+        
+                        <div class="botones">
+                            <a href="{{ url_for('verificar')}}">
+                            <input type="submit" value="VERIFICAR" class="button-registro"></input></a>
+                        </div>
+                        
+
+                        <hr class="from-group" color="#bebed2" width="100%"/>
+                        <div class="botones">
+                            <a href="{{ url_for('registro')}}">
+                            <input type="button" value="VOLVER ATRAS" class="button-atras"></input></a>
+                        </div>
+                        <div class="botones">
+                            <a href="{{ url_for('login')}}">
+                            <input type="button" value="INICIAR SESION" class="button-sesion"></input></a>
+                        </div>
+                        <div class="botones">
+                            <a href="{{ url_for('login')}}">
+                            <input type="button" value="REGISTRATE CON GOOGLE" class="button-google"></input></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>
+<script>
+    setTimeout(function () {
+        const messagesContainer = document.querySelector('.mensaje-final')
+
+        if (!messagesContainer) return;
+        messagesContainer.style.display = 'none'
+
+    }, 4000)
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='registro.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='yocobro.png') }}" type="image/x-icon">
+    <title>Registro</title>
+</head>
+<body>
+<section class="todo-contenido">
+    <div class="mensaje-registro">
+        {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    
+                  <div class="{{category }}">{{message}}</div>  
+               
+                 {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div> 
+
+    
+    <div class="contenido-registro">
+        <div class="item-registro">
+            <div class="formulario-registro">
+                
+                <div class="contenido-formulario">
+                    <form action="{{ url_for('registro')}}" method="post" id="formularioregistro">
+                        
+                        <div class="form-group">
+                            <h3 class="YO-COBRO">YO COBRO <span class="MI-DINERO">MI DINERO</span></h3>
+                            <H5>Formulario de Registro</H5>
+                            <hr class="form-group" color="#bebed2" width="100%"/>
+                        </div>
+                        
+                            <div class="form-group">
+                                <label for="nombres">NOMBRES</label>
+                                <p><input type="text" name="nombres" id="nombres" placeholder="Ingrese sus Nombres" required pattern="\D+"></input></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellidos">APELLIDOS</label>
+                                <p><input type="text" name="apellidos" id="apellidos" placeholder="Ingrese sus Apellidos" required pattern="\D+"></input></p>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="email-registro">CORREO ELECTRONICO</label>
+                                <p><input type="email" name="email-registro" id="email-registro" placeholder="Ingrese su Correo Electronico" required></input></p>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <label for="contraseña-registro">INGRESA UNA CONTRASEÑA</label>
+                                <p><input type="password" minlength="6"  name="contraseña-registro" id="contraseña-registro" placeholder="Minimo 6 caracteres"></input></p>
+                            </div> 
+
+                            <div class="form-group">
+                                <label for="confirmar-contraseña">CONFIRMAR CONTRASEÑA</label>
+                                <p><input type="password" minlength="6"  name="confirmar-contraseña" id="confirmar-contraseña" placeholder="Favor repetir la Contraseña"></input></p>
+                            </div> 
+                            
+                          
+                          
+                        <div class="botones">
+                            <a href="{{ url_for('registro')}}">
+                            <input type="submit" value="REGISTRAR" class="button-registro"></input></a>
+                        </div>
+                        <hr class="form-group" color="#bebed2" width="100%"/>
+                        <div class="botones">
+                            <a href="{{ url_for('login')}}">
+                            <input type="button" value="INICIAR SESION" class="button-sesion"></input></a>
+                        </div>
+                        <div class="botones">
+                            <a href="{{ url_for('login')}}">
+                            <input type="button" value="REGISTRATE CON GOOGLE" class="button-google"></input></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>
+<script>
+    setTimeout(function () {
+        const messagesContainer = document.querySelector('.mensaje-registro')
+
+        if (!messagesContainer) return;
+        messagesContainer.style.display = 'none'
+
+    }, 4000)
+</script>
+</body>
+</html>
