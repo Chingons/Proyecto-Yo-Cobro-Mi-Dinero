@@ -106,7 +106,7 @@ img{
   }
 
 .contenidoinicio{
-  padding-top: 200px;
+  padding-top: 140px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -214,17 +214,7 @@ border-radius: 10px;
   animation: enviar 1s infinite alternate;
   cursor: pointer;
 }
-.cerrartabla{
-  background-color: red;
-  font-size: 35px;
-  color: white;
-  text-decoration: none;
-  border: none;
-}
 
-.cerrartabla:hover{
-  cursor: pointer;
-}
 
 @keyframes enviar{
   from{
@@ -274,65 +264,112 @@ border-radius: 10px;
   padding-right: 40px;
 }
 
-.lupa{
-  width: 20px;
-}
-
-.lupa:hover{
-  cursor: pointer;
-}
-
-#tablacompleta{
-  display: none;
+.input-mostrarclientes{
+  width:600px;
+  display: block;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  padding-top: 300px;
-}
-
-#tabladatos{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-}
-
-.tabladatos, th, td{
-  border: solid black 1px;
-  border-collapse: collapse;
-  font-size: 18px;
-  
+  flex-direction: column;
 }
 
 
 
-.cabezatabla{
-  background-color: #0d9eff;
-  color: white;
-}
-
-.cuerpotabla{
-  background-color: white;
-}
-
-.cabezatabla, .cuerpotabla{
-  padding: 7px;
-
-}
-
-.referenciaid:link, .referenciaid:visited, .referenciaid:active{
+.resultado-clientes{
   text-decoration: none;
   text-decoration-line: none;
   color: black;
+  display: block;
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 5px;
+  
+}
+
+.resultado-clientes:hover{
+  background-color: #0d9eff;
+  color: white;
 
 }
 
-.referenciaid:hover{
-  color: #c20d0d;
+.contenedor-resultado-clientes{
+  display: none;
+  position: absolute;
+  flex-direction: column;
+  
+}
+
+.impresion-clientes{
+  list-style: none;
+}
+.area-factura{
+  padding-top:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+
+
+.error-factura{
+position: absolute;
+  font-size: 15px;
+  color: #e40808;
+  display: none;
+  margin-top: 50px;
+}
+
+#error-cantidad{
+  margin-right: 950px;
+  
+}
+
+#error-descripcion{
+  margin-right: 120px;
+}
+
+#error-precio{
+  margin-left: 680px;
+}
+
+.input-factura{
+  height: 30px;
+  font-size: 17px;
+  border-radius: 10px;
+  border-color: #0d9eff;
+  text-align: center;
+  margin: 20px;
+}
+
+#descripcion-producto{
+  width: 500px;
+}
+#boton-factura{
+  background-color: #0d9eff;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  height: 40px;
+  padding: 5px;
+
+}
+
+#boton-factura:hover{
   cursor: pointer;
-
 }
 
+#mostrador-de-clientes{
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border-color: #0d9eff;
+  font-size: 17px;
+}
+
+#mostrador-de-clientes:hover{
+  cursor: pointer;
+  
+}
 
 .datosadmin{
   display: flex;
@@ -351,13 +388,6 @@ border-radius: 10px;
   font-size: 17px;
 }
 
-#inputbuscador{
-  width: 600px;
-  border-radius: 10px;
-  border-color: #0d9eff;
-  font-size: 17px;
-}
-
 .titulo-datos-cliente{
   display: flex;
   justify-content: center;
@@ -365,10 +395,6 @@ border-radius: 10px;
   padding-top: 20px;
   color:#003785;
 
-}
-
-#inputbuscador:hover{
-  cursor: pointer;
 }
 
 .datoscliente{
@@ -422,7 +448,6 @@ border-radius: 10px;
   font-size: large;
   color: #003785;
 }
-
 
 
 .formulario-facturacion{

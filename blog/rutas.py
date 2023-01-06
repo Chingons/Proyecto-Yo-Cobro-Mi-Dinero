@@ -1,4 +1,3 @@
-from http import client
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from blog import app
 import psycopg2
@@ -29,10 +28,10 @@ formularios_recuperar = {}
 imprimir_clientes = {}
 
 mysql_port = 5432
-mysql_host='ec2-52-73-155-171.compute-1.amazonaws.com'
-mysql_user='blzjwmyrgcmrwg'
-mysql_password='4b5834567c7d373ce638d622d2f01b1272101596a8b4f72def193084f092c77d'
-mysql_db='dbqh2islt96mva'
+mysql_host='localhost'
+mysql_user='postgres'
+mysql_password='0000'
+mysql_db='postgres'
 
 conn = psycopg2.connect(dbname=mysql_db, user=mysql_user, password=mysql_password, host=mysql_host, port = mysql_port)
 
@@ -44,7 +43,7 @@ session
 @app.route("/login", methods=['GET','POST'])
 def login():
     if 'loggedin' in session:
-        return redirect(url_for('inicio', id=0, facturarclientes = {"id":0, "nombrecompleto": 'nombrecliente', "telefono":"000-000-0000", "identificacion":"000-0000000-0", "ubicacion":"Ciudad" }))
+        return redirect(url_for('inicio', id=0, facturarclientes = {"id":0, "nombrecompleto": 'None', "telefono":"0", "identificacion":"0", "ubicacion":"None" }))
     
     else:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -52,7 +51,7 @@ def login():
             email_login = request.form['user_email']
             password_login = request.form['user_password']
 
-            cursor.execute('SELECT * FROM usuarios WHERE email = %s', (email_login,))
+            cursor.execute('SELECT * FROM usuario WHERE email = %s', (email_login,))
             cuenta = cursor.fetchone()
 
           
@@ -63,12 +62,12 @@ def login():
 
             elif cuenta:
                 log_id = cuenta[0]
-                log_email = cuenta[1]
-                log_nombres = cuenta[2]
-                log_apellidos = cuenta[3]
+                log_nombres = cuenta[1]
+                log_apellidos = cuenta[2]
+                log_email = cuenta[3]
                 log_contraseña = cuenta[4]
                 password_rs = log_contraseña
-
+                
                 
                 if check_password_hash(password_rs, password_login):
                     session['loggedin'] = True
@@ -95,7 +94,7 @@ def login():
 @app.route("/home", methods=['GET','POST'])
 def home():
     if 'loggedin' in session:
-        #return redirect(url_for('inicio',id))
+        
         return render_template('inicio.html',id=0, nombre=session['nombres'], apellido=session['apellidos'], facturarclientes = {"id":0, "nombrecompleto": 'nombrecliente', "telefono":"000-000-0000", "identificacion":"000-0000000-0", "ubicacion":"Ciudad" })
     else:
         return redirect(url_for('login'))
@@ -116,7 +115,7 @@ def registro():
         datos_registro ['confirmar_contraseña_registro']= request.form['confirmar-contraseña']
         
 
-        cursor.execute('SELECT * FROM usuarios WHERE email =%s', (datos_registro['email'],))
+        cursor.execute('SELECT * FROM usuario WHERE email =%s', (datos_registro['email'],))
         account = cursor.fetchone()
         print(account)
 
@@ -220,7 +219,7 @@ def verificar():
                     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
                     ya_verificado.append('esta-verificado')
                     
-                    cursor.execute("INSERT INTO usuarios (nombres, apellidos,email, contraseña, fecha) VALUES (%s,%s,%s,%s,%s)",(enviar_datos[codigo_final[codigo]]['nombres'], enviar_datos[codigo_final[codigo]]['apellidos'], enviar_datos[codigo_final[codigo]]['email'], enviar_datos[codigo_final[codigo]]['contraseña'], hora_fecha))
+                    cursor.execute("INSERT INTO usuario (nombres, apellidos,email, contraseña, fecha) VALUES (%s,%s,%s,%s,%s)",(enviar_datos[codigo_final[codigo]]['nombres'], enviar_datos[codigo_final[codigo]]['apellidos'], enviar_datos[codigo_final[codigo]]['email'], enviar_datos[codigo_final[codigo]]['contraseña'], hora_fecha))
                     conn.commit()
                     datos_registro.clear()
                     email_verificar.pop(codigo_final[codigo])
@@ -255,7 +254,7 @@ def recuperar():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method== 'POST' and 'recuperacion' in request.form:
       formularios_recuperar['email']=request.form['recuperacion']
-      cursor.execute('SELECT * FROM usuarios WHERE email =%s', (formularios_recuperar['email'],))
+      cursor.execute('SELECT * FROM usuario WHERE email =%s', (formularios_recuperar['email'],))
       account = cursor.fetchone()
       if account:
          codigo_otp = random.randint(0000000, 9999999)
@@ -319,7 +318,7 @@ def actualizar():
                 cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
                 datos_recuperar['confirmar_contraseña_registro'] = request.form['confirmar-contraseña']
                 hashed = generate_password_hash(datos_recuperar['confirmar_contraseña_registro'])
-                cursor.execute("UPDATE usuarios set contraseña =%s where email = %s",(hashed, email_recuperar[codigo_actualizar]))
+                cursor.execute("UPDATE usuario set contraseña =%s where email = %s",(hashed, email_recuperar[codigo_actualizar]))
                 conn.commit()
                 datos_recuperar.pop(email_recuperar[codigo_actualizar])
                 email_recuperar.pop(codigo_actualizar)
@@ -396,7 +395,7 @@ def inicio(id):
         
         
         else:
-            campos_cliente = {"id":0, "nombrecompleto": 'nombrecliente', "telefono":"000-000-0000", "identificacion":"000-0000000-0", "ubicacion":"Ciudad" }    
+            campos_cliente = {"id":0, "nombrecompleto": 'None', "telefono":"0", "identificacion":"0", "ubicacion":"None" }    
             
         
 
