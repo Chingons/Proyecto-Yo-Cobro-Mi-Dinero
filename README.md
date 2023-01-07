@@ -39,6 +39,23 @@ estan los clientes
 que hemos registrado, en donde seleccionaremos a cual cliente
 deseamos facturarle.
 
+CONFIGURAR EL PROYECTO
+
+PRIMERO
+Nos iremos al archivo comandos.sql en donde copiaremos los comandos sql para la creacion de las bases de datos que se encuentran en ese proyecto.
+
+
+SEGUNDO
+Crearemos un archivo de configuracion ".env" en esta misma ubicacion en donde crearemos las siguientes variables:
+
+DATABASE_PORT = 5432
+DATABASE_HOST ='localhost'
+DATABASE_USER = 'postgres'
+DATABASE_PASSWORD = '0000'
+DATABASE = 'postgres'
+
+puede utilizar las credenciales de su gusto
+
 
 COMO EJECUTAR EL Proyecto
 
@@ -46,11 +63,11 @@ Ejecutamos el archivo llamado Run.py, el cual tengo como archivo
 ejecutador del codigo.
 
 Tengo configurado el puerto en donde podemos visualizar nuestro Proyecto
-el puerto que he puesto manualmente es el puerto 8000.
+el puerto que he puesto manualmente es el puerto 5000.
 
 Luego de ejecutar el proyecto con el archivo Run.py, entraremos
 a nuestro navegador favorito y entramos con la direccion
-localhost:8000.
+localhost:5000.
 
 Lo primero que va a aparecer es la pagina de login, en donde
 si no tenemos una cuenta nos podemos registrar (Si nos vamos a 
@@ -60,12 +77,6 @@ necesitaremos un codigo para activarla, el cual nos llegara en un
 mensaje  a nuestro correo, por eso necesitamos un correo real al cual
 podamos acceder al mensaje para escribir el codigo).
 
-Pero le puedo facilitar la siguiente cuenta ya registrada
-para que pueda acceder.
-
-Correo: chingons200@gmail.com
-
-Contraseña: 000000
 
 También si hemos creado una cuenta y se nos olvida la Contraseña
 podemos dar click en "Olvidaste tu contraseña", en donde 

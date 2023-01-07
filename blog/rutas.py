@@ -9,9 +9,7 @@ import random
 from email.message import EmailMessage
 import ssl
 import smtplib
-
-
-
+from decouple import config
 
 verificar_cuenta = []
 ya_verificado =[]
@@ -27,11 +25,12 @@ email_recuperar = {}
 formularios_recuperar = {}
 imprimir_clientes = {}
 
-mysql_port = 5432
-mysql_host='localhost'
-mysql_user='postgres'
-mysql_password='0000'
-mysql_db='postgres'
+mysql_port = config("DATABASE_PORT")
+mysql_host = config("DATABASE_HOST")
+mysql_user = config("DATABASE_USER")
+mysql_password = config("DATABASE_PASSWORD")
+mysql_db = config("DATABASE")
+
 
 conn = psycopg2.connect(dbname=mysql_db, user=mysql_user, password=mysql_password, host=mysql_host, port = mysql_port)
 
@@ -117,7 +116,7 @@ def registro():
 
         cursor.execute('SELECT * FROM usuario WHERE email =%s', (datos_registro['email'],))
         account = cursor.fetchone()
-        print(account)
+        
 
         
         if not datos_registro['nombres'] or not datos_registro['apellidos'] or not datos_registro['email'] or not datos_registro['contraseña_registro'] or not datos_registro['confirmar_contraseña_registro']:
@@ -144,7 +143,7 @@ def registro():
             enviar_datos[datos_registro['email']] = {'nombres':datos_registro['nombres'], 'apellidos':datos_registro['apellidos'], 'email':datos_registro['email'], 'contraseña':hashed_password}
             
             email_emisor = 'noresponderyocobrotudinero@gmail.com'
-            email_password = 'qilppvviqicvxmhk'
+            email_password = 'kqwftczwtmxjwoez'
             email_receptor = datos_registro['email']
             
             asunto= 'ACTIVACION DE CUENTA YO COBRO TU DINERO'
@@ -263,7 +262,7 @@ def recuperar():
          datos_recuperar['apellidos'] = account[3]
          email_recuperar[codigo_otp] = formularios_recuperar['email']
          email_emisor = 'noresponderyocobrotudinero@gmail.com'
-         email_password = 'qilppvviqicvxmhk'
+         email_password = 'kqwftczwtmxjwoez'
          email_receptor = formularios_recuperar['email'] 
          asunto= 'CAMBIAR CONTRASEÑA CUENTA YO COBRO TU DINERO'
          cuerpo =  """
@@ -355,7 +354,6 @@ def nuevocliente():
             account = cursor.fetchone()
 
             if account:
-                print (account)
                 flash('Cliente ya Registrado','error')
 
             else:
@@ -377,6 +375,9 @@ def inicio(id):
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s', (session['id'],))
         clientes = cursor.fetchall()
+        cursor.execute('SELECT idfactura FROM FACTURAS order by idfactura desc')
+        factura = cursor.fetchall()
+        no_factura =  factura[0][0] +1
         cantidadclientes = len(clientes)
         contador = 0
         facturar_clientes = {}
@@ -399,7 +400,7 @@ def inicio(id):
             
         
 
-        return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente)
+        return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura)
 
     else:
         return render_template('login.html')

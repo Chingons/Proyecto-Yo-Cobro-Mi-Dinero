@@ -119,20 +119,7 @@ hr{
     
 }
 
-.button-google{
-    font-size: 1em;
-    height: 2em;
-    border-color: transparent;
-    border-radius: 5px;
-    background-color: #3f3f3f;
-    color: white;
-    margin-top: 10px;
-    cursor: pointer;
-    width: 350px;
-    background-image:url(./google.png);
-    background-size: 26px 26px;
-    background-repeat: no-repeat;
-}
+
 
 
 .mensaje-registro{
@@ -200,7 +187,7 @@ hr{
         border-bottom:2px solid #bebed2;
         
     }
-    .button-google, .button-registro, .button-sesion{
+    .button-registro, .button-sesion{
         width: 300px;
     }
     .aprobado, .error, .rellenar{

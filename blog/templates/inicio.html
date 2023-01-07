@@ -69,7 +69,18 @@
 
             
         </form>
+
+        <div class="principio-de-factura">
+            <h2>FACTURA</h2>
+            <p>FECHA:  <input type="text" readonly="readonly" id="fecha">  </p>
+            <p>NO. DE FACTURA: <input type="text" readonly="readonly" value="{{factura}}"></p>
+
+
+        </div>
+        
         <div class="area-factura">
+
+            
                 <input type="number" id="cantidad"  class="input-factura"  placeholder="CANTIDAD" onkeyup="errorCantidad();" onclick="errorCantidad();">
                 
                 
@@ -91,11 +102,7 @@
                     <p >ESTE CAMPO DEBE SER MAYOR A 0</p>
                 </div>
               
-        </div>
-        <div>
-            <p>Fecha:  <input type="text" readonly="readonly" id="fecha">  </p>
-            
-            </div>
+        </div>  
         
 
     </div>
