@@ -49,9 +49,13 @@ SEGUNDO
 Crearemos un archivo de configuracion ".env" en esta misma ubicacion en donde crearemos las siguientes variables:
 
 DATABASE_PORT = 5432
+
 DATABASE_HOST ='localhost'
+
 DATABASE_USER = 'postgres'
+
 DATABASE_PASSWORD = '0000'
+
 DATABASE = 'postgres'
 
 puede utilizar las credenciales de su gusto

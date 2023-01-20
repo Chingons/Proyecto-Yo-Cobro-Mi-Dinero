@@ -399,6 +399,11 @@ def inicio(id):
             campos_cliente = {"id":0, "nombrecompleto": 'None', "telefono":"0", "identificacion":"0", "ubicacion":"None" }    
             
         
+        if request.method == "POST":
+            jsonData = request.get_json()
+            print(jsonData)
+            return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura)
+
 
         return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura)
 

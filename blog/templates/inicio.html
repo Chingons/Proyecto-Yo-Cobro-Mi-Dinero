@@ -47,7 +47,7 @@
             <div class="datoscliente">
                 
                 <div class="fc-id">
-                    <p class="p-fc">ID: <input type="text" class="facturacion facturacion-id"  readonly="readonly" value="{{facturarclientes['id']}}">    </p>
+                    <p class="p-fc">ID: <input type="text" id="id-cliente" class="facturacion facturacion-id"  readonly="readonly" value="{{facturarclientes['id']}}">    </p>
                 </div>
                 <div class="fc-nombre" >
                     <p class="p-fc">NOMBRE: <input type="text" class="facturacion facturacion-nombre"  readonly="readonly" value="{{facturarclientes['nombrecompleto']}}">     </p>
@@ -71,38 +71,65 @@
         </form>
 
         <div class="principio-de-factura">
-            <h2>FACTURA</h2>
-            <p>FECHA:  <input type="text" readonly="readonly" id="fecha">  </p>
-            <p>NO. DE FACTURA: <input type="text" readonly="readonly" value="{{factura}}"></p>
+            <h2 id="titulo-factura">FACTURA</h2>
+            <div class="organizar-fecha">
+                <p class="no-factura">NO. DE FACTURA: <input type="text" id="numero-factura" class="factura-fecha" readonly="readonly" value="{{factura}}"></p>
+                <p class="fecha">FECHA:  <input class="factura-fecha" type="text" readonly="readonly" id="fecha">  </p>
+        </div>
+            
 
 
         </div>
         
         <div class="area-factura">
 
-            
+           <div class="mensaje-error">
                 <input type="number" id="cantidad"  class="input-factura"  placeholder="CANTIDAD" onkeyup="errorCantidad();" onclick="errorCantidad();">
+                <p id="error-cantidad">ESTE CAMPO DEBE SER MAYOR A 0</p>
+
+           </div>
                 
+
                 
-                <input type="text" class="input-factura descripcion" id="descripcion-producto" placeholder="DESCRIPCION" onkeyup="errorDescripcion();" onclick="errorDescripcion();">
-                
-                
-                
-                <input type="number" class="input-factura precio-unitario" id="precio-unitario" placeholder="PRECIO UNITARIO" onkeyup="errorPrecio();" onclick="errorPrecio();">
-                
-                
-                <input type="button" class="input-factura" id="boton-factura" value="AGREGAR">
-                <div id="error-cantidad" class="error-factura">
-                    <p  >ESTE CAMPO DEBE SER MAYOR A 0</p>
+                <div class="mensaje-error">
+                    <input type="text" class="input-factura descripcion" id="descripcion-producto" placeholder="DESCRIPCION" onkeyup="errorDescripcion();" onclick="errorDescripcion();">
+                    <p id="error-descripcion">POR FAVOR RELLENAR ESTE CAMPO</p>
+
                 </div>
-                <div class="error-factura" id="error-descripcion">
-                    <p >POR FAVOR RELLENAR ESTE CAMPO</p>
+                
+                
+                <div class="mensaje-error">
+                    <input type="number" class="input-factura precio-unitario" id="precio-unitario" placeholder="PRECIO UNITARIO" onkeyup="errorPrecio();" onclick="errorPrecio();">
+                    <p id="error-precio">ESTE CAMPO DEBE SER MAYOR A 0</p>
+
                 </div>
-                <div class="error-factura" id="error-precio">
-                    <p >ESTE CAMPO DEBE SER MAYOR A 0</p>
-                </div>
+                
+                
+                <input type="button" class="input-factura" id="boton-factura" onclick="factura(),productos(),jsonad(), agregartabla(), mostrartotal();" value="AGREGAR">
+            
               
         </div>  
+
+        <div>
+            <table id="elementos-factura">
+                <tr>
+                    <th>CANTIDAD</th>
+                    <TH>DESCRIPCION</TH>
+                    <TH>PRECIO UNITARIO</TH>
+                    <TH>TOTAL</TH>
+                    <th>BORRAR</th>
+                </tr>
+                
+            </table>
+            <TR>
+
+            </TR>
+
+        </div>
+
+        <div>
+            <input type="text" id="final_total" value="0" readonly>
+        </div>
         
 
     </div>
@@ -121,6 +148,142 @@
 
     fecha = new Date().toLocaleDateString();
     document.getElementById("fecha").value = fecha;
+    
+
+    var agregar = {
+        factura:{},
+        articulos:[],
+        totales:[],
+        total_final:0,
+
+
+    }
+
+    
+    
+    
+
+    function mostrartotal(){
+        let suma = 0;
+            for(let x=0; x<agregar.totales.length; x++){
+            let y = agregar.totales[x];
+            suma += y;  
+        }
+        
+        agregar.total_final = suma;
+            
+        document.getElementById("final_total").value=agregar.total_final;
+        
+    }
+    
+    function factura(){
+        agregar.factura.id_cliente= document.getElementById("id-cliente").value;
+        agregar.factura.no_factura= document.getElementById("numero-factura").value;
+        agregar.factura.fecha_factura= document.getElementById("fecha").value;
+        
+       
+
+    }
+
+    function productos(){
+        if(document.getElementById("cantidad").value != "" && document.getElementById("descripcion-producto").value != "" && document.getElementById("precio-unitario").value != "" ){
+            agregar.articulos.push({cantidad:document.getElementById("cantidad").value, descripcion:document.getElementById("descripcion-producto").value, precio_unitario: document.getElementById("precio-unitario").value, total:document.getElementById("cantidad").value * document.getElementById("precio-unitario").value});
+        agregar.totales.push(document.getElementById("cantidad").value * document.getElementById("precio-unitario").value); 
+        document.getElementById("cantidad").value = "";
+        document.getElementById("descripcion-producto").value = "";
+        document.getElementById("precio-unitario").value = "";
+        
+
+        }
+        else{
+            errorPrecio();
+            errorDescripcion();
+            errorCantidad();
+        }
+    }
+
+    function agregartabla(){
+          let impresion = agregar.articulos.length -1;
+         if(document.getElementById(impresion)==null){
+            let tabla = document.getElementById("elementos-factura");
+        
+        let tr = document.createElement('tr');
+        tr.id = impresion;
+
+        let precio_factura = document.createElement('td');
+        precio_factura.id = impresion;
+       
+        let descripcion_factura = document.createElement('td');
+        descripcion_factura.id = impresion;
+
+        let cantidad_factura = document.createElement('td');
+        cantidad_factura.id = impresion;
+        
+        let total_factura = document.createElement('td'); 
+        total_factura.id = impresion;
+        
+        let boton_delete = document.createElement('button');
+        boton_delete.id = impresion;
+        boton_delete.value = impresion;
+        boton_delete.type = 'button';
+        
+        cantidad_factura.innerHTML = agregar.articulos[impresion].cantidad;
+        descripcion_factura.innerHTML = agregar.articulos[impresion].descripcion;
+        precio_factura.innerHTML = agregar.articulos[impresion].precio_unitario;
+        total_factura.innerHTML = agregar.articulos[impresion].total;
+        boton_delete.innerHTML = 'Borrar';
+        boton_delete.addEventListener("click", function(){
+            document.getElementById(boton_delete.value).remove();
+            delete(agregar.articulos[boton_delete.value]);
+            agregar.totales[boton_delete.value]=0;
+            mostrartotal();
+        } );
+        tr.appendChild(cantidad_factura);
+        tr.appendChild(descripcion_factura);
+        tr.appendChild(precio_factura);
+        tr.appendChild(total_factura);
+        tr.appendChild(boton_delete);
+        tabla.appendChild(tr);    
+        }
+            
+        
+
+        
+
+        
+        
+        
+    
+    }
+
+    
+
+
+    function jsonad() {
+
+fetch('http://localhost:5000/inicio/0', {
+    headers : {
+        'Content-Type' : 'application/json'
+    },
+    method : 'POST',
+    body : JSON.stringify(agregar)
+})
+.then(function (response){
+
+    if(response.ok) {
+        response.json()
+        .then(function(response) {
+            console.log(response);
+        });
+    }
+    else {
+        throw Error('Something went wrong');
+    }
+})
+.catch(function(error) {
+    console.log(error);
+});
+}
 
 
     function mostrarclientes() {

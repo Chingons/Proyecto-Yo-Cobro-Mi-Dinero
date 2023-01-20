@@ -32,6 +32,7 @@ img{
     align-items: center;
     padding: 20px 80px;
     transition: 0.6s;
+    background: white;
   }
   
   header.down{
@@ -302,35 +303,37 @@ border-radius: 10px;
   list-style: none;
 }
 .area-factura{
-  padding-top:40px;
+  padding-top:20px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
-}
-
-
-
-.error-factura{
-position: absolute;
-  font-size: 15px;
-  color: #e40808;
-  display: none;
-  margin-top: 50px;
-}
-
-#error-cantidad{
-  margin-right: 950px;
+  width: 100%;
   
 }
 
-#error-descripcion{
-  margin-right: 120px;
+.mensaje-error{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+ 
 }
 
-#error-precio{
-  margin-left: 680px;
+#error-cantidad, #error-descripcion, #error-precio{
+  font-size: 15px;
+  color: #b60b0b;
+  display: none;
+  position: absolute;
+  
 }
+
+
+
+
+
 
 .input-factura{
   height: 30px;
@@ -339,10 +342,13 @@ position: absolute;
   border-color: #0d9eff;
   text-align: center;
   margin: 20px;
+  margin-bottom: 0;
+  max-width: 100%;
 }
 
 #descripcion-producto{
   width: 500px;
+  max-width: 100%;
 }
 #boton-factura{
   background-color: #0d9eff;
@@ -444,6 +450,37 @@ position: absolute;
   align-items: center;
 }
 
+.principio-de-factura{
+  padding-top: 40px;
+}
+
+#titulo-factura{
+  color: #0d9eff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.factura-fecha{
+  height: 30px;
+  font-size: 17px;
+  border-radius: 10px;
+  border-color: #02049c;
+  
+  
+}
+
+.organizar-fecha{
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+
+}
+
+.no-factura, .fecha{
+  font-size: large;
+  color: #0d0391;
+}
 .p-fc{
   font-size: large;
   color: #003785;
@@ -457,6 +494,7 @@ position: absolute;
   font-size: 30px;
   color: #0d9eff;
   padding-top: 20px;
+
   
 }
 
