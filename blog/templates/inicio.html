@@ -113,17 +113,15 @@
         <div>
             <table id="elementos-factura">
                 <tr>
-                    <th>CANTIDAD</th>
-                    <TH>DESCRIPCION</TH>
-                    <TH>PRECIO UNITARIO</TH>
-                    <TH>TOTAL</TH>
-                    <th>BORRAR</th>
+                    <th id="titulo-cantidad">CANTIDAD</th>
+                    <TH id="titulo-descripcion">DESCRIPCION</TH>
+                    <TH id="titulo-precio">PRECIO UNITARIO</TH>
+                    <TH id="titulo-total">TOTAL</TH>
+                    <th id="titulo-borrar">BORRAR</th>
                 </tr>
                 
+                
             </table>
-            <TR>
-
-            </TR>
 
         </div>
 
@@ -172,7 +170,7 @@
         
         agregar.total_final = suma;
             
-        document.getElementById("final_total").value=agregar.total_final;
+        document.getElementById("final_total").value= new Intl.NumberFormat('en-US').format(agregar.total_final) ;
         
     }
     
@@ -209,28 +207,39 @@
         
         let tr = document.createElement('tr');
         tr.id = impresion;
+        tr.className = 'tr-factura';
 
         let precio_factura = document.createElement('td');
         precio_factura.id = impresion;
+        precio_factura.className = 'precio-factura';
        
         let descripcion_factura = document.createElement('td');
         descripcion_factura.id = impresion;
+        descripcion_factura.className = 'descripcion-factura';
 
         let cantidad_factura = document.createElement('td');
         cantidad_factura.id = impresion;
+        cantidad_factura.className = 'cantidad-factura';
         
         let total_factura = document.createElement('td'); 
         total_factura.id = impresion;
+        total_factura.className = 'total-factura';
         
+        let boton = document.createElement('td');
+        boton.id = impresion;
+
         let boton_delete = document.createElement('button');
         boton_delete.id = impresion;
+        boton_delete.className = 'boton-borrar-factura';
         boton_delete.value = impresion;
         boton_delete.type = 'button';
         
-        cantidad_factura.innerHTML = agregar.articulos[impresion].cantidad;
+        boton.appendChild(boton_delete);
+
+        cantidad_factura.innerHTML = new Intl.NumberFormat('en-US').format(agregar.articulos[impresion].cantidad);
         descripcion_factura.innerHTML = agregar.articulos[impresion].descripcion;
-        precio_factura.innerHTML = agregar.articulos[impresion].precio_unitario;
-        total_factura.innerHTML = agregar.articulos[impresion].total;
+        precio_factura.innerHTML = new Intl.NumberFormat('en-US').format(agregar.articulos[impresion].precio_unitario);
+        total_factura.innerHTML = new Intl.NumberFormat('en-US').format(agregar.articulos[impresion].total);
         boton_delete.innerHTML = 'Borrar';
         boton_delete.addEventListener("click", function(){
             document.getElementById(boton_delete.value).remove();
@@ -242,7 +251,7 @@
         tr.appendChild(descripcion_factura);
         tr.appendChild(precio_factura);
         tr.appendChild(total_factura);
-        tr.appendChild(boton_delete);
+        tr.appendChild(boton);
         tabla.appendChild(tr);    
         }
             

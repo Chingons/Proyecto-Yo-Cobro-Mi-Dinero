@@ -505,6 +505,43 @@ border-radius: 10px;
   background-color: #f0f2f5;
 }
 
+#elementos-factura{
+  width: 90%;
+  margin: auto;
+  border: solid #0d0391 1px; 
+  -moz-border-radius: 10px; 
+  -webkit-border-radius: 10px; 
+  border-radius: 10px; 
+  -webkit-box-shadow: 0 3px #0d0391; 
+  -moz-box-shadow: 0 3px #0d0391; 
+  box-shadow: 0 3px #0d0391;
+  
+  
+}
+
+#elementos-factura tr{
+   text-align: center;
+   justify-content: center;
+   vertical-align: top;
+}
+
+#elementos-factura th{
+  color: #003785;
+}
+
+#titulo-cantidad, #titulo-total, #titulo-borrar{
+  width: 10%;
+
+}
+
+#titulo-precio{
+  width: 15%;
+}
+
+#titulo-descripcion{
+  width: 55%;
+}
+
 
 
   @media (max-width: 991px){
