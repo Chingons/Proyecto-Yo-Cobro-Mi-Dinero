@@ -121,7 +121,9 @@ def registro():
         
         if not datos_registro['nombres'] or not datos_registro['apellidos'] or not datos_registro['email'] or not datos_registro['contraseña_registro'] or not datos_registro['confirmar_contraseña_registro']:
             flash ('FAVOR RELLENAR TODOS LOS CAMPOS', 'rellenar')
-        
+        elif account =="":
+            pass
+
         elif account:
             flash('CORREO ELECTRONICO REGISTRADO, FAVOR INGRESAR UN CORREO DIFERENTE', 'aprobado')
     
@@ -377,7 +379,18 @@ def inicio(id):
         clientes = cursor.fetchall()
         cursor.execute('SELECT idfactura FROM FACTURAS order by idfactura desc')
         factura = cursor.fetchall()
-        no_factura =  factura[0][0] +1
+        comparacion = len(factura)
+        
+
+        if comparacion == 0:
+             no_factura = 1
+            
+           
+        
+        else:
+             no_factura =  factura[0][0] + 1
+           
+            
         cantidadclientes = len(clientes)
         contador = 0
         facturar_clientes = {}

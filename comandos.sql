@@ -1,6 +1,6 @@
 
 create table usuario (
-    id int primary key not null,
+    id serial primary key,
     nombres VARCHAR(100) not null,
     apellidos VARCHAR(100) not null,
     email varchar (500) not null,
@@ -10,7 +10,7 @@ create table usuario (
 
 
 create table clientes (
-    id int primary key not null,
+    id serial primary key,
     idcreador int not null,
     nombres VARCHAR(100) not null,
     apellidos varchar (100) not NULL,
@@ -22,7 +22,7 @@ create table clientes (
 
 
 create table facturas(
-    idfactura bigint primary key not null,
+    idfactura serial primary key,
     idfacturador int not null,
     idcliente int not null,
     fecha date not null,
