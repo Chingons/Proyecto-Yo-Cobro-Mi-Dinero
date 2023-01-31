@@ -16,22 +16,27 @@
                 
                 
                 <div class="input-mostrarclientes">
-                    <input class="facturacion" type="text" name="mostrador-de-clientes" id="mostrador-de-clientes" onclick="mostrarclientes();"  onkeyup="search();" placeholder="Ingrese Nombre Cliente">
+                    <input class="facturacion" type="text" name="mostrador-de-clientes" id="mostrador-de-clientes" onclick="mostrarclientes();"  onkeyup="search();" placeholder="Click aquí para mostrar sus clientes">
                     
-                    <div class="contenedor-resultado-clientes facturacion" >
-                            <ul id="listado-clientes">
-
-                        
-                        {% for c in cliente %}
-                        <li class="impresion-clientes">
-                            <a href="{{ url_for('inicio', id=c[0]) }}" class="resultado-clientes">   {{c[0]}} {{c[2]}} {{c[3]}} {{c[4]}} {{c[5]}} {{c[6]}} </a>
-                            <hr>
-
-                        </li>
+                    <div class="contenedor-resultado-clientes" >
                         
                             
-                        {% endfor %}
-                        </ul>
+                                <ul id="listado-clientes">
+                        
+                                    {% for c in cliente %}
+                                
+                                    <li class="impresion-clientes">
+                                        <a href="{{ url_for('inicio', id=c[0]) }}" class="resultado-clientes">  {{c[0]}}, {{c[2]}} {{c[3]}}, {{c[4]}}, {{c[5]}}, {{c[6]}}   </a>
+                                        <hr>
+            
+                                    </li>
+                                    
+                                        
+                                    {% endfor %}
+                                    </ul>
+
+                           
+                            
                     </div>
                         
                     
@@ -41,27 +46,30 @@
             </div>
             
             
-            <div class="titulo-datos-cliente">
-                <h3>DATOS DE CLIENTE</h3>
+            <div class="titulo-datos-factura">
+                <h3>DATOS DE FACTURA</h3>
             </div>
             <div class="datoscliente">
                 
                 <div class="fc-id">
                     <p class="p-fc">ID: <input type="text" id="id-cliente" class="facturacion facturacion-id"  readonly="readonly" value="{{facturarclientes['id']}}">    </p>
                 </div>
+                
                 <div class="fc-nombre" >
                     <p class="p-fc">NOMBRE: <input type="text" class="facturacion facturacion-nombre"  readonly="readonly" value="{{facturarclientes['nombrecompleto']}}">     </p>
                 </div>
-                <div class="fc-telefono" >
-                    <p class="p-fc">TELEFONO: <input type="text" class="facturacion facturacion-telefono"  readonly="readonly" value="{{facturarclientes['telefono']}}">     </p>
+                
+                <div class="fc-factura">
+                    <p class="p-fc">NO. DE FACTURA: <input type="text" class="facturacion facturacion-no-factura" id="numero-factura"  readonly="readonly" value="{{factura}}"></p>
+
                 </div>
-                <div class="fc-identificacion">
-                    <p class="p-fc">IDENTIFICACION: <input type="text" class="facturacion facturacion-identificacion"  readonly="readonly" value="{{facturarclientes['identificacion']}}">    </p>
+                
+                <div class="fc-fecha">
+                    <p class="p-fc">FECHA:  <input type="text" class="facturacion facturacion-fecha" readonly="readonly" id="fecha">  </p>
+
                 </div>
-            </div>
+
             
-            <div class="ubicacion" >
-                <p class="p-fc">UBICACION: <input type="text" class="facturacion facturacion-ubicacion"  readonly="readonly" value="{{facturarclientes['ubicacion']}}">     </p>
             </div>
     
             
@@ -72,10 +80,9 @@
 
         <div class="principio-de-factura">
             <h2 id="titulo-factura">FACTURA</h2>
-            <div class="organizar-fecha">
-                <p class="no-factura">NO. DE FACTURA: <input type="text" id="numero-factura" class="factura-fecha" readonly="readonly" value="{{factura}}"></p>
-                <p class="fecha">FECHA:  <input class="factura-fecha" type="text" readonly="readonly" id="fecha">  </p>
-        </div>
+           
+                 
+       
             
 
 
@@ -110,7 +117,7 @@
               
         </div>  
 
-        <div>
+        <div class="impresion-articulos">
             <table id="elementos-factura">
                 <tr>
                     <th id="titulo-cantidad">CANTIDAD</th>
@@ -118,6 +125,24 @@
                     <TH id="titulo-precio">PRECIO UNITARIO</TH>
                     <TH id="titulo-total">TOTAL</TH>
                     <th id="titulo-borrar">BORRAR</th>
+                    
+                </tr>
+                <tr>
+                    <td>
+                        <hr>
+                    </td>
+                    <td>
+                        <hr>
+                    </td>
+                    <td>
+                        <hr>
+                    </td>
+                    <td>
+                        <hr>
+                    </td>
+                    <td>
+                        <hr>
+                    </td>
                 </tr>
                 
                 
@@ -159,7 +184,7 @@
 
     
     
-    
+  
 
     function mostrartotal(){
         let suma = 0;
@@ -252,7 +277,8 @@
         tr.appendChild(precio_factura);
         tr.appendChild(total_factura);
         tr.appendChild(boton);
-        tabla.appendChild(tr);    
+        tabla.appendChild(tr); 
+        
         }
             
         
@@ -299,9 +325,11 @@ fetch('http://localhost:5000/inicio/0', {
     
     if (y===1) {
         document.querySelector('.contenedor-resultado-clientes').style.display = "block";
+        document.getElementById('mostrador-de-clientes').placeholder= "Buscar cliente por nombre o alguna otra información";
         return y=0;
   } else{
     document.querySelector('.contenedor-resultado-clientes').style.display = "none";
+    document.getElementById('mostrador-de-clientes').placeholder= "Click aquí para mostrar sus clientes";
     return y=1;
   } 
   
@@ -333,8 +361,16 @@ function errorCantidad(){
     let valorCantidad = cantidad.value;
     
     
+    if (document.getElementById("id-cliente").value==0){
+        
+        document.getElementById("error-cantidad").innerText = "FAVOR SELECCIONAR UN CLIENTE";
+        document.querySelector('#error-cantidad').style.display = "grid";
+        document.getElementById("cantidad").setAttribute('readonly', true);
+    }
 
-    if (valorCantidad==""){
+    else{
+        document.getElementById("cantidad").removeAttribute('readonly');
+        if (valorCantidad==""){
         document.querySelector('#error-cantidad').style.display = "grid";}
 
     else if (valorCantidad==0){
@@ -342,24 +378,49 @@ function errorCantidad(){
 
     else {
         document.querySelector('#error-cantidad').style.display = "none";}
+
+    }
+   
 }
 
 function errorDescripcion(){
     let descripcion = document.getElementById("descripcion-producto");
     let valorDescripcion = descripcion.value;
 
-    if (valorDescripcion==""){
+    if (document.getElementById("id-cliente").value==0){
+        
+        document.getElementById("error-descripcion").innerText = "FAVOR SELECCIONAR UN CLIENTE";
+        document.querySelector('#error-descripcion').style.display = "grid";
+        document.getElementById("descripcion-producto").setAttribute('readonly', true);
+    }
+
+    else{
+        document.getElementById("descripcion-producto").removeAttribute('readonly');
+        if (valorDescripcion==""){
         document.querySelector('#error-descripcion').style.display = "grid";}
    
     else{
         document.querySelector('#error-descripcion').style.display = "none";}
+
+    }
+
+    
 }
 
 function errorPrecio(){
     let precio = document.getElementById("precio-unitario");
     let valorPrecio = precio.value;
 
-    if (valorPrecio==""){
+    if (document.getElementById("id-cliente").value==0){
+        
+        document.getElementById("error-precio").innerText = "FAVOR SELECCIONAR UN CLIENTE";
+        document.querySelector('#error-precio').style.display = "grid";
+        document.getElementById("precio-unitario").setAttribute('readonly', true);
+    }
+
+    else{
+        document.getElementById("precio-unitario").removeAttribute('readonly');
+        if (valorPrecio==""){
         document.querySelector('#error-precio').style.display = "grid";}
 
     else if (valorPrecio==0){
@@ -367,6 +428,10 @@ function errorPrecio(){
 
     else {
         document.querySelector('#error-precio').style.display = "none";}
+
+    }
+
+    
 }
 
 

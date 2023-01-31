@@ -267,6 +267,7 @@ border-radius: 10px;
 
 .input-mostrarclientes{
   width:600px;
+  max-width: 600px;
   display: block;
   justify-content: center;
   align-items: center;
@@ -289,27 +290,30 @@ border-radius: 10px;
 .resultado-clientes:hover{
   background-color: #0d9eff;
   color: white;
-
 }
 
 .contenedor-resultado-clientes{
   display: none;
   position: absolute;
   flex-direction: column;
-  
+  width: 600px;
+  max-width: 600px;
 }
 
 .impresion-clientes{
   list-style: none;
 }
 .area-factura{
-  padding-top:20px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   width: 100%;
   
+}
+
+.impresion-articulos{
+  padding-top: 30px;
 }
 
 .mensaje-error{
@@ -394,11 +398,10 @@ border-radius: 10px;
   font-size: 17px;
 }
 
-.titulo-datos-cliente{
+.titulo-datos-factura{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
   color:#003785;
 
 }
@@ -414,44 +417,36 @@ border-radius: 10px;
   font-size: 17px;
   border-radius: 10px;
   border-color: #a6cbff;
+  text-align: center;
 }
 
 .facturacion-id{
-  width:80px;
-  padding: 5px;
+  width:120px;
+  
+  
 }
 
 .facturacion-nombre{
-  padding: 5px;
+  width: 300px;
 }
 
-.facturacion-telefono{
+.facturacion-fecha{
+  width: 130px;
+}
+
+.facturacion-no-factura{
   width: 150px;
-  padding: 5px;
 }
 
-.facturacion-identificacion{
-  width: 200px;
-  padding: 5px;
-}
 
-.facturacion-ubicacion{
-  width: 400px;
-  padding: 5px;
-}
-
-.fc-id, .fc-nombre, .fc-telefono, .fc-identificacion{
+.fc-id, .fc-nombre, .fc-factura{
   padding-right: 20px;
 }
 
-.ubicacion{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .principio-de-factura{
-  padding-top: 40px;
+  padding-top: 10px;
 }
 
 #titulo-factura{
@@ -461,26 +456,7 @@ border-radius: 10px;
   align-items: center;
 }
 
-.factura-fecha{
-  height: 30px;
-  font-size: 17px;
-  border-radius: 10px;
-  border-color: #02049c;
-  
-  
-}
 
-.organizar-fecha{
-  display: flex;
-  justify-content: space-around;
-  padding-top: 10px;
-
-}
-
-.no-factura, .fecha{
-  font-size: large;
-  color: #0d0391;
-}
 .p-fc{
   font-size: large;
   color: #003785;
