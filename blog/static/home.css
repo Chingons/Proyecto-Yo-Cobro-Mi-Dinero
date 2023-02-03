@@ -322,7 +322,6 @@ border-radius: 10px;
   justify-content: center;
   flex-direction: column;
   justify-content: space-between;
-  width: 40%;
  
 }
 
@@ -335,7 +334,9 @@ border-radius: 10px;
 }
 
 
-
+#titulo-articulos{
+  display: none;
+}
 
 
 
@@ -585,12 +586,29 @@ border-radius: 10px;
 
 
 
+@media screen and (min-width:1200px) and (max-width: 1500px){
+  #facturador{
+    width: 250px;
+  }
+  .input-mostrarclientes{
+    width:400px;
+  }
+  .contenedor-resultado-clientes{
+    width: 400px;
+  }
+  .facturacion-nombre{
+    width: 200px;
+  }
+  .facturacion-id, .facturacion-no-factura{
+    width: 70px;
+  }
+
+}
 
 
-
-  @media (max-width: 991px){
+  @media screen and (max-width: 1200px){
     header, header.down{
-        padding: 20px 40px;
+        padding: 10px 20px;
     }
     header .btn{
       display: block;
@@ -629,10 +647,145 @@ border-radius: 10px;
       margin: 20px;
       padding: 0 15px;
     }
+    .formulario-facturacion, .datosadmin, .area-factura{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    
+    .datoscliente{
+      flex-direction: column;
+      justify-content: left;
+      padding: 10px;
+      padding-left: 30px;
+    }
+    .titulo-datos-factura{
+      padding-top: 15px;
+    }
+    
+    .input-mostrarclientes{
+      display: block;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 80%;
+    }
+    .datosinicio{
+      width: 100%;
+    }
+    #facturador{
+      width: 60%;
+    }
+    #mostrador-de-clientes{
+      width: 100%;
+      
+      
+      
+    }
+    .input-mostrarclientes, .u-facturador{
+      padding: 10px;
+    }
+    .contenedor-resultado-clientes{
+      display: none;
+      position: absolute;
+      flex-direction: column;
+      width: 80%;
+    }
+    .contenidoinicio{
+      padding-top:100px ;
+    }
+
+    .p-fc{
+      padding-top: 5px;
+      font-size: 16px;
+    }
+    .facturacion, .input-factura{
+      height: 25px;
+      font-size: 16px;
+    }
+    
+    .area-factura{
+      padding-top: 0px;
+    }
+    .principio-de-factura{
+      padding-top: 20px;
+    }
+    .input-factura, #descripcion-producto{
+      width: 300px;
+      padding: 5px;
+    }
+
+    .facturacion-nombre{
+      width: 200px;
+    }
+    #elementos-factura tr{
+      display: flex;
+      flex-direction: column;
+      border: 1px solid gray;
+      padding: 10px;
+      margin-bottom: 5px;
+    }
+    #elementos-factura th, #hr-tabla, #tr-titulos, .no-mostrar{
+      display: none;
+      border: none;
+      padding: none;
+      margin: none;
+    }
+    #elementos-factura td[title]{
+      display: flex;
+      width: 100%;
+    }
+
+    #elementos-factura td[title]::before{
+      content: attr(title);
+      color: #0d0391;
+    }
+    #titulo-articulos{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #0d0391;
+    }
+    #boton-guardar-factura{
+      font-size: 17px;
+      padding: 3px;
+      border-radius: 3px;
+      margin-right: 10px;
+      border: 0;
+    }
+
+    #final_total{
+      font-size: 17px;
+      padding: 3px;
+      border-radius: 3px;
+      margin-right: 10px;
+      border: 0;
+      width: 120px;
+    }
+    
+    #titulo-total-final{
+      font-size: 17px;
+      padding: 3px;
+      border-radius: 3px;
+      border: 0;
+    }
+    .final-guardar-factura{
+      justify-content: center;
+      align-items: center;
+    }
+
+    #error-articulos{
+      position: absolute;
+      font-size: 20px;
+      margin-bottom: 60px;
+    }
+
+
   }
   
  
-  @media (max-width: 600px){
+  @media screen and (max-width: 600px){
     .cncliente{
       width: 100%;
       height: 40px;
@@ -648,8 +801,7 @@ border-radius: 10px;
     .parrafoagregar{
       font-size: 20px;
       padding: 4px;
-
-      
       }
+
 
   }

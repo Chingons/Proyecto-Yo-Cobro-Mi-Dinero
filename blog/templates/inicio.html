@@ -11,7 +11,7 @@
         </div>
         <form action="{{ url_for('inicio', id=0)}}" method="get">
             <div class="datosadmin">
-                <div>
+                <div class="u-facturador">
                     <p class="facturacion u-facturador">USUARIO: <input type="text"  name="facturador" id="facturador" value="{{nombre}} {{apellido}}" readonly="readonly"> </p>
                 </div>
                 
@@ -120,7 +120,8 @@
 
         <div class="impresion-articulos">
             <table id="elementos-factura">
-                <tr>
+                <tr id="tr-titulos"  class="no-mostrar">
+                    <h3 id="titulo-articulos">ARTICULOS</h3>
                     <th id="titulo-cantidad">CANTIDAD</th>
                     <TH id="titulo-descripcion">DESCRIPCION</TH>
                     <TH id="titulo-precio">PRECIO UNITARIO</TH>
@@ -128,20 +129,20 @@
                     <th id="titulo-borrar">BORRAR</th>
                     
                 </tr>
-                <tr>
-                    <td>
+                <tr id="hr-tabla" class="no-mostrar">
+                    <td class="no-mostrar">
                         <hr>
                     </td>
-                    <td>
+                    <td class="no-mostrar">
                         <hr>
                     </td>
-                    <td>
+                    <td class="no-mostrar">
                         <hr>
                     </td>
-                    <td>
+                    <td class="no-mostrar">
                         <hr>
                     </td>
-                    <td>
+                    <td class="no-mostrar">
                         <hr>
                     </td>
                 </tr>
@@ -233,7 +234,7 @@
     function agregartabla(){
           let impresion = agregar.articulos.length -1;
          if(document.getElementById(impresion)==null){
-        
+
         
         let tabla = document.getElementById("elementos-factura");
         
@@ -243,18 +244,22 @@
 
         let precio_factura = document.createElement('td');
         precio_factura.id = impresion;
+        precio_factura.title = 'precio unitario: ';
         precio_factura.className = 'precio-factura';
        
         let descripcion_factura = document.createElement('td');
         descripcion_factura.id = impresion;
+        descripcion_factura.title = 'descripcion: ';
         descripcion_factura.className = 'descripcion-factura';
 
         let cantidad_factura = document.createElement('td');
         cantidad_factura.id = impresion;
+        cantidad_factura.title= 'cantidad: ';
         cantidad_factura.className = 'cantidad-factura';
         
         let total_factura = document.createElement('td'); 
         total_factura.id = impresion;
+        total_factura.title = 'sub-total: ';
         total_factura.className = 'total-factura';
         
         let boton = document.createElement('td');
