@@ -25,6 +25,7 @@ email_recuperar = {}
 formularios_recuperar = {}
 imprimir_clientes = {}
 
+
 mysql_port = config("DATABASE_PORT")
 mysql_host = config("DATABASE_HOST")
 mysql_user = config("DATABASE_USER")
@@ -378,6 +379,7 @@ def inicio(id):
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s', (session['id'],))
         clientes = cursor.fetchall()
         cursor.execute('SELECT idfactura FROM FACTURAS order by idfactura desc')
+        
         factura = cursor.fetchall()
         comparacion = len(factura)
         
@@ -414,13 +416,19 @@ def inicio(id):
         
         if request.method == "POST":
             jsonData = request.get_json()
-            print(jsonData)
-            return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura)
-
+            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto, estado) values (%s, %s, %s, %s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],"NOPAGADA"))
+            conn.commit()
+            flash('Factura Realizada con Exito','aprobado')
+            return login()
+            
+            
+            
+           
 
         return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura)
 
     else:
         return render_template('login.html')
+
 
 

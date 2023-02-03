@@ -374,6 +374,7 @@ border-radius: 10px;
   border-radius: 10px;
   border-color: #0d9eff;
   font-size: 17px;
+  height: 25px;
 }
 
 #mostrador-de-clientes:hover{
@@ -517,6 +518,73 @@ border-radius: 10px;
 #titulo-descripcion{
   width: 55%;
 }
+
+
+.boton-borrar-articulo{
+  background-color: #e40808;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  padding: 2px;
+  font-size: 15px;
+}
+
+.boton-borrar-articulo:hover{
+  cursor: pointer;
+}
+
+.final-guardar-factura{
+  padding: 30px;
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+}
+
+#final_total{
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  width: 150px;
+  color:white;
+  background-color: #eb1717;
+  border: 0;
+}
+
+#titulo-total-final{
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 5px;
+  border: 0;
+  background-color:#0d9eff;
+  color: white;
+  width: 80px;
+}
+
+#boton-guardar-factura{
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 15px;
+  border: 0;
+  background-color: #0d0391;
+  color: white;
+}
+
+#boton-guardar-factura:hover{
+  cursor: pointer;
+}
+
+#error-articulos{
+  font-size: 20px;
+  color: #b60b0b;
+  padding-right: 60px;
+  display: none;
+  
+}
+
+
+
 
 
 

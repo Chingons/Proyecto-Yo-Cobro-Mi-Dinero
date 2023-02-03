@@ -5,12 +5,13 @@
 <div class="contenidoinicio" >
     
     <div class="datosinicio">
+        
         <div class="formulario-facturacion">
             FACTURACIÓN
         </div>
         <form action="{{ url_for('inicio', id=0)}}" method="get">
             <div class="datosadmin">
-                <div >
+                <div>
                     <p class="facturacion u-facturador">USUARIO: <input type="text"  name="facturador" id="facturador" value="{{nombre}} {{apellido}}" readonly="readonly"> </p>
                 </div>
                 
@@ -112,7 +113,7 @@
                 </div>
                 
                 
-                <input type="button" class="input-factura" id="boton-factura" onclick="factura(),productos(),jsonad(), agregartabla(), mostrartotal();" value="AGREGAR">
+                <input type="button" class="input-factura" id="boton-factura" onclick="factura(),productos(), agregartabla(), mostrartotal();" value="AGREGAR">
             
               
         </div>  
@@ -123,7 +124,7 @@
                     <th id="titulo-cantidad">CANTIDAD</th>
                     <TH id="titulo-descripcion">DESCRIPCION</TH>
                     <TH id="titulo-precio">PRECIO UNITARIO</TH>
-                    <TH id="titulo-total">TOTAL</TH>
+                    <TH id="titulo-total">SUBTOTAL</TH>
                     <th id="titulo-borrar">BORRAR</th>
                     
                 </tr>
@@ -150,8 +151,12 @@
 
         </div>
 
-        <div>
-            <input type="text" id="final_total" value="0" readonly>
+        <div class="final-guardar-factura">
+            <p id="error-articulos">FAVOR INGRESAR ARTICULOS</p>
+            <a id="referencia">
+            <input type="button" id="boton-guardar-factura" onclick="jsonad();" value="GUARDAR FACTURA"></a>
+          <input type="text" id="titulo-total-final" value="TOTAL:" readonly>  <input type="text"  id="final_total" value="0" readonly>
+            
         </div>
         
 
@@ -258,6 +263,7 @@
         boton_delete.className = 'boton-borrar-factura';
         boton_delete.value = impresion;
         boton_delete.type = 'button';
+        boton_delete.classList = "boton-borrar-articulo";
         
         boton.appendChild(boton_delete);
 
@@ -295,29 +301,45 @@
 
 
     function jsonad() {
+        if (document.getElementById("id-cliente").value==0){
+            document.getElementById("error-cantidad").innerText = "FAVOR SELECCIONAR UN CLIENTE";
+            document.querySelector('#error-cantidad').style.display = "grid";
+            document.getElementById("cantidad").setAttribute('readonly', true);
+            document.getElementById("error-descripcion").innerText = "FAVOR SELECCIONAR UN CLIENTE";
+            document.querySelector('#error-descripcion').style.display = "grid";
+            document.getElementById("descripcion-producto").setAttribute('readonly', true);
+            document.getElementById("error-precio").innerText = "FAVOR SELECCIONAR UN CLIENTE";
+            document.querySelector('#error-precio').style.display = "grid";
+            document.getElementById("precio-unitario").setAttribute('readonly', true);
+            
+        }
 
-fetch('http://localhost:5000/inicio/0', {
-    headers : {
-        'Content-Type' : 'application/json'
-    },
-    method : 'POST',
-    body : JSON.stringify(agregar)
-})
-.then(function (response){
+        else if(agregar.total_final==0){
+            document.getElementById('error-articulos').style.display="flex";
 
-    if(response.ok) {
-        response.json()
-        .then(function(response) {
-            console.log(response);
-        });
-    }
-    else {
-        throw Error('Something went wrong');
-    }
-})
-.catch(function(error) {
-    console.log(error);
-});
+            setTimeout(function () {
+                
+            document.getElementById('error-articulos').style.display="none";
+                
+            
+
+            }, 3000)
+        }
+        
+        else{
+            document.getElementById('error-articulos').style.display="none";
+            document.getElementById('referencia').href = "{{ url_for('login') }}";
+            fetch('http://localhost:5000/inicio/0', {
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            method : 'POST',
+            body : JSON.stringify(agregar)
+        })
+
+        }
+
+
 }
 
 
@@ -436,6 +458,7 @@ function errorPrecio(){
 
 
 </script>
+
 
 {% endblock %}
 

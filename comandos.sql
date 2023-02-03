@@ -30,3 +30,11 @@ create table facturas(
     estado VARCHAR(50) not null /*el estado es para saber si la factura esta "PAGADA" o "NOPAGADA" */
 )
 
+
+create table articulos(
+idfactura int not null,
+	cantidad bigint not null,
+	descripcion varchar(150) not null,
+	precio bigint not null,
+	subtotal bigint not null
+)
