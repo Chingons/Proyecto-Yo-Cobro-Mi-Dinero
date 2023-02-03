@@ -214,7 +214,7 @@
     }
 
     function productos(){
-        if(document.getElementById("cantidad").value != "" && document.getElementById("descripcion-producto").value != "" && document.getElementById("precio-unitario").value != "" ){
+        if(document.getElementById("cantidad").value != 0 && document.getElementById("descripcion-producto").value != 0 && document.getElementById("precio-unitario").value != 0 ){
             agregar.articulos.push({cantidad:document.getElementById("cantidad").value, descripcion:document.getElementById("descripcion-producto").value, precio_unitario: document.getElementById("precio-unitario").value, total:document.getElementById("cantidad").value * document.getElementById("precio-unitario").value});
         agregar.totales.push(document.getElementById("cantidad").value * document.getElementById("precio-unitario").value); 
         document.getElementById("cantidad").value = "";
@@ -233,7 +233,9 @@
     function agregartabla(){
           let impresion = agregar.articulos.length -1;
          if(document.getElementById(impresion)==null){
-            let tabla = document.getElementById("elementos-factura");
+        
+        
+        let tabla = document.getElementById("elementos-factura");
         
         let tr = document.createElement('tr');
         tr.id = impresion;

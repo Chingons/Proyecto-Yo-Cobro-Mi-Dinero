@@ -418,7 +418,14 @@ def inicio(id):
             jsonData = request.get_json()
             cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto, estado) values (%s, %s, %s, %s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],"NOPAGADA"))
             conn.commit()
-            flash('Factura Realizada con Exito','aprobado')
+           
+            for p in jsonData['articulos']:
+                if p==None:
+                    pass
+                else:
+                    cursor.execute('INSERT INTO articulos (idfactura,cantidad,descripcion,precio,subtotal) values (%s, %s, %s, %s,%s)', (jsonData['factura']['no_factura'] ,p['cantidad'], p['descripcion'], p['precio_unitario'], p['total']))
+                    conn.commit()
+            
             return login()
             
             
