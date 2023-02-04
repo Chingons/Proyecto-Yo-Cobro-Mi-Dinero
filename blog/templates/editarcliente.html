@@ -3,16 +3,53 @@
 
 <div id="html-editarclientes">
 
-    <div class="contenido-editarcliente">
+    <div class="contenido-editarcliente" data-aos="fade-down" data-aos-duration="1500">
 
-        {% for datos in  datos_clientes%}
-        <p>ID <input type="text" name="" readonly value="{{datos[0]}}"></p>
-        <p>Nombres <input type="text" value="{{datos[2]}}" required></p>
-        <p>Apellidos <input type="text" value="{{datos[3]}}" required></p>
-        <p>Telefono <input type="tel" value="{{datos[4]}}" required></p>
-        <p>Identificacion <input type="text" value="{{datos[5]}}" required></p>
-        <p>Dirección<input type="text" value="{{datos[6]}}" required></p>
-        {% endfor %}
+            <h2 id="titulo-editar">EDITAR O ACTUALIZAR DATOS CLIENTE</h2>
+            {% for datos in  datos_clientes%}
+            <div class="formularios-editar-cliente">
+                <form action="{{url_for('guardarcliente')}}" method="post">
+                    <div class="inputs-editar-clientes">
+                        <p>ID: <input type="text" name="id-editado" id="id-editado" readonly value="{{datos[0]}}" ></p>
+                    </div>
+        
+                    <div class="inputs-editar-clientes">
+                        <p>Nombres: <input type="text" name="nombre-editado" id="nombre-editado" value="{{datos[2]}}" required pattern="\D+"></p>
+                    </div>
+                
+                    <div class="inputs-editar-clientes">
+                        <p>Apellidos: <input type="text" name="apellido-editado" id="apellido-editado" value="{{datos[3]}}" required pattern="\D+"></p>
+                    </div>
+                
+                    <div class="inputs-editar-clientes">
+                        <p>Telefono: <input type="tel" name="telefono-editado" id="telefono-editado" value="{{datos[4]}}" required ></p>
+                    </div>
+
+                    <div class="inputs-editar-clientes">
+                        <p>Identificacion: <input type="text" value="{{datos[5]}}" readonly required></p>
+                    </div>
+                
+                    <div class="inputs-editar-clientes">
+                        <p>Dirección: <input type="text" name="direccion-editado" id="direccion-editado"value="{{datos[6]}}" required></p>
+                    </div>
+            
+                    <div class="botones-editar">
+                        <a  href="{{url_for('guardarcliente')}}" type="submit"><input id="guardar-edit" type="submit" value="GUARDAR"></a>
+                        <a id="cancelar-edit" href="{{url_for('clientes')}}">CANCELAR</a>
+                    </div>
+            </form>
+               
+            </div>
+            
+        
+            {% endfor %}
+
+           
+            
+
+        
+        
+        
 
     </div>
 

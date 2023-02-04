@@ -622,11 +622,7 @@ border-radius: 10px;
 
 }
 
-.contenido-editarcliente{
-  width: 80%;
-  background-color: white;
-  flex-direction: column;
-}
+
 
 #tabla-clientes{
   margin: auto;
@@ -729,6 +725,82 @@ border-radius: 5px;
     margin-bottom: 40px;
   }
 
+  .contenido-editarcliente{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 50%;
+    background-color: white;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    
+
+  }
+.formularios-editar-cliente{
+  padding: 20px;
+}
+.inputs-editar-clientes{
+  padding: 10px;
+}
+.inputs-editar-clientes p{
+  font-size: 20px;
+  color: #003785;
+}
+
+.inputs-editar-clientes input{
+  font-size: 20px;
+  width: 300px;
+  border-radius: 5px;
+  height: 25px;
+  border-color:  #0d9eff;
+
+}
+
+#titulo-editar{
+  color: #0d9eff
+}
+
+.botones-editar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding-top: 20px;
+}
+
+#guardar-edit, #cancelar-edit:link{
+  text-decoration: none;
+}
+
+#guardar-edit, #cancelar-edit:visited{
+  text-decoration: none;
+}
+
+#guardar-edit{
+  font-size: 20px;
+  padding: 5px;
+  background-color: #0d9eff;
+  color: white;
+  border-radius: 5px;
+  margin-right: 20px;
+  border: none;
+}
+#guardar-edit:hover{
+  cursor: pointer;
+}
+
+#cancelar-edit{
+  font-size: 20px;
+  padding: 5px;
+  background-color: #e40808;
+  color: white;
+  border-radius: 5px;
+  
+}
+
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
@@ -755,6 +827,9 @@ border-radius: 5px;
   }
   #descripcion-producto{
     width: 330px;
+  }
+  .contenido-editarcliente{
+    width: 50%;
   }
 
 
@@ -874,6 +949,7 @@ border-radius: 5px;
     .facturacion-nombre{
       width: 200px;
     }
+
     #elementos-factura tr{
       display: flex;
       flex-direction: column;
@@ -896,6 +972,7 @@ border-radius: 5px;
       content: attr(title);
       color: #0d0391;
     }
+
     #titulo-articulos{
       display: flex;
       justify-content: center;
@@ -936,6 +1013,85 @@ border-radius: 5px;
       margin-bottom: 60px;
     }
 
+    
+    
+   
+    #tabla-clientes th{
+      display: none;
+      border: none;
+      padding: none;
+      margin: none;
+    }
+
+    #tabla-clientes td{
+      border: none;
+      
+    }
+
+    #tr-td-clientes{
+      display: flex;
+      flex-direction: column;
+      border: 1px solid gray;
+      border-bottom:1px solid gray;
+      padding: 10px;
+      margin-bottom: 5px;
+    }
+    
+    #tabla-clientes td[title]{
+      display: flex;
+      width: 100%;
+      font-size: 17px;
+    }
+
+    #tabla-clientes td[title]::before{
+      content: attr(title);
+      color: #0d0391;
+    }
+    #html-clientes{
+      padding-top: 120px;
+    }
+    .titulo-clientes{
+      font-size: 14px;
+    }
+
+    .contenido-clientes{
+      width: 90%;
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+      border-radius: 20px;
+    }
+    #input-buscar-cliente{
+      width: 300px;
+      font-size: 13px;
+    }
+
+    .contenido-editarcliente{
+      width: 90%;
+      background-color: white;
+      flex-direction: column;
+      
+    }
+    #titulo-editar{
+      font-size: 20px;
+    }
+    #html-editarclientes{
+      padding-top: 120px;
+      align-items: left;
+    }
+    
+    .inputs-editar-clientes p{
+      font-size: 18px;
+      
+    }
+    .inputs-editar-clientes input{
+      width: 200px;
+      font-size: 18px;
+      height: 25px;
+      
+    }
+    #boton-eliminar-cliente{
+      margin-right: 50px;
+      
+    }
 
   }
   

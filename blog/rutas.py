@@ -459,10 +459,41 @@ def editar_clientes(idcliente):
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s and id=%s', (session['id'],idcliente,))
         cliente_editar = cursor.fetchall()
+        if request.method=='POST':
+            nombre_edit = request.form['nombre-editado']
+            apellido_edit = request.form['apellido-editado']
+            telefono_edit = request.form['telefono-editado']
+            direccion_edit = request.form['direccion-editado']
+            print(nombre_edit)
+            return redirect(url_for('clientes'))
+
         return render_template('editarcliente.html',nombre=session['nombres'], apellido=session['apellidos'], datos_clientes=cliente_editar)
     
     else:
         return render_template('login.html')
+
+@app.route('/guardarcliente',methods=['GET','POST'])
+def guardarcliente():
+    if 'loggedin' in session:
+        if request.method=='POST':
+            id_edit = request.form['id-editado']
+            nombre_edit = request.form['nombre-editado']
+            apellido_edit = request.form['apellido-editado']
+            telefono_edit = request.form['telefono-editado']
+            direccion_edit = request.form['direccion-editado']
+            cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute('update clientes set nombres = %s where id=%s and idcreador=%s', (nombre_edit, id_edit,session['id'],))
+            cursor.execute('update clientes set apellidos = %s where id=%s and idcreador=%s', (apellido_edit, id_edit,session['id'],))
+            cursor.execute('update clientes set telefono = %s where id=%s and idcreador=%s', (telefono_edit, id_edit,session['id'],))
+            cursor.execute('update clientes set direccion = %s where id=%s and idcreador=%s', (direccion_edit, id_edit,session['id'],))
+            conn.commit()
+            
+
+        return redirect(url_for('clientes'))
+    
+    else:
+        return render_template('login.html')
+
 
 @app.route('/eliminar_cliente/<int:ideliminar>',methods=['GET','POST'])
 def eliminar_cliente(ideliminar):

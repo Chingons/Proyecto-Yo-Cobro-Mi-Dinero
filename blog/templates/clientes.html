@@ -1,7 +1,7 @@
 {% extends "home.html"%}
 {% block content %}
 
-<div id="html-clientes">
+<div id="html-clientes" data-aos="fade-down" data-aos-duration="1500">
 
 
 
@@ -38,14 +38,14 @@
                 
                 <tr id="tr-td-clientes">
                     
-                    <td>{{cliente[0]}} </td>
-                    <td>{{cliente[2]}} {{cliente[3]}}</td>
-                    <td>{{cliente[4]}} </td>
-                    <td>{{cliente[5]}} </td>
-                    <td>{{cliente[6]}} </td>
-                    <td><a id="boton-editar" href="{{ url_for('editar_clientes', idcliente=cliente[0]) }}"> EDITAR</a></td>
-                    <td><input id="boton-tabla-teliminar" type="button" onclick="tomar_valor('{{cliente[0]}}'), mostrar_mensaje();" value="ELIMINAR"> 
-                    </tr>
+                    <td title="ID: ">{{cliente[0]}} </td>
+                    <td title="NOMBRE: ">{{cliente[2]}} {{cliente[3]}}</td>
+                    <td title="TELEFONO: ">{{cliente[4]}} </td>
+                    <td title="IDENTIFICACION: ">{{cliente[5]}} </td>
+                    <td title="UBICACION: ">{{cliente[6]}} </td>
+                    <td title="EDITAR: "><a id="boton-editar" href="{{ url_for('editar_clientes', idcliente=cliente[0]) }}"> EDITAR</a></td>
+                    <td title="ELIMINAR: "><input id="boton-tabla-teliminar" type="button" onclick="tomar_valor('{{cliente[0]}}'), mostrar_mensaje();" value="ELIMINAR"> 
+                </tr>
                 {% endfor %}
             </table>
         </div>
