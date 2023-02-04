@@ -29,7 +29,7 @@
               <li><a href="#">{{nombre}} {{apellido}}</a></li>
               <li><a href="{{ url_for('inicio', id=0) }}">FACTURA</a></li>
               <li><a href="{{ url_for('nuevocliente') }}">Nuevo Cliente</a></li>
-              <li><a href="#">About</a></li>
+              <li><a href="{{ url_for('clientes') }}">Clientes</a></li>
               <li><a href="#">Blog</a></li>
               <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
           </ul>

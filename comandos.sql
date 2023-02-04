@@ -17,7 +17,7 @@ create table clientes (
     telefono VARCHAR(50) not null,
     identificacion VARCHAR(50) not null,
     direccion varchar not null,
-    fecha_creacion date not null
+    fecha_creacion date not null,
 )
 
 
@@ -27,7 +27,8 @@ create table facturas(
     idcliente int not null,
     fecha date not null,
     monto bigint not null,
-    estado VARCHAR(50) not null /*el estado es para saber si la factura esta "PAGADA" o "NOPAGADA" */
+    estado VARCHAR not null,
+    pagada VARCHAR not null
 )
 
 
@@ -36,5 +37,6 @@ idfactura int not null,
 	cantidad bigint not null,
 	descripcion varchar(150) not null,
 	precio bigint not null,
-	subtotal bigint not null
+	subtotal bigint not null,
+    estado varchar not null
 )

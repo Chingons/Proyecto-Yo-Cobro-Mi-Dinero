@@ -33,11 +33,13 @@ img{
     padding: 20px 80px;
     transition: 0.6s;
     background: white;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
   }
   
   header.down{
     background: white;
     padding: 15px 80px;
+    
   }
   
   header .brand{
@@ -118,6 +120,8 @@ img{
 .datosinicio{
   width: 80%;
   background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  border-radius: 20px;
 }
 
 .parrafoagregar{
@@ -583,7 +587,147 @@ border-radius: 10px;
   display: none;
   
 }
+#html-clientes{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 150px;
+}
 
+.contenido-clientes{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  width: 80%;
+}
+
+.titulo-clientes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #0d9eff;
+}
+
+#html-editarclientes{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 150px;
+
+}
+
+.contenido-editarcliente{
+  width: 80%;
+  background-color: white;
+  flex-direction: column;
+}
+
+#tabla-clientes{
+  margin: auto;
+  border: solid #0d0391 1px; 
+  border-collapse: collapse;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  margin-bottom: 70px;
+  max-width: 95%;
+}
+
+#tabla-clientes td, #tabla-clientes th{
+  padding: 5px;
+  font-size: 18px;
+  border: 1px solid black;
+  
+}
+
+#tr-th-clientes{
+  color: #003785;
+}
+
+#tr-td-clientes:hover{
+  color: white;
+  background: #0d9eff;
+}
+
+#mensaje-eliminar{
+  width: 250px;
+  position: absolute;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid #003785;
+  background-color: #0d9eff;
+  color: black;
+  display: none;
+}
+
+#boton-eliminar-cliente{
+  background-color: #e40808;
+  color: white;
+  font-size: 20px;
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+#boton-eliminar-cliente:link, #boton-editar:link{
+  text-decoration: none;
+}
+
+#boton-eliminar-cliente:visited, #boton-editar:visited{
+  text-decoration: none;
+}
+
+#boton-no-eliminar{
+  background-color: #bebed2;
+  color: black;
+  font-size: 20px;
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+#boton-eliminar-cliente:hover, #boton-no-eliminar:hover{
+  cursor: pointer;
+}
+
+#boton-editar{
+background-color: #bebed2;
+color: black;
+font-size: 17px;
+padding: 5px;
+border-radius: 5px;
+}
+
+#boton-tabla-teliminar{
+  background-color: #e40808;
+  color: white;
+  font-size: 17px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  }
+
+  #boton-tabla-teliminar:hover{
+    cursor: pointer;
+  }
+
+  #input-buscar-cliente{
+    width: 500px;
+    border-radius: 10px;
+    font-size: 18px;
+    height: 25px;
+    text-align: center;
+    margin-bottom: 40px;
+  }
 
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
@@ -602,6 +746,17 @@ border-radius: 10px;
   .facturacion-id, .facturacion-no-factura{
     width: 70px;
   }
+  header .menu a{
+    font-size: 15px;
+    padding: 2px;
+  }
+  #precio-unitario, #cantidad{
+    width: 180px;
+  }
+  #descripcion-producto{
+    width: 330px;
+  }
+
 
 }
 

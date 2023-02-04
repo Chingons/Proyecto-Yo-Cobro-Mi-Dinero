@@ -1,0 +1,36 @@
+{% extends "home.html"%}
+{% block content %}
+
+<div id="html-editarclientes">
+
+    <div class="contenido-editarcliente">
+
+        {% for datos in  datos_clientes%}
+        <p>ID <input type="text" name="" readonly value="{{datos[0]}}"></p>
+        <p>Nombres <input type="text" value="{{datos[2]}}" required></p>
+        <p>Apellidos <input type="text" value="{{datos[3]}}" required></p>
+        <p>Telefono <input type="tel" value="{{datos[4]}}" required></p>
+        <p>Identificacion <input type="text" value="{{datos[5]}}" required></p>
+        <p>Dirección<input type="text" value="{{datos[6]}}" required></p>
+        {% endfor %}
+
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

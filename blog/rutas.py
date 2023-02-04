@@ -353,11 +353,14 @@ def nuevocliente():
             nuevo_cliente['direccion'] = request.form['direccion']
 
             cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-            cursor.execute('SELECT * FROM clientes WHERE identificacion =%s and idcreador=%s', (nuevo_cliente['identificacion'], nuevo_cliente['idcreador']))
+            
+            cursor.execute('SELECT * FROM clientes WHERE identificacion =%s and idcreador=%s', (nuevo_cliente['identificacion'], nuevo_cliente['idcreador'],))
             account = cursor.fetchone()
 
+            
             if account:
                 flash('Cliente ya Registrado','error')
+        
 
             else:
                 cursor.execute("INSERT INTO clientes (idcreador, nombres, apellidos, telefono, identificacion, direccion, fecha_creacion) VALUES (%s,%s,%s,%s,%s,%s,%s)",(nuevo_cliente['idcreador'], nuevo_cliente['nombres'], nuevo_cliente['apellidos'], nuevo_cliente['telefono'],nuevo_cliente['identificacion'],nuevo_cliente['direccion'], hora_fecha))
@@ -416,14 +419,14 @@ def inicio(id):
         
         if request.method == "POST":
             jsonData = request.get_json()
-            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto, estado) values (%s, %s, %s, %s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],"NOPAGADA"))
+            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto, estado, pagada) values (%s, %s, %s, %s,%s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],"ACTIVO", "NO"))
             conn.commit()
            
             for p in jsonData['articulos']:
                 if p==None:
                     pass
                 else:
-                    cursor.execute('INSERT INTO articulos (idfactura,cantidad,descripcion,precio,subtotal) values (%s, %s, %s, %s,%s)', (jsonData['factura']['no_factura'] ,p['cantidad'], p['descripcion'], p['precio_unitario'], p['total']))
+                    cursor.execute('INSERT INTO articulos (idfactura,cantidad,descripcion,precio,subtotal, estado) values (%s, %s, %s, %s,%s,%s)', (jsonData['factura']['no_factura'] ,p['cantidad'], p['descripcion'], p['precio_unitario'], p['total'], "ACTIVO"))
                     conn.commit()
             
             return login()
@@ -437,5 +440,44 @@ def inicio(id):
     else:
         return render_template('login.html')
 
+
+
+@app.route('/clientes',methods=['GET','POST'])
+def clientes():
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s', (session['id'],))
+        nuestros_clientes = cursor.fetchall()
+        return render_template('clientes.html',nombre=session['nombres'], apellido=session['apellidos'], clientes_usuario=nuestros_clientes)
+    
+    else:
+        return render_template('login.html')
+
+@app.route('/editar_clientes/<int:idcliente>',methods=['GET','POST'])
+def editar_clientes(idcliente):
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s and id=%s', (session['id'],idcliente,))
+        cliente_editar = cursor.fetchall()
+        return render_template('editarcliente.html',nombre=session['nombres'], apellido=session['apellidos'], datos_clientes=cliente_editar)
+    
+    else:
+        return render_template('login.html')
+
+@app.route('/eliminar_cliente/<int:ideliminar>',methods=['GET','POST'])
+def eliminar_cliente(ideliminar):
+     if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT idfactura FROM facturas WHERE idfacturador = %s and idcliente=%s and estado=%s', (session['id'],ideliminar,"ACTIVO"))
+        id_factura = cursor.fetchall()
+        if len(id_factura) >0:
+            for id in id_factura:
+                cursor.execute('update articulos set estado=%s WHERE idfactura = %s ', ("ELIMINADO",id[0],))
+                conn.commit()
+            cursor.execute('update facturas set estado=%s WHERE idfacturador = %s and idcliente=%s', ("ELIMINADO",session['id'],ideliminar,))
+            conn.commit()
+        cursor.execute('delete from clientes WHERE idcreador = %s and id=%s', (session['id'],ideliminar,))
+        conn.commit()
+        return redirect(url_for('clientes'))
 
 

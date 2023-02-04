@@ -1,0 +1,107 @@
+{% extends "home.html"%}
+{% block content %}
+
+<div id="html-clientes">
+
+
+
+    <div class="contenido-clientes">
+        <div class="titulo-clientes">
+            <h2> EDITAR O ELIMINAR CLIENTES</h2>
+        </div>
+        
+    <div>
+        <input type="text" id="input-buscar-cliente" onkeyup="buscar();" placeholder="INGRESE AQUI ALGUN DATO DE SU CLIENTE">
+    </div>
+
+        <div id="mensaje-eliminar">
+                    
+            <p>¿Esta seguro que desea eliminar este cliente?</p>
+            <a id="boton-eliminar-cliente"  href="#" onclick="eliminar();"> SI</a>
+            <input id="boton-no-eliminar" onclick="esconder_mensaje();" type="button" value="NO">
+        </div> 
+
+
+        <div id="contenedor-tabla-clientes">
+            <table id="tabla-clientes">
+                <tr id="tr-th-clientes">
+                    <TH>ID</TH>
+                    <th>NOMBRE</th>
+                    <TH>TELEFONO</TH>
+                    <TH>IDENTIFICACION</TH>
+                    <TH>UBICACION</TH>
+                    <th>EDITAR</th>
+                    <TH>ELIMINAR</TH>
+                </tr>
+                {% for cliente in clientes_usuario %}
+                
+                
+                <tr id="tr-td-clientes">
+                    
+                    <td>{{cliente[0]}} </td>
+                    <td>{{cliente[2]}} {{cliente[3]}}</td>
+                    <td>{{cliente[4]}} </td>
+                    <td>{{cliente[5]}} </td>
+                    <td>{{cliente[6]}} </td>
+                    <td><a id="boton-editar" href="{{ url_for('editar_clientes', idcliente=cliente[0]) }}"> EDITAR</a></td>
+                    <td><input id="boton-tabla-teliminar" type="button" onclick="tomar_valor('{{cliente[0]}}'), mostrar_mensaje();" value="ELIMINAR"> 
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+var id_eliminar;
+function mostrar_mensaje(){
+    document.getElementById('mensaje-eliminar').style.display="inline";
+}
+
+function tomar_valor(x){
+    id_eliminar = x;
+}
+
+function esconder_mensaje(){
+    document.getElementById('mensaje-eliminar').style.display="none";
+}
+
+function eliminar(){
+    document.getElementById('boton-eliminar-cliente').href="{{ url_for('eliminar_cliente', ideliminar=0) }}".replace(0,id_eliminar);
+    return 
+}
+
+function buscar() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, j, visible;
+  input = document.getElementById("input-buscar-cliente");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tabla-clientes");
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 0; i < tr.length; i++) {
+    visible = false;
+    
+    td = tr[i].getElementsByTagName("td");
+    for (j = 0; j < td.length; j++) {
+      if (td[j] && td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+        visible = true;
+      }
+    }
+    if (visible === true) {
+      tr[i].style.display = "";
+      document.getElementById('tr-th-clientes').style.display = ""
+    } else {
+      tr[i].style.display = "none";
+      document.getElementById('tr-th-clientes').style.display = ""
+    }
+  }
+}
+
+
+</script>
+
+{% endblock %}
