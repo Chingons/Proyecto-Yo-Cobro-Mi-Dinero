@@ -1,0 +1,52 @@
+{% extends "home.html"%}
+{% block content %}
+
+<div id="html-articulos" data-aos="zoom-in" data-aos-duration="1500">
+    <div id="contenido-articulos">
+        <div id="titulo-articulos-fc">
+            <h2>ARTICULOS</h2>
+
+        </div>
+        <div id="tabla-articulos-fc">
+            <table>
+                <tr>
+                    <th>CANTIDAD</th>
+                    <th>DESCRIPCION</th>
+                    <th>PRECIO</th>
+                    <th>SUBTOTAL</th>
+                </tr>
+                {% for articulo in articulos %}
+    
+                    <tr id="tr-articulos">
+                        <td title="CANTIDAD: ">{{articulo[1]}}</td>
+                        <td title="DESCRIPCION: "> {{articulo[2]}}</td>
+                        <td title="PRECIO: "> {{articulo[3]}}</td>
+                        <td title="SUBTOTAL: "> {{articulo[4]}} </td>
+                    </tr>
+                
+                {% endfor %}
+            </table>
+
+
+        </div>
+            <a id="boton-volver-art" href="javascript:history.back()"> VOLVER ATRÁS</a>
+
+                
+
+
+
+
+    </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}

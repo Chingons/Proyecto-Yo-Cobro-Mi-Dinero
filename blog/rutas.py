@@ -11,6 +11,7 @@ import ssl
 import smtplib
 from decouple import config
 
+
 verificar_cuenta = []
 ya_verificado =[]
 hora_fecha = time.strftime("%c")
@@ -95,7 +96,7 @@ def login():
 def home():
     if 'loggedin' in session:
         
-        return render_template('inicio.html',id=0, nombre=session['nombres'], apellido=session['apellidos'], facturarclientes = {"id":0, "nombrecompleto": 'nombrecliente', "telefono":"000-000-0000", "identificacion":"000-0000000-0", "ubicacion":"Ciudad" })
+        return render_template('inicio.html',id=0, facturarclientes = {"id":0, "nombrecompleto": 'nombrecliente', "telefono":"000-000-0000", "identificacion":"000-0000000-0", "ubicacion":"Ciudad" })
     else:
         return redirect(url_for('login'))
 
@@ -370,7 +371,7 @@ def nuevocliente():
             
 
         
-        return render_template('addcliente.html', title="Nuevo Cliente", nombre=session['nombres'], apellido=session['apellidos'])
+        return render_template('addcliente.html', title="Nuevo Cliente")
     else:
             return redirect(url_for('login'))
     
@@ -379,7 +380,7 @@ def nuevocliente():
 def inicio(id):
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s', (session['id'],))
+        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'],))
         clientes = cursor.fetchall()
         cursor.execute('SELECT idfactura FROM FACTURAS order by idfactura desc')
         
@@ -446,9 +447,9 @@ def inicio(id):
 def clientes():
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s', (session['id'],))
+        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'],))
         nuestros_clientes = cursor.fetchall()
-        return render_template('clientes.html',nombre=session['nombres'], apellido=session['apellidos'], clientes_usuario=nuestros_clientes)
+        return render_template('clientes.html', clientes_usuario=nuestros_clientes)
     
     else:
         return render_template('login.html')
@@ -467,7 +468,7 @@ def editar_clientes(idcliente):
             print(nombre_edit)
             return redirect(url_for('clientes'))
 
-        return render_template('editarcliente.html',nombre=session['nombres'], apellido=session['apellidos'], datos_clientes=cliente_editar)
+        return render_template('editarcliente.html', datos_clientes=cliente_editar)
     
     else:
         return render_template('login.html')
@@ -512,3 +513,74 @@ def eliminar_cliente(ideliminar):
         return redirect(url_for('clientes'))
 
 
+@app.route('/estadoscuentas', methods=['GET', 'POST'])
+def estadoscuentas():
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'],))
+        estado_clientes = cursor.fetchall()
+        contador = 0
+        
+        for datos in estado_clientes:
+            total_montos = 0
+            cursor.execute('SELECT monto from facturas where idcliente =%s and estado=%s and pagada=%s',( str(datos[0]),'ACTIVO','NO'))
+            monto = cursor.fetchall()
+            for total in monto:
+                total_montos += total[0]
+            
+            insertar = format(total_montos, ',d')
+            estado_clientes[contador].append(insertar)
+            contador +=1
+            
+        return render_template('clientes_estados.html', clientes_estado=estado_clientes)
+    
+    
+    else:
+        return render_template('login.html')
+    
+
+@app.route('/facturas/<int:clientedeuda>')
+def facturas(clientedeuda):
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT * FROM facturas WHERE idcliente = %s and estado=%s and pagada=%s order by idfactura asc', (clientedeuda, 'ACTIVO', 'NO'))
+        deudas= cursor.fetchall()
+        facturas_deuda = []
+        cambiar = 0
+        for tomar in deudas:
+            cambiar = format(tomar[4], ',d')
+            tomar[4] = cambiar
+            facturas_deuda.append(tomar)
+        
+        return render_template('facturas.html', facturas=facturas_deuda)
+    
+    else:
+        return render_template('login.html')
+
+
+
+@app.route('/articulos/<int:articulos>')
+def articulos(articulos):
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT * FROM articulos WHERE idfactura = %s and estado=%s order by idfactura asc', (articulos, 'ACTIVO'))
+        datos_articulos = cursor.fetchall()
+        cantidad = 0
+        precio = 0
+        subtotal = 0
+        articulos_finales = []
+        for articulo in datos_articulos:
+            cantidad = format(articulo[1], ',d')
+            articulo[1] = cantidad
+            
+            precio = format(articulo[3], ',d')
+            articulo[3] = precio
+
+            subtotal = format(articulo[4], ',d')
+            articulo[4] = subtotal
+            articulos_finales.append(articulo)
+        
+        return render_template('articulos.html', articulos=articulos_finales)
+    
+    else:
+        return render_template('login.html')

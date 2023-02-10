@@ -1,0 +1,98 @@
+{% extends "home.html"%}
+{% block content %}
+
+<div id="contenedor-html-clientes-estadocuenta" data-aos="zoom-in" data-aos-duration="1500">
+    <div id="mostrador-clientes-estadocuenta">
+        <div id="titulo-clientes-estado">
+            <h2> ESTADO DE CUENTA CLIENTES</h2>
+        </div>
+        <div>
+            <input type="text" id="input-buscar-cliente-estado" onkeyup="buscar();" placeholder="INGRESE AQUI ALGUN DATO DE SU CLIENTE">
+        </div>
+
+        <div id="tabla-clientes-estado">
+            <table>
+                <tr id="tr-th-clientes-estado">
+                    <TH>ID</TH>
+                    <th>NOMBRE</th>
+                    <TH>TELEFONO</TH>
+                    <TH>IDENTIFICACION</TH>
+                    <TH>UBICACION</TH>
+                    <th>BALANCE</th>
+                    <TH>FACTURAS</TH>
+                </tr>
+                {% for estados in clientes_estado %}
+                
+                
+                <tr id="tr-td-clientes-estado">
+                    
+                    <td title="ID: ">{{estados[0]}} </td>
+                    <td title="NOMBRE: ">{{estados[2]}} {{estados[3]}}</td>
+                    <td title="TELEFONO: ">{{estados[4]}} </td>
+                    <td title="IDENTIFICACION: ">{{estados[5]}} </td>
+                    <td title="UBICACION: ">{{estados[6]}} </td>
+                    <td title="BALANCE: ">{{estados[8]}} </td>
+                    <td title="FACTURAS: "><a id="boton-mostrar-facturas" href="{{ url_for('facturas', clientedeuda=estados[0]) }}"> MOSTRAR</a></td> 
+                </tr>
+                {% endfor %}
+                
+
+            </table>
+
+        </div>
+
+
+        
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+ 
+function buscar() {
+  var input, filter, table, tr, td, i, j, visible;
+  input = document.getElementById("input-buscar-cliente-estado");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tabla-clientes-estado");
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 0; i < tr.length; i++) {
+    visible = false;
+    
+    td = tr[i].getElementsByTagName("td");
+    for (j = 0; j < td.length; j++) {
+      if (td[j] && td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+        visible = true;
+      }
+    }
+    if (visible === true) {
+      tr[i].style.display = "";
+      document.getElementById('tr-th-clientes-estado').style.display = ""
+    } else {
+      tr[i].style.display = "none";
+      document.getElementById('tr-th-clientes-estado').style.display = ""
+    }
+  }
+}
+
+
+
+</script>
+
+
+{% endblock %}

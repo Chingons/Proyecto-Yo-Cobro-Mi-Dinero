@@ -25,7 +25,7 @@ create table facturas(
     idfactura serial primary key,
     idfacturador int not null,
     idcliente int not null,
-    fecha date not null,
+    fecha varchar not null,
     monto bigint not null,
     estado VARCHAR not null,
     pagada VARCHAR not null
