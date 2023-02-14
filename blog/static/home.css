@@ -1002,6 +1002,17 @@ border-radius: 5px;
   border-radius: 5px;
 }
 
+#htmlrecibo{
+  width: 100%;
+
+}
+
+#contenido-recibo{
+  margin-top: 150px;
+  background-color: white;
+  border-radius: 20px;
+
+}
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
