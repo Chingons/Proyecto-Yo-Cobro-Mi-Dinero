@@ -41,7 +41,7 @@
                     <td title="ID: ">{{cliente[0]}} </td>
                     <td title="NOMBRE: ">{{cliente[2]}} {{cliente[3]}}</td>
                     <td title="TELEFONO: ">{{cliente[4]}} </td>
-                    <td title="IDENTIFICACION: ">{{cliente[5]}} </td>
+                    <td title="IDENTIFICACION: " >{{cliente[5]}} </td>
                     <td title="UBICACION: ">{{cliente[6]}} </td>
                     <td title="EDITAR: "><a id="boton-editar" href="{{ url_for('editar_clientes', idcliente=cliente[0]) }}"> EDITAR</a></td>
                     <td title="ELIMINAR: "><input id="boton-tabla-teliminar" type="button" onclick="tomar_valor('{{cliente[0]}}'), mostrar_mensaje();" value="ELIMINAR"> 
@@ -71,7 +71,6 @@ function esconder_mensaje(){
 
 function eliminar(){
     document.getElementById('boton-eliminar-cliente').href="{{ url_for('eliminar_cliente', ideliminar=0) }}".replace(0,id_eliminar);
-    return 
 }
 
 function buscar() {

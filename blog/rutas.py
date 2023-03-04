@@ -10,6 +10,7 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 from decouple import config
+import json
 
 
 verificar_cuenta = []
@@ -420,7 +421,9 @@ def inicio(id):
         
         if request.method == "POST":
             jsonData = request.get_json()
-            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto, estado, pagada) values (%s, %s, %s, %s,%s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],"ACTIVO", "NO"))
+            monto_actual = jsonData['total_final']
+            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto_original,monto_actual, estado, pagada) values (%s, %s, %s, %s,%s,%s,%s)', 
+                           (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],monto_actual,"ACTIVO", "NO"))
             conn.commit()
            
             for p in jsonData['articulos']:
@@ -523,7 +526,7 @@ def estadoscuentas():
         
         for datos in estado_clientes:
             total_montos = 0
-            cursor.execute('SELECT monto from facturas where idcliente =%s and estado=%s and pagada=%s',( str(datos[0]),'ACTIVO','NO'))
+            cursor.execute('SELECT monto_actual from facturas where idcliente =%s and estado=%s and pagada=%s',( str(datos[0]),'ACTIVO','NO'))
             monto = cursor.fetchall()
             for total in monto:
                 total_montos += total[0]
@@ -539,7 +542,7 @@ def estadoscuentas():
         return render_template('login.html')
     
 
-@app.route('/facturas/<int:clientedeuda>')
+@app.route('/facturas/<int:clientedeuda>', methods=['GET', 'POST'])
 def facturas(clientedeuda):
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -550,6 +553,8 @@ def facturas(clientedeuda):
         for tomar in deudas:
             cambiar = format(tomar[4], ',d')
             tomar[4] = cambiar
+            cambiar = format(tomar[5], ',d')
+            tomar[5] = cambiar
             facturas_deuda.append(tomar)
         
         return render_template('facturas.html', facturas=facturas_deuda)
@@ -559,7 +564,7 @@ def facturas(clientedeuda):
 
 
 
-@app.route('/articulos/<int:articulos>')
+@app.route('/articulos/<int:articulos>', methods=['GET', 'POST'])
 def articulos(articulos):
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -582,5 +587,99 @@ def articulos(articulos):
         
         return render_template('articulos.html', articulos=articulos_finales)
     
+    else:
+        return render_template('login.html')
+
+@app.route('/recibo', methods=['GET', 'POST'])
+def recibo():
+    
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT id,nombres,apellidos,telefono,identificacion,direccion FROM clientes WHERE idcreador = %s order by id asc', (session['id'], ))
+        clientes_recibo = cursor.fetchall()
+        facturas_recibo = []
+        enviar_factura = {}
+        formato = 0
+        contador_ingresar = 0
+        contador_interno = 0
+        organizar_facturas = {}
+        contador_ingcliente = 0
+        archivo_json = ('blog/static/recibo.json')
+        
+        cursor.execute('SELECT * FROM FACTURAS WHERE idfacturador=%s and pagada=%s order by idfactura asc',(session['id'],"NO",))
+        facturas_x= cursor.fetchall()
+            
+        for factura in facturas_x:
+            formato = format(factura[4], ',d')
+            factura[4] = formato
+            formato = format(factura[5], ',d')
+            factura[5] = formato
+            facturas_recibo.append(factura)
+
+        for ingcliente in clientes_recibo:
+                
+                enviar_factura[contador_ingcliente] = {'id': ingcliente[0], 'nombre': ingcliente[1] + " " + ingcliente[2], 
+                                                       'telefono': ingcliente[3], 'identificacion': ingcliente[4],
+                                                       'direccion': ingcliente[5], 'facturas': []}
+                        
+                
+                
+                contador_ingcliente +=1
+                
+        for fc in facturas_recibo:
+                if len(organizar_facturas)==0:
+                    contador_ingresar = fc[2]
+                    organizar_facturas[contador_ingresar] = []
+                    organizar_facturas[contador_ingresar].append(fc)
+
+                else:
+                        if fc[2]==organizar_facturas[contador_ingresar][contador_interno] [2] and fc[0] != organizar_facturas[contador_ingresar][contador_interno][0]:
+                            organizar_facturas[contador_ingresar].append(fc)
+                            contador_interno += 1
+                        
+                        elif fc[2] not in organizar_facturas:
+                            contador_interno = 0
+                            contador_ingresar = fc[2]
+                            organizar_facturas[contador_ingresar] = []
+                            organizar_facturas[contador_ingresar].append(fc)
+                        
+                        elif fc[2] in organizar_facturas:
+                            contador_interno = 0
+                            contador_ingresar = fc[2]
+                            organizar_facturas[contador_ingresar].append(fc)
+            
+            
+        for keys in enviar_factura:
+              id_add = enviar_factura[keys]['id']
+              
+              if id_add in organizar_facturas.keys():
+                enviar_factura[keys]['facturas'].append(organizar_facturas[id_add])
+                
+            
+            
+        datos = open(archivo_json, "w")
+        json.dump(enviar_factura, datos)
+        datos.close()
+        #data = open(archivo_json, "r") abrir json  
+        #data1 = json.load(data) abrir json 
+        #print(data1) imprimir json
+
+        return render_template('recibo.html')
+
+   
+    else:
+        return render_template('login.html')
+
+@app.route('/pagar/<int:idpagar>', methods=['GET','POST'])
+def pagar(idpagar):
+    if 'loggedin' in session:
+        print(idpagar) 
+
+           
+
+        return redirect(url_for('recibo',idrecibo=0))
+
+   
+   
     else:
         return render_template('login.html')

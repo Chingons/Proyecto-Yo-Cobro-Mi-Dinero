@@ -1,0 +1,242 @@
+{% extends "home.html"%}
+{% block content %}
+
+<div id="htmlrecibo">
+    <div id="contenido-recibo">
+      <div id="mensaje-recibo">
+        <p>¿ESTA SEGURO DE GUARDAR ESTE PAGO?</p>
+        <p>Si ha recibido la suma de RD$: <p id="monto-mensaje"> </p> presione "SI" de lo 
+        contrario presione "NO".</p>
+        <input type="button" value="SI" onclick="facturas_pagadas();"> <input type="button" onclick="esconder_mensaje();" value="NO">
+      </div>
+      <div>
+        <input type="text" name="" id="">
+        <ul id="ul-recibo"></ul>
+      </div>
+      <div>
+        <input type="text" name="fecha-recibo" id="fecha-recibo" readonly>
+        <input type="text" name="id-cliente-recibo" id="id-cliente-recibo">
+        <input type="text" name="nombre-cliente-recibo" id="nombre-cliente-recibo">
+      </div>
+      <div>
+        <table id="tabla-recibo">
+          <tr>
+            <th>ID FACTURA</th>
+            <th>FECHA</th>
+            <th>MONTO ORIGINAL</th>
+            <TH>MONTO ACTUAL</TH>
+            <th>SELECCIONAR</th>
+          </tr>
+
+        </table>
+        <table id="tabla-procesar-recibo">
+          <tr>
+            <th>ID FACTURA</th>
+            <th>FECHA</th>
+            <th>MONTO ORIGINAL</th>
+            <TH>MONTO ACTUAL</TH>
+            <th>CANCELAR</th>
+          </tr>
+
+        </table>
+
+        
+      </div>
+      <input type="text" id="total-recibo" value="0" readonly>
+      <input type="button" value="PAGAR FACTURAS" onclick="monstrar_mensaje();">
+    </div>
+
+
+
+
+</div>
+
+
+<script>
+document.getElementById("mensaje-recibo").style.display="none";
+fecha = new Date().toLocaleDateString();
+document.getElementById("fecha-recibo").value = fecha;
+var datos_json = {}
+var total_recibo = 0;
+var suma_recibo=0;
+var miArray = [];
+
+
+
+async function loadNames() {
+  const response = await fetch("{{ url_for('static', filename='recibo.json') }}");
+  const prueba = await response.json();
+  datos_json = prueba;
+  impresion_clientes(datos_json);
+  
+}
+
+
+function impresion_clientes(variable_pasar){
+  let ul= document.getElementById('ul-recibo');
+  for(let imp_datos in variable_pasar){
+    let li = document.createElement('li');
+    let boton = document.createElement('button');
+    li.innerHTML = variable_pasar[imp_datos]['nombre'] + " " + variable_pasar[imp_datos]['telefono'] + " " + variable_pasar[imp_datos]['identificacion'] + " " + variable_pasar[imp_datos]['direccion'];
+    boton.addEventListener("click", function(){
+      document.getElementById('id-cliente-recibo').value = variable_pasar[imp_datos]['id'];
+      document.getElementById('nombre-cliente-recibo').value = variable_pasar[imp_datos]['nombre'];
+      tamaño_tabla = document.getElementById("tabla-recibo").rows.length;
+      for (var borrar = tamaño_tabla-1; borrar>0; borrar--){
+        document.getElementById("tabla-recibo").deleteRow(borrar);
+      }
+      tamaño_tabla_proceso = document.getElementById("tabla-procesar-recibo").rows.length;
+      
+      for (var borrar_proceso = tamaño_tabla_proceso-1; borrar_proceso>0; borrar_proceso--){
+        document.getElementById("tabla-procesar-recibo").deleteRow(borrar_proceso);
+      }
+      impresion_factura(imp_datos, datos_json);
+       
+    });
+    boton.appendChild(li);
+    ul.appendChild(boton); 
+  }
+}
+
+function impresion_factura(clave,datos){
+  for (let y=0; y<datos[clave]['facturas'][0].length; y++){
+            let tabla = document.getElementById('tabla-recibo');
+            let tr = document.createElement('tr');
+            let id= document.createElement('td');
+            id.title = "ID FACTURA: ";
+            
+            let fecha= document.createElement('td');
+            fecha.title = "FECHA FACTURA: ";
+            
+            let monto_original= document.createElement('td');
+            monto_original.title = "MONTO ORIGINAL: ";
+            
+            let monto_actual= document.createElement('td');
+            monto_actual.title = "MONTO ACTUAL: ";
+            
+            let seleccionar_td = document.createElement('td');
+            
+            let boton_procesar = document.createElement("button");
+            boton_procesar.title = "SELECCIONAR: ";
+            boton_procesar.addEventListener("click", function(){
+              tabla_procesada(datos[clave]['facturas'][0][y]);})
+              
+              id.innerHTML = datos[clave]['facturas'][0][y][0];
+              fecha.innerHTML = datos[clave]['facturas'][0][y][3];
+              monto_original.innerHTML = datos[clave]['facturas'][0][y][4];
+              monto_actual.innerHTML = datos[clave]['facturas'][0][y][5];
+              boton_procesar.innerHTML = "PROCESAR";
+              seleccionar_td.appendChild(boton_procesar);
+              tr.appendChild(id);
+              tr.appendChild(fecha);
+              tr.appendChild(monto_original);
+              tr.appendChild(monto_actual);
+              tr.appendChild(seleccionar_td);
+              tabla.appendChild(tr);
+
+          }   
+          }
+            
+        
+
+
+
+function tabla_procesada(datos_procesar){
+
+
+
+let filtrar = miArray.indexOf(datos_procesar[0]);
+
+if(filtrar>-1){
+
+}
+else{
+miArray.push(datos_procesar[0]);
+
+  let tabla_proceso = document.getElementById('tabla-procesar-recibo');
+  let tamaño_tabla_proceso = tabla_proceso.getElementsByTagName("td");
+  let tr_proceso = document.createElement('tr');
+      tr_proceso.className = datos_procesar[0];
+  let id_proceso= document.createElement('td');
+  let fecha_proceso= document.createElement('td');
+  let monto_original_proceso= document.createElement('td');
+  let monto_actual_proceso= document.createElement('td');
+  let boton_actual_proceso = document.createElement("button");
+  tr_proceso.id = datos_procesar[0];  
+  boton_actual_proceso.addEventListener("click", function(){
+              document.getElementById(datos_procesar[0]).remove();
+              const index = miArray.indexOf(datos_procesar[0]);
+              if (index > -1) {
+              miArray.splice(index, 1);}
+  });
+  boton_actual_proceso.innerHTML = "CANCELAR";
+  id_proceso.innerHTML = datos_procesar[0];
+  fecha_proceso.innerHTML = datos_procesar[3];
+  monto_original_proceso.innerHTML = datos_procesar[4];
+  monto_actual_proceso.innerHTML = datos_procesar[5];
+  let reemplazar = datos_procesar[5].replace(",","");
+  let solucion = document.getElementById('total-recibo').value;
+  let rem_solucion = solucion.replace(",","");
+  let sumar_solucion = Number(rem_solucion) + Number(reemplazar);
+  let formato_numero = new Intl.NumberFormat('en-US').format(sumar_solucion);
+  
+  document.getElementById('total-recibo').value = formato_numero;
+
+  tr_proceso.appendChild(id_proceso);
+  tr_proceso.appendChild(fecha_proceso);
+  tr_proceso.appendChild(monto_original_proceso);
+  tr_proceso.appendChild(monto_actual_proceso);
+  tr_proceso.appendChild(boton_actual_proceso);
+  tabla_proceso.appendChild(tr_proceso);
+}
+}
+  
+
+
+    
+    
+      
+    
+
+
+function facturas_pagadas(){
+let tamaño_tabla = document.getElementById("tabla-procesar-recibo").rows.length;
+let monto_recibo = document.getElementById('total-recibo').value;
+let fecha_recibo = document.getElementById("fecha-recibo").value;
+let id_cliente_recibo = document.getElementById('id-cliente-recibo').value;
+let datos_factura_recibo = {'idcliente':id_cliente_recibo,'facturas':[], 'fecha_facturas':[], 'montos_facturas':[], 
+'monto_recibo':monto_recibo, 'fecha_recibo':fecha_recibo}
+
+
+  for (let x=1; x<tamaño_tabla; x++){
+    datos_factura_recibo['facturas'].push(document.getElementById("tabla-procesar-recibo").rows[x].cells[0].innerHTML);
+    datos_factura_recibo['fecha_facturas'].push(document.getElementById("tabla-procesar-recibo").rows[x].cells[1].innerHTML);
+    datos_factura_recibo['montos_facturas'].push(document.getElementById("tabla-procesar-recibo").rows[x].cells[3].innerHTML);
+  }
+
+
+
+
+console.log(datos_factura_recibo);
+
+}
+
+function monstrar_mensaje(){
+  let monto_impresion = document.getElementById('total-recibo').value;
+  document.getElementById('monto-mensaje').innerHTML = monto_impresion;
+  document.getElementById("mensaje-recibo").style.display="";
+}
+
+function esconder_mensaje(){
+  document.getElementById("mensaje-recibo").style.display="none";
+}
+
+loadNames();
+
+
+
+
+    
+</script>
+
+{% endblock %}

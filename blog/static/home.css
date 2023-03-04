@@ -1002,6 +1002,17 @@ border-radius: 5px;
   border-radius: 5px;
 }
 
+#htmlrecibo{
+  width: 100%;
+
+}
+
+#contenido-recibo{
+  margin-top: 150px;
+  background-color: white;
+  border-radius: 20px;
+
+}
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
@@ -1293,9 +1304,6 @@ border-radius: 5px;
       margin-right: 50px;
       
     }
-    #tabla-clientes-estado{
-      width: 100%;
-    }
 
     #tabla-clientes-estado td[title]{
       display: flex;
@@ -1315,7 +1323,9 @@ border-radius: 5px;
       border-bottom:1px solid gray;
       margin-bottom: 5px;
       padding: 5px;
+      
     }
+    
     #input-buscar-cliente-estado{
       width: 300px;
       font-size: 13px;
@@ -1329,6 +1339,8 @@ border-radius: 5px;
     #mostrador-clientes-estadocuenta{
       margin-top:120px ;
       width: 90%;
+      padding: 5px;
+      
     }
 
     #contenido-facturas{
@@ -1345,6 +1357,9 @@ border-radius: 5px;
     }
     #tabla-articulos-fc{
       font-size: 14px;
+    }
+    #tabla-facturas th, td{
+      font-size: 15px;
     }
 
 
