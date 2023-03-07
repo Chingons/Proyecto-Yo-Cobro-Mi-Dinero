@@ -71,8 +71,7 @@ create table facturas(
     idfacturador int not null,
     idcliente int not null,
     fecha varchar not null,
-    monto_original bigint not null,
-    monto_actual bigint not null,
+    monto bigint not null,
     estado VARCHAR not null,
     pagada VARCHAR not null
 )
@@ -86,12 +85,3 @@ idfactura int not null,
 	subtotal bigint not null,
     estado varchar not null
 )
-
-create table recibos(idrecibo serial primary key,
-idcreador_recibo integer not null,
-idcliente_recibo integer not null,
-facturas varchar not null,
-fecha_facturas varchar not null, 
-montos_facturas varchar not null,
-monto_recibo BIGINT not null,
-fecha_recibo varchar not null)

@@ -71,6 +71,7 @@ function esconder_mensaje(){
 
 function eliminar(){
     document.getElementById('boton-eliminar-cliente').href="{{ url_for('eliminar_cliente', ideliminar=0) }}".replace(0,id_eliminar);
+    return 
 }
 
 function buscar() {

@@ -10,7 +10,6 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 from decouple import config
-import json
 
 
 verificar_cuenta = []
@@ -540,7 +539,7 @@ def estadoscuentas():
         return render_template('login.html')
     
 
-@app.route('/facturas/<int:clientedeuda>', methods=['GET', 'POST'])
+@app.route('/facturas/<int:clientedeuda>')
 def facturas(clientedeuda):
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -560,7 +559,7 @@ def facturas(clientedeuda):
 
 
 
-@app.route('/articulos/<int:articulos>', methods=['GET', 'POST'])
+@app.route('/articulos/<int:articulos>')
 def articulos(articulos):
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -584,6 +583,7 @@ def articulos(articulos):
         return render_template('articulos.html', articulos=articulos_finales)
     
     else:
+<<<<<<< HEAD
         return render_template('login.html')
 
 @app.route('/recibo/<int:idrecibo>', methods=['GET', 'POST'])
@@ -631,3 +631,6 @@ def pagar(idpagar):
    
     else:
         return render_template('login.html')
+=======
+        return render_template('login.html')
+>>>>>>> parent of cd37bcd (funcion recibo mostrando facturas y proceso)
