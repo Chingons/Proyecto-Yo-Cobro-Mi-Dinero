@@ -10,6 +10,7 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 from decouple import config
+import json
 
 
 verificar_cuenta = []
@@ -583,36 +584,31 @@ def articulos(articulos):
         return render_template('articulos.html', articulos=articulos_finales)
     
     else:
-<<<<<<< HEAD
         return render_template('login.html')
 
-@app.route('/recibo/<int:idrecibo>', methods=['GET', 'POST'])
-def recibo(idrecibo):
+@app.route('/recibo', methods=['GET', 'POST'])
+def recibo():
     
     if 'loggedin' in session:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'], ))
         clientes_recibo = cursor.fetchall()
-        facturas_recibo = []
         enviar_factura = {}
         formato = 0
         archivo_json = 'recibo.json'
-
-        if idrecibo>0:
-            cursor.execute('SELECT * FROM FACTURAS WHERE idcliente=%s order by idfactura asc',(idrecibo,))
-            facturas_x= cursor.fetchall()
+        for recoger in clientes_recibo:
+            cursor.execute('SELECT * FROM facturas where idcliente =%s and estado =%s and pagada =%s order by idfactura asc',(recoger[0],'ACTIVO','NO'))
+            enviar_factura[formato] = {'idcliente':recoger[0], 'nombre':recoger[2] + " " + recoger[3], 
+                                       'telefono':recoger[4], 'identificacion':recoger[5], 'direccion':recoger[6],
+                                       'facturas':cursor.fetchall()}
+            formato += 1        
+           
             
-            for factura in facturas_x:
-                formato = format(factura[4], ',d')
-                factura[4] = formato
-                facturas_recibo.append(factura)
-            
-            enviar_factura[0] = facturas_recibo
-            datos = open(archivo_json, "w")
-            json.dump(enviar_factura, datos)
-            datos.close()
-
-        return render_template('recibo.html', clientes=clientes_recibo, frecibo = facturas_recibo)
+        
+        datos = open('blog/static/recibo.json', "w")
+        json.dump(enviar_factura, datos)
+        datos.close()
+        return render_template('recibo.html')
 
    
     else:
@@ -631,6 +627,3 @@ def pagar(idpagar):
    
     else:
         return render_template('login.html')
-=======
-        return render_template('login.html')
->>>>>>> parent of cd37bcd (funcion recibo mostrando facturas y proceso)

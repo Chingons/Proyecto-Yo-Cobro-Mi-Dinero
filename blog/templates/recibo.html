@@ -6,15 +6,6 @@
 
         <input type="text" placeholder="Click aquí para mostrar sus clientes">
         <ul>
-            {% for cliente in clientes %}
-            <li class="">
-
-                <a href="{{ url_for('recibo', idrecibo=cliente[0]) }}" type="submit" class="">  {{cliente[0]}}, {{cliente[2]}} {{cliente[3]}}, {{cliente[4]}}, {{cliente[5]}}, {{cliente[6]}}   </a>
-                <hr>
-
-            </li>
-            {% endfor %}
-
         </ul>
 
         <table>
@@ -25,42 +16,13 @@
                 <th>SELECCIONAR</th>
 
             </tr>
-            {% for facturas in frecibo %}
-            
-            <tr>
-                <th>{{facturas[0]}}</th>
-                <th>{{facturas[3]}}</th>
-                <th>{{facturas[4]}}</th>
-                <th><input type="checkbox" id="idfactura-recibo" value="{{facturas[0]}}"> </th>
-
-            </tr>
-            <a id="referencia-pagar"><input type="submit" value="PRUEBA"> </a>
-        <script>
-            idfactura = document.getElementById('idfactura-recibo').value;
-            document.getElementById('referencia-pagar').href="{{ url_for('pagar', idpagar=facturas[0]) }}";
-
-
-        </script>
-            {% endfor %}
-
-
         </table>
-
-
-
-        
-
-
     </div>
-
-
-
-
 </div>
 
 
 <script>
-    fetch('recibo.json')
+    fetch('static/recibo.json')
     .then(respuesta => respuesta.json())
     .then(respuesta => console.log(respuesta));
 </script>
