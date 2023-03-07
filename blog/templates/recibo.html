@@ -17,12 +17,26 @@
                 <th>SELECCIONAR</th>
             </tr>
         </table>
+
+        <h2>FACTURAS PROCESADAS</h2>
+
+        <table id="tabla-facturas-pagar">
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th>MONTO ORIGINAL</th>
+                <th>MONTO ACTUAL</th>
+                <th>REMOVER</th>
+            </tr>
+        </table>
     </div>
 </div>
 
 
 <script>
     var prueba;
+    var facturas_procesadas=[];
+
     function conexion_json(){
         fetch('static/recibo.json')
         .then(devolucion => devolucion.json())
@@ -55,8 +69,14 @@
         let tabla_recibo = document.getElementById("tabla-impresion-recibo");
         let tamaño_tabla = tabla_recibo.rows.length;
         
+        let tabla_proceso = document.getElementById("tabla-facturas-pagar");
+        let tamaño_proceso = tabla_proceso.rows.length;
+        facturas_procesadas = [];
         for (let o = tamaño_tabla -1; o>0; o--){
             tabla_recibo.deleteRow(o);}
+        
+        for (let h= tamaño_proceso -1; h>0; h--){
+            tabla_proceso.deleteRow(h);}
         
         for (let p=0; p<datos_facturas.length; p++){
             let tr = document.createElement('tr');
@@ -69,9 +89,12 @@
             
             td_id.innerHTML = datos_facturas[p][0];
             td_fecha.innerHTML = datos_facturas[p][3];
-            td_monto_original.innerHTML = datos_facturas[p][4];
-            td_monto_actual.innerHTML = datos_facturas[p][5];
+            td_monto_original.innerHTML =  new Intl.NumberFormat('en-US').format(datos_facturas[p][4]);
+            td_monto_actual.innerHTML = new Intl.NumberFormat('en-US').format(datos_facturas[p][5]);
             boton_seleccionar.innerHTML = "SELECCIONAR";
+            boton_seleccionar.addEventListener("click", function(){
+                facturas_recibo(datos_facturas[p]);
+            });
 
             td_seleccionar.appendChild(boton_seleccionar);
 
@@ -83,7 +106,57 @@
 
             tabla_recibo.appendChild(tr);} 
      }
+
+     function facturas_recibo(recibidas){
+        let fc_recibo = document.getElementById("tabla-facturas-pagar");
+        
+        if (facturas_procesadas.includes(recibidas[0])==true){
+
+        }
+        else {
+                facturas_procesadas.push(recibidas[0]);
+       
+       
+                let tr = document.createElement("tr");
+                let td_idr = document.createElement("td");
+                let td_fechar = document.createElement("td");
+                let td_monto_originalr = document.createElement("td");
+                let td_monto_actualr = document.createElement("td");
+                let remover = document.createElement("td");
+                let boton_remover = document.createElement("button");
+
+
+                tr.id = recibidas[0];
+                td_idr.innerHTML = recibidas[0];
+                td_fechar.innerHTML = recibidas[3];
+                td_monto_originalr.innerHTML = new Intl.NumberFormat('en-US').format(recibidas[4]);
+                td_monto_actualr.innerHTML = new Intl.NumberFormat('en-US').format(recibidas[5]);
+                boton_remover.innerHTML = "REMOVER";
+                boton_remover.addEventListener("click", function(){
+                  let  remover_elemento = document.getElementById(recibidas[0]);
+                  remover_elemento.remove();
+                  const index = facturas_procesadas.indexOf(recibidas[0]);
+                    if (index > -1) {
+                    facturas_procesadas.splice(index, 1);
+                    }
+                    
+                });
+                remover.appendChild(boton_remover);
+                tr.appendChild(td_idr);
+                tr.appendChild(td_fechar);
+                tr.appendChild(td_monto_originalr);
+                tr.appendChild(td_monto_actualr);
+                tr.appendChild(remover);
+                fc_recibo.appendChild(tr);
+            
+        }
+    }
+
+        
+        
+        
      
+
 
      conexion_json();
 </script>
