@@ -53,6 +53,10 @@
 
      function facturas(datos_facturas){
         let tabla_recibo = document.getElementById("tabla-impresion-recibo");
+        let tamaño_tabla = tabla_recibo.rows.length;
+        
+        for (let o = tamaño_tabla -1; o>0; o--){
+            tabla_recibo.deleteRow(o);}
         
         for (let p=0; p<datos_facturas.length; p++){
             let tr = document.createElement('tr');
@@ -77,10 +81,7 @@
             tr.appendChild(td_monto_actual);
             tr.appendChild(td_seleccionar);
 
-            tabla_recibo.appendChild(tr);
-            
-        }
-        
+            tabla_recibo.appendChild(tr);} 
      }
      
 
