@@ -5,10 +5,10 @@
     <div id="contenido-recibo">
 
         <input type="text" placeholder="Click aquí para mostrar sus clientes">
-        <ul>
+        <ul id="impresion-clientes-recibo">
         </ul>
 
-        <table id="tabla-impresion-factura">
+        <table id="tabla-impresion-recibo">
             <tr>
                 <th>ID</th>
                 <th>FECHA</th>
@@ -28,13 +28,21 @@
         .then(devolucion => devolucion.json())
         .then(datos=> {
        var datos_json = datos
-        impresion(datos_json);
+       var tamaño = Object.keys(datos_json).length;
+        impresion(datos_json, tamaño);
     });
 
     }
     
-     function impresion(vimprimir){
-        prueba = vimprimir;
+     function impresion(vimprimir, tvariable){
+        let ul_impresion = document.getElementById("impresion-clientes-recibo");
+        
+        for (let y=0; y<tvariable; y++){
+            let li = document.createElement('li');
+            li.innerHTML=vimprimir[y]['nombre'] + " " + vimprimir[y]['telefono'] + " " 
+            + vimprimir[y]['identificacion'] + " " + vimprimir[y]['direccion'];
+            ul_impresion.appendChild(li);
+        }
 
      }
 

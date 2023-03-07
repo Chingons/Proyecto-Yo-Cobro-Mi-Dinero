@@ -1002,6 +1002,12 @@ border-radius: 5px;
   border-radius: 5px;
 }
 
+#htmlrecibo{
+  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+}
+
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
