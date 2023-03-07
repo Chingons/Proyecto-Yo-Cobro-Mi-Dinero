@@ -39,13 +39,49 @@
         
         for (let y=0; y<tvariable; y++){
             let li = document.createElement('li');
-            li.innerHTML=vimprimir[y]['nombre'] + " " + vimprimir[y]['telefono'] + " " 
+            let clickboton = document.createElement('button');
+            clickboton.innerHTML = vimprimir[y]['nombre'] + " " + vimprimir[y]['telefono'] + " " 
             + vimprimir[y]['identificacion'] + " " + vimprimir[y]['direccion'];
+            clickboton.addEventListener("click",function(){
+                facturas(vimprimir[y]['facturas']);
+            });
+            li.appendChild(clickboton);
             ul_impresion.appendChild(li);
         }
 
      }
 
+     function facturas(datos_facturas){
+        let tabla_recibo = document.getElementById("tabla-impresion-recibo");
+        
+        for (let p=0; p<datos_facturas.length; p++){
+            let tr = document.createElement('tr');
+            let td_id = document.createElement('td');
+            let td_fecha = document.createElement('td');
+            let td_monto_original = document.createElement('td');
+            let td_monto_actual = document.createElement('td');
+            let td_seleccionar = document.createElement('td');
+            let boton_seleccionar = document.createElement("button");
+            
+            td_id.innerHTML = datos_facturas[p][0];
+            td_fecha.innerHTML = datos_facturas[p][3];
+            td_monto_original.innerHTML = datos_facturas[p][4];
+            td_monto_actual.innerHTML = datos_facturas[p][5];
+            boton_seleccionar.innerHTML = "SELECCIONAR";
+
+            td_seleccionar.appendChild(boton_seleccionar);
+
+            tr.appendChild(td_id);
+            tr.appendChild(td_fecha);
+            tr.appendChild(td_monto_original);
+            tr.appendChild(td_monto_actual);
+            tr.appendChild(td_seleccionar);
+
+            tabla_recibo.appendChild(tr);
+            
+        }
+        
+     }
      
 
      conexion_json();
