@@ -8,13 +8,13 @@
         <ul>
         </ul>
 
-        <table>
+        <table id="tabla-impresion-factura">
             <tr>
                 <th>ID</th>
                 <th>FECHA</th>
-                <th>MONTO</th>
+                <th>MONTO ORIGINAL</th>
+                <th>MONTO ACTUAL</th>
                 <th>SELECCIONAR</th>
-
             </tr>
         </table>
     </div>
@@ -22,9 +22,25 @@
 
 
 <script>
-    fetch('static/recibo.json')
-    .then(respuesta => respuesta.json())
-    .then(respuesta => console.log(respuesta));
+    var prueba;
+    function conexion_json(){
+        fetch('static/recibo.json')
+        .then(devolucion => devolucion.json())
+        .then(datos=> {
+       var datos_json = datos
+        impresion(datos_json);
+    });
+
+    }
+    
+     function impresion(vimprimir){
+        prueba = vimprimir;
+
+     }
+
+     
+
+     conexion_json();
 </script>
 
 {% endblock %}
