@@ -1018,12 +1018,27 @@ border-radius: 5px;
   width: 300px;
 }
 
+#mensaje-abono{
+  display: none;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 150px;
+  width: 300px;
+}
+
 #boton-error-recibo{
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 #error-procesar-facturas{
+  display: none;
+  position: absolute;
+}
+
+#error-abono, #error-procesar-abono, #error-abono-0{
   display: none;
   position: absolute;
 }

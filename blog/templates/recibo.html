@@ -14,6 +14,19 @@
             
             <input type="button" id="mensaje-total-cancelar" value="CANCELAR">
         </div>
+
+        <div id="mensaje-abono">
+            <p>¿Quieres abonar la suma de RD$:?</p>
+            <p id="mensaje-abonar"></p>
+            <p>Si no desea abonar presione "CANCELAR", de lo contrario presione "ABONAR"</p>
+            <a href="{{ url_for('abonar') }}">
+                <input type="button" id="mensaje-total-abonar" value="ABONAR"> 
+            </a>
+            
+            <input type="button" id="mensaje-cancelar-abono" value="CANCELAR">
+        </div>
+
+        <input type="text" name="id-cliente-recibo" id="id-cliente-recibo" readonly>
         <input type="text" name="fecha_recibo" id="fecha_recibo" readonly>
         <input type="text" name="idrecibo" id="idrecibo" value="{{id}}" readonly>
         <input type="text" placeholder="Click aquí para mostrar sus clientes">
@@ -45,9 +58,23 @@
         <label >TOTAL: <input type="text" value="0" id="input-total" readonly> </label>
         <div id="boton-error-recibo">
             <p id="error-procesar-facturas">FAVOR PROCESAR FACTURAS</p>
-            <input type="button" value="GRABAR PAGO" onclick="comprobar();">
+            <input type="button" id="boton-guardar-recibo" value="GRABAR PAGO" onclick="comprobar();">
 
         </div>
+        
+        <div>
+            <p>INGRESE LA CANTIDAD A ABONAR</p>
+            <p id="error-abono-0"></p>
+            <input type="number" disabled id="cantidad-abonar">
+            <p id="error-abono">SOLO ABONAR 1 FACTURA A LA VEZ</p>
+            <p id="error-procesar-abono">FAVOR PROCESAR FACTURAS</p>
+            <input type="button" id="boton-guardar-abono" value="GUARDAR ABONO" onclick="guadar_abono();" disabled>
+            <input type="button" id="boton-cancelar-abono" onclick="cancelar_abono();" value="CANCELAR ABONO" disabled>
+            <input type="button" value="ACTIVAR ABONO" id="boton-activar-abono" onclick="activar_abono();">
+
+        </div>
+        
+
         
     </div>
 </div>
@@ -56,11 +83,9 @@
 <script>
     var prueba;
     var facturas_procesadas=[];
-    var fechas_procesadas = [];
-    var montos_originales = [];
-    var montos_actuales = [];
-
+    var organizar = {};
     var facturas_pagadas={}
+    var factura_abonar = {}
 
     fecha_recibo = new Date().toLocaleDateString();
     document.getElementById("fecha_recibo").value = fecha_recibo;
@@ -82,10 +107,12 @@
         for (let y=0; y<tvariable; y++){
             let li = document.createElement('li');
             let clickboton = document.createElement('button');
+           
             clickboton.innerHTML = vimprimir[y]['nombre'] + " " + vimprimir[y]['telefono'] + " " 
             + vimprimir[y]['identificacion'] + " " + vimprimir[y]['direccion'];
             clickboton.addEventListener("click",function(){
                 facturas(vimprimir[y]['facturas']);
+                document.getElementById("id-cliente-recibo").value = vimprimir[y]['idcliente'];
             });
             li.appendChild(clickboton);
             ul_impresion.appendChild(li);
@@ -100,6 +127,8 @@
         let tabla_proceso = document.getElementById("tabla-facturas-pagar");
         let tamaño_proceso = tabla_proceso.rows.length;
         facturas_procesadas = [];
+        facturas_pagadas = {};
+        factura_abonar = {};
         document.getElementById("input-total").value = "0";
         for (let o = tamaño_tabla -1; o>0; o--){
             tabla_recibo.deleteRow(o);}
@@ -150,7 +179,7 @@
             let suma = recibidas[5] + Number(tomar_value_input);
             input_total.value = new Intl.NumberFormat('en-US').format(suma);
                 facturas_procesadas.push(recibidas[0]);
-                facturas_pagadas[recibidas[0]] = {"idfactura":recibidas[0], "fecha":recibidas[3], "monto_original":recibidas[4], "monto_actual":recibidas[5]};
+                organizar[recibidas[0]] = {"idfactura":recibidas[0], "fecha":recibidas[3], "monto_original":recibidas[4], "monto_actual":recibidas[5]}
                 let tr = document.createElement("tr");
                 let td_idr = document.createElement("td");
                 let td_fechar = document.createElement("td");
@@ -174,7 +203,7 @@
                     let valor_restar = remover_elemento.getElementsByTagName("td")[3].innerHTML.replace(",","");
                     let resta = Number(tomar_value_input_resta) - Number(valor_restar);
                     input_total_resta.value = new Intl.NumberFormat('en-US').format(resta);
-                    delete facturas_pagadas[recibidas[0]];
+                    delete organizar[recibidas[0]];
                   remover_elemento.remove();
                   const index = facturas_procesadas.indexOf(recibidas[0]);
                     if (index > -1) {
@@ -195,6 +224,10 @@
     function comprobar(){
         if (document.getElementById("input-total").value==0){
             document.getElementById("error-procesar-facturas").style.display="flex";
+            setTimeout(function(){
+                document.getElementById("error-procesar-facturas").style.display="none";
+            },3000);
+            
         }
         else{
             document.getElementById("error-procesar-facturas").style.display="none";
@@ -206,14 +239,20 @@
                 document.getElementById("mensaje-pago").style.display="none";
             });
 
-            boton_pagar.onclick= enviarjson();
+            boton_pagar.addEventListener("click", function(){
+                enviarjson();
+            } );
+            
+            
         }
         
     }
 
     function enviarjson(){
+        facturas_pagadas["idcliente"] =  document.getElementById("id-cliente-recibo").value;
         facturas_pagadas["fecha_recibo"] = document.getElementById("fecha_recibo").value;
         facturas_pagadas["monto_recibo"] = document.getElementById("input-total").value;
+        facturas_pagadas["facturas"] = organizar;
         fetch('http://localhost:5000/pagar', {
             headers : {
                 'Content-Type' : 'application/json'
@@ -223,7 +262,106 @@
         });
     }
 
-        
+    function activar_abono(){
+        let boton_cancelar = document.getElementById("boton-cancelar-abono");
+        let boton_activar = document.getElementById("boton-activar-abono");
+        let boton_guardar = document.getElementById("boton-guardar-abono");
+        let input_abonar = document.getElementById("cantidad-abonar");
+        let boton_pagar = document.getElementById("boton-guardar-recibo");
+        let input_total = document.getElementById("input-total");
+        boton_activar.disabled = true;
+        boton_pagar.disabled = true;
+        input_total.disabled = true;
+        boton_cancelar.disabled = false;
+        boton_guardar.disabled = false;
+        input_abonar.disabled = false;
+        input_abonar.focus();
+    }
+
+    function cancelar_abono(){
+        let boton_cancelar2 = document.getElementById("boton-cancelar-abono");
+        let boton_activar2 = document.getElementById("boton-activar-abono");
+        let boton_guardar2 = document.getElementById("boton-guardar-abono");
+        let input_abonar2 = document.getElementById("cantidad-abonar");
+        let boton_pagar2 = document.getElementById("boton-guardar-recibo");
+        let input_total2 = document.getElementById("input-total");
+        boton_activar2.disabled = false;
+        boton_cancelar2.disabled = true;
+        boton_guardar2.disabled = true;
+        input_abonar2.disabled = true;
+        input_abonar2.value = "";
+        boton_pagar2.disabled = false;
+        input_total2.disabled = false;
+    }
+
+    function guadar_abono(){
+        let input_total3 = document.getElementById("input-total").value;
+        if (input_total3!=0){
+            let medicion = facturas_procesadas.length;
+            if (medicion>1){
+                document.getElementById("error-abono").style.display="flex";
+            setTimeout(function(){
+                document.getElementById("error-abono").style.display="none";
+            },3000);
+            }
+            else{
+                let monto_alto = input_total3.replace(",","");
+                if(document.getElementById("cantidad-abonar").value==0){
+                    document.getElementById("error-abono-0").style.display="flex";
+                    document.getElementById("error-abono-0").innerHTML = "ESTE CAMPO DEBE SER MAYOR A 0";
+            setTimeout(function(){
+                document.getElementById("error-abono-0").style.display="none";
+            },3000);
+                }
+                else if(document.getElementById("cantidad-abonar").value >= Number(monto_alto)){
+                    document.getElementById("error-abono-0").style.display="flex";
+                    document.getElementById("error-abono-0").innerHTML = "NO PUEDE SER MAYOR O IGUAL AL TOTAL DE LA FACTURA";
+            setTimeout(function(){
+                document.getElementById("error-abono-0").style.display="none";
+            },3000);
+                }
+                else{
+
+                
+                let cantidad_abonar = document.getElementById("cantidad-abonar").value;
+                    
+            document.getElementById("mensaje-abono").style.display="flex";
+            document.getElementById("mensaje-abonar").innerHTML = new Intl.NumberFormat('en-US').format(cantidad_abonar);
+            
+            let boton_cancelar_abono = document.getElementById("mensaje-cancelar-abono");
+            let boton_pagar_abono = document.getElementById("mensaje-total-abonar");
+            boton_cancelar_abono.addEventListener("click",function(){
+                document.getElementById("mensaje-abono").style.display="none";
+            });
+
+            boton_pagar_abono.addEventListener("click", function(){
+                enviar_abono_json();
+            } );
+            }
+            }
+        }
+        else{
+            document.getElementById("error-procesar-abono").style.display="flex";
+            setTimeout(function(){
+                document.getElementById("error-procesar-abono").style.display="none";
+            },3000);
+        }
+    }
+
+    function enviar_abono_json(){
+        factura_abonar["idcliente"] =  document.getElementById("id-cliente-recibo").value
+            factura_abonar["fecha_abono"] = document.getElementById("fecha_recibo").value;
+            factura_abonar["monto_abono"] = document.getElementById("cantidad-abonar").value;
+            factura_abonar["factura"] = organizar;
+            
+            fetch('http://localhost:5000/abonar', {
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                method : 'POST',
+                body : JSON.stringify(factura_abonar)
+            });
+    }
      conexion_json();
 </script>
 

@@ -627,7 +627,34 @@ def recibo():
 
 @app.route('/pagar', methods=['GET','POST'])
 def pagar():
-    if request.method=='POST':
-        prueba = request.get_json()
-        print(prueba)
-    return redirect(url_for('recibo'))
+    if 'loggedin' in session:
+        if request.method=='POST':
+            prueba = request.get_json()
+            print(prueba)
+            
+        return redirect(url_for('recibo'))
+    
+    else:
+        return render_template('login.html')
+
+@app.route('/abonar', methods=['GET','POST'])
+def abonar():
+    if 'loggedin' in session:
+        if request.method=='POST':
+            abonar = request.get_json()
+            for id in abonar['factura']:
+                idfactura = abonar['factura'][id]['idfactura']
+                montoactual = abonar['factura'][id]['monto_actual']
+                monto_original = abonar['factura'][id]['monto_original']
+                fecha_factura = abonar['factura'][id]['fecha']
+            
+            abono_final = int(montoactual) - int(abonar['monto_abono'])
+            cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute("update facturas set monto_actual=%s where idfactura =%s",(abono_final, idfactura))
+            conn.commit()
+            cursor.execute("insert into recibos (idcreador_recibo, idcliente_recibo, facturas, fecha_facturas, montos_originales_facturas, monto_pago_facturas, monto_total_recibo, fecha_recibo) values (%s, %s, %s, %s, %s, %s, %s, %s)",(session['id'], int(abonar['idcliente']), idfactura, fecha_factura,monto_original, abonar['monto_abono'], abonar['monto_abono'], abonar['fecha_abono']))
+            conn.commit()
+        return redirect(url_for('recibo'))
+    
+    else:
+        return render_template('login.html')
