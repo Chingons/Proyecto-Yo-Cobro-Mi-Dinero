@@ -29,6 +29,8 @@
                 <th>REMOVER</th>
             </tr>
         </table>
+
+        <label >TOTAL: <input type="text" value="0" id="input-total" readonly> </label>
     </div>
 </div>
 
@@ -72,6 +74,7 @@
         let tabla_proceso = document.getElementById("tabla-facturas-pagar");
         let tamaño_proceso = tabla_proceso.rows.length;
         facturas_procesadas = [];
+        document.getElementById("input-total").value = "0";
         for (let o = tamaño_tabla -1; o>0; o--){
             tabla_recibo.deleteRow(o);}
         
@@ -110,13 +113,17 @@
      function facturas_recibo(recibidas){
         let fc_recibo = document.getElementById("tabla-facturas-pagar");
         
+
         if (facturas_procesadas.includes(recibidas[0])==true){
 
         }
         else {
+            let input_total = document.getElementById("input-total");
+            let value_input = input_total.value;
+            let tomar_value_input = value_input.replace(",", "");
+            let suma = recibidas[5] + Number(tomar_value_input);
+            input_total.value = new Intl.NumberFormat('en-US').format(suma);
                 facturas_procesadas.push(recibidas[0]);
-       
-       
                 let tr = document.createElement("tr");
                 let td_idr = document.createElement("td");
                 let td_fechar = document.createElement("td");
@@ -133,7 +140,13 @@
                 td_monto_actualr.innerHTML = new Intl.NumberFormat('en-US').format(recibidas[5]);
                 boton_remover.innerHTML = "REMOVER";
                 boton_remover.addEventListener("click", function(){
-                  let  remover_elemento = document.getElementById(recibidas[0]);
+                    let  remover_elemento = document.getElementById(recibidas[0]);
+                    let input_total_resta = document.getElementById("input-total");
+                    let value_input_resta = input_total_resta.value;
+                    let tomar_value_input_resta = value_input_resta.replace(",", "");
+                    let valor_restar = remover_elemento.getElementsByTagName("td")[3].innerHTML.replace(",","");
+                    let resta = Number(tomar_value_input_resta) - Number(valor_restar);
+                    input_total_resta.value = new Intl.NumberFormat('en-US').format(resta);
                   remover_elemento.remove();
                   const index = facturas_procesadas.indexOf(recibidas[0]);
                     if (index > -1) {
@@ -147,17 +160,11 @@
                 tr.appendChild(td_monto_originalr);
                 tr.appendChild(td_monto_actualr);
                 tr.appendChild(remover);
-                fc_recibo.appendChild(tr);
-            
+                fc_recibo.appendChild(tr);  
         }
     }
 
         
-        
-        
-     
-
-
      conexion_json();
 </script>
 
