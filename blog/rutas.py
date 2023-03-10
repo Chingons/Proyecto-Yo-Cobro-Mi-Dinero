@@ -380,6 +380,7 @@ def nuevocliente():
 @app.route('/inicio/<int:id>', methods=['GET','POST'])
 def inicio(id):
     if 'loggedin' in session:
+        conn = psycopg2.connect(dbname=mysql_db, user=mysql_user, password=mysql_password, host=mysql_host, port = mysql_port)
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'],))
         clientes = cursor.fetchall()
@@ -421,7 +422,7 @@ def inicio(id):
         
         if request.method == "POST":
             jsonData = request.get_json()
-            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto, estado, pagada) values (%s, %s, %s, %s,%s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],"ACTIVO", "NO"))
+            cursor.execute('INSERT INTO facturas (idfacturador, idcliente, fecha, monto_original, monto_actual, estado, pagada) values (%s, %s, %s, %s,%s,%s,%s)', (session['id'], int(jsonData['factura']['id_cliente']) ,jsonData['factura']['fecha_factura'],jsonData['total_final'],jsonData['total_final'],"ACTIVO", "NO"))
             conn.commit()
            
             for p in jsonData['articulos']:
@@ -466,7 +467,7 @@ def editar_clientes(idcliente):
             apellido_edit = request.form['apellido-editado']
             telefono_edit = request.form['telefono-editado']
             direccion_edit = request.form['direccion-editado']
-            print(nombre_edit)
+            
             return redirect(url_for('clientes'))
 
         return render_template('editarcliente.html', datos_clientes=cliente_editar)
@@ -629,8 +630,29 @@ def recibo():
 def pagar():
     if 'loggedin' in session:
         if request.method=='POST':
-            prueba = request.get_json()
-            print(prueba)
+            idfacturas =[]
+            fechafacturas=[]
+            montos_originales=[]
+            montos_actuales=[]
+            
+            pago = request.get_json()
+            
+            for fc in pago["facturas"]:
+                idfacturas.append(pago["facturas"][fc]['idfactura']) 
+                fechafacturas.append(pago["facturas"][fc]['fecha'])
+                montos_originales.append(pago["facturas"][fc]['monto_original'])
+                montos_actuales.append(pago["facturas"][fc]['monto_actual'])
+            
+            parar = len(idfacturas)
+            cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            for num in range(0, parar):
+                cursor.execute("update facturas set monto_actual=%s, pagada=%s where idfactura=%s",(0,"SI", idfacturas[num]))
+            conn.commit()
+            cursor.execute("insert into recibos (idcreador_recibo, idcliente_recibo, facturas, fecha_facturas, montos_originales_facturas, monto_pago_facturas, monto_total_recibo, fecha_recibo) values (%s, %s, %s, %s, %s, %s, %s, %s)",(session['id'], int(pago['idcliente']), idfacturas, fechafacturas,montos_originales, montos_actuales, pago['monto_recibo'], pago['fecha_recibo']))
+            conn.commit()
+            
+            
+            
             
         return redirect(url_for('recibo'))
     
