@@ -595,6 +595,15 @@ def recibo():
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'], ))
         clientes_recibo = cursor.fetchall()
+        cursor.execute('SELECT idrecibo from recibos order by idrecibo desc')
+        ultimo_recibo = cursor.fetchall()
+        idrecibo = 0
+        comparacion = len(ultimo_recibo)
+        if comparacion==0:
+            idrecibo = 1
+        else:
+            idrecibo = ultimo_recibo[0][0] +1
+        
         enviar_factura = {}
         formato = 0
         archivo_json = 'recibo.json'
@@ -610,22 +619,15 @@ def recibo():
         datos = open('blog/static/recibo.json', "w")
         json.dump(enviar_factura, datos)
         datos.close()
-        return render_template('recibo.html')
+        return render_template('recibo.html', id=idrecibo)
 
    
     else:
         return render_template('login.html')
 
-@app.route('/pagar/<int:idpagar>', methods=['GET','POST'])
-def pagar(idpagar):
-    if 'loggedin' in session:
-        print(idpagar) 
-
-           
-
-        return redirect(url_for('recibo',idrecibo=0))
-
-   
-   
-    else:
-        return render_template('login.html')
+@app.route('/pagar', methods=['GET','POST'])
+def pagar():
+    if request.method=='POST':
+        prueba = request.get_json()
+        print(prueba)
+    return redirect(url_for('recibo'))

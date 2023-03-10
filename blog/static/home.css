@@ -1008,6 +1008,25 @@ border-radius: 5px;
   justify-content: center;
 }
 
+#mensaje-pago{
+  display: none;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 150px;
+  width: 300px;
+}
+
+#boton-error-recibo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#error-procesar-facturas{
+  display: none;
+  position: absolute;
+}
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{

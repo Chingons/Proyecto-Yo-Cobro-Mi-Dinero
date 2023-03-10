@@ -3,7 +3,19 @@
 
 <div id="htmlrecibo">
     <div id="contenido-recibo">
-
+        <div id="mensaje-pago">
+            
+            <p>¿Has recibido la suma de RD$:?</p>
+            <p id="mensaje-total"></p>
+            <p>Si no es así presione "CANCELAR", de lo contrario presione "PAGAR"</p>
+            <a href="{{ url_for('pagar') }}">
+                <input type="button" id="mensaje-total-pagar" value="PAGAR"> 
+            </a>
+            
+            <input type="button" id="mensaje-total-cancelar" value="CANCELAR">
+        </div>
+        <input type="text" name="fecha_recibo" id="fecha_recibo" readonly>
+        <input type="text" name="idrecibo" id="idrecibo" value="{{id}}" readonly>
         <input type="text" placeholder="Click aquí para mostrar sus clientes">
         <ul id="impresion-clientes-recibo">
         </ul>
@@ -31,6 +43,12 @@
         </table>
 
         <label >TOTAL: <input type="text" value="0" id="input-total" readonly> </label>
+        <div id="boton-error-recibo">
+            <p id="error-procesar-facturas">FAVOR PROCESAR FACTURAS</p>
+            <input type="button" value="GRABAR PAGO" onclick="comprobar();">
+
+        </div>
+        
     </div>
 </div>
 
@@ -41,8 +59,11 @@
     var fechas_procesadas = [];
     var montos_originales = [];
     var montos_actuales = [];
-    
-    var facturas_pagadas={"facturas":[]}
+
+    var facturas_pagadas={}
+
+    fecha_recibo = new Date().toLocaleDateString();
+    document.getElementById("fecha_recibo").value = fecha_recibo;
 
     function conexion_json(){
         fetch('static/recibo.json')
@@ -129,8 +150,7 @@
             let suma = recibidas[5] + Number(tomar_value_input);
             input_total.value = new Intl.NumberFormat('en-US').format(suma);
                 facturas_procesadas.push(recibidas[0]);
-                facturas_pagadas["facturas"].push(recibidas[0]);
-                console.log(facturas_pagadas);
+                facturas_pagadas[recibidas[0]] = {"idfactura":recibidas[0], "fecha":recibidas[3], "monto_original":recibidas[4], "monto_actual":recibidas[5]};
                 let tr = document.createElement("tr");
                 let td_idr = document.createElement("td");
                 let td_fechar = document.createElement("td");
@@ -154,6 +174,7 @@
                     let valor_restar = remover_elemento.getElementsByTagName("td")[3].innerHTML.replace(",","");
                     let resta = Number(tomar_value_input_resta) - Number(valor_restar);
                     input_total_resta.value = new Intl.NumberFormat('en-US').format(resta);
+                    delete facturas_pagadas[recibidas[0]];
                   remover_elemento.remove();
                   const index = facturas_procesadas.indexOf(recibidas[0]);
                     if (index > -1) {
@@ -169,6 +190,37 @@
                 tr.appendChild(remover);
                 fc_recibo.appendChild(tr);  
         }
+    }
+
+    function comprobar(){
+        if (document.getElementById("input-total").value==0){
+            document.getElementById("error-procesar-facturas").style.display="flex";
+        }
+        else{
+            document.getElementById("error-procesar-facturas").style.display="none";
+            document.getElementById("mensaje-pago").style.display="flex";
+            document.getElementById("mensaje-total").innerHTML = document.getElementById("input-total").value;
+            let boton_cancelar = document.getElementById("mensaje-total-cancelar");
+            let boton_pagar = document.getElementById("mensaje-total-pagar");
+            boton_cancelar.addEventListener("click",function(){
+                document.getElementById("mensaje-pago").style.display="none";
+            });
+
+            boton_pagar.onclick= enviarjson();
+        }
+        
+    }
+
+    function enviarjson(){
+        facturas_pagadas["fecha_recibo"] = document.getElementById("fecha_recibo").value;
+        facturas_pagadas["monto_recibo"] = document.getElementById("input-total").value;
+        fetch('http://localhost:5000/pagar', {
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            method : 'POST',
+            body : JSON.stringify(facturas_pagadas)
+        });
     }
 
         
