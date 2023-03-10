@@ -11,7 +11,8 @@
                 <tr>
                     <th>ID</th>
                     <th>FECHA</th>
-                    <TH>MONTO</TH>
+                    <TH>MONTO ORIGINAL</TH>
+                    <TH>MONTO ACTUAL</TH>
                     <TH>ARTICULOS</TH>
                 </tr>
                 {% for factura in facturas %}
@@ -21,7 +22,8 @@
                     
                     <td title="ID: ">{{factura[0]}} </td>
                     <td title="FECHA: ">{{factura[3]}} </td>
-                    <td title="MONTO: ">{{factura[4]}} </td>
+                    <td title="MONTO ORIGINAL: ">{{factura[4]}} </td>
+                    <td title="MONTO ACTUAL: ">{{factura[5]}} </td>
                     <td title="ARTICULOS: "> <a id="boton-articulos" href="{{url_for('articulos', articulos=factura[0])}}">MOSTRAR</a> </td> 
                 </tr>
                 {% endfor %}

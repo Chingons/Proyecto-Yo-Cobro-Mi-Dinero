@@ -524,7 +524,7 @@ def estadoscuentas():
         
         for datos in estado_clientes:
             total_montos = 0
-            cursor.execute('SELECT monto from facturas where idcliente =%s and estado=%s and pagada=%s',( str(datos[0]),'ACTIVO','NO'))
+            cursor.execute('SELECT monto_actual from facturas where idcliente =%s and estado=%s and pagada=%s',( str(datos[0]),'ACTIVO','NO'))
             monto = cursor.fetchall()
             for total in monto:
                 total_montos += total[0]
@@ -551,6 +551,8 @@ def facturas(clientedeuda):
         for tomar in deudas:
             cambiar = format(tomar[4], ',d')
             tomar[4] = cambiar
+            cambiar = format(tomar[5], ',d')
+            tomar[5] = cambiar
             facturas_deuda.append(tomar)
         
         return render_template('facturas.html', facturas=facturas_deuda)

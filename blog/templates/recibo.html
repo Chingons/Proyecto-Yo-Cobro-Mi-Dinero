@@ -38,6 +38,11 @@
 <script>
     var prueba;
     var facturas_procesadas=[];
+    var fechas_procesadas = [];
+    var montos_originales = [];
+    var montos_actuales = [];
+    
+    var facturas_pagadas={"facturas":[]}
 
     function conexion_json(){
         fetch('static/recibo.json')
@@ -124,6 +129,8 @@
             let suma = recibidas[5] + Number(tomar_value_input);
             input_total.value = new Intl.NumberFormat('en-US').format(suma);
                 facturas_procesadas.push(recibidas[0]);
+                facturas_pagadas["facturas"].push(recibidas[0]);
+                console.log(facturas_pagadas);
                 let tr = document.createElement("tr");
                 let td_idr = document.createElement("td");
                 let td_fechar = document.createElement("td");

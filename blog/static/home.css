@@ -1305,7 +1305,7 @@ border-radius: 5px;
 
     #tabla-clientes-estado td[title]{
       display: flex;
-      width: 100%;
+      width: 97%;
       font-size: 17px;
     }
 
@@ -1321,7 +1321,9 @@ border-radius: 5px;
       border-bottom:1px solid gray;
       margin-bottom: 5px;
       padding: 5px;
+      width: 98%;
     }
+   
     #input-buscar-cliente-estado{
       width: 300px;
       font-size: 13px;
@@ -1352,6 +1354,13 @@ border-radius: 5px;
     #tabla-articulos-fc{
       font-size: 14px;
     }
+    #tabla-facturas th{
+      font-size: 14px;
+    }
+    #tabla-facturas td{
+      font-size: 13px;
+    }
+    
 
 
   }
