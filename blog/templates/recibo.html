@@ -25,13 +25,20 @@
             
             <input type="button" id="mensaje-cancelar-abono" value="CANCELAR">
         </div>
+        <div id="input-ul-recibo">
+            <input type="text" id="recibo-input" placeholder="Click aquí para mostrar sus clientes" onclick="ul_imp();" onkeyup="buscar();">
+            <ul id="impresion-clientes-recibo">
+            </ul>
 
+        </div>
+        
         <input type="text" name="id-cliente-recibo" id="id-cliente-recibo" readonly>
         <input type="text" name="fecha_recibo" id="fecha_recibo" readonly>
         <input type="text" name="idrecibo" id="idrecibo" value="{{id}}" readonly>
-        <input type="text" placeholder="Click aquí para mostrar sus clientes">
-        <ul id="impresion-clientes-recibo">
-        </ul>
+       
+            
+        
+        
 
         <table id="tabla-impresion-recibo">
             <tr>
@@ -84,8 +91,9 @@
     var prueba;
     var facturas_procesadas=[];
     var organizar = {};
-    var facturas_pagadas={}
-    var factura_abonar = {}
+    var facturas_pagadas={};
+    var factura_abonar = {};
+    var lul=0;
 
     fecha_recibo = new Date().toLocaleDateString();
     document.getElementById("fecha_recibo").value = fecha_recibo;
@@ -100,21 +108,58 @@
     });
 
     }
+
+    function ul_imp(){
+        if (lul==0){
+            document.getElementById("impresion-clientes-recibo").style.display="flex";
+            document.getElementById("recibo-input").placeholder="Buscar cliente por nombre o alguna otra información";
+            lul = 1;
+        }
+        else{
+            document.getElementById("impresion-clientes-recibo").style.display="none";
+            document.getElementById("recibo-input").placeholder="Click aquí para mostrar sus clientes";
+            lul = 0;
+        }
+        
+    }
+
+    function buscar() { 
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("recibo-input");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("impresion-clientes-recibo");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "flex";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+    
     
      function impresion(vimprimir, tvariable){
         let ul_impresion = document.getElementById("impresion-clientes-recibo");
         
         for (let y=0; y<tvariable; y++){
             let li = document.createElement('li');
-            let clickboton = document.createElement('button');
+            let clickboton = document.createElement("a");
+            let hr = document.createElement("hr");
            
             clickboton.innerHTML = vimprimir[y]['nombre'] + " " + vimprimir[y]['telefono'] + " " 
             + vimprimir[y]['identificacion'] + " " + vimprimir[y]['direccion'];
             clickboton.addEventListener("click",function(){
                 facturas(vimprimir[y]['facturas']);
                 document.getElementById("id-cliente-recibo").value = vimprimir[y]['idcliente'];
+                document.getElementById("impresion-clientes-recibo").style.display="none";
+                document.getElementById("recibo-input").placeholder="Click aquí para mostrar sus clientes";
+                lul = 0;
             });
             li.appendChild(clickboton);
+            li.appendChild(hr);
             ul_impresion.appendChild(li);
         }
 

@@ -1042,6 +1042,40 @@ border-radius: 5px;
   display: none;
   position: absolute;
 }
+#recibo-input{
+  display: block;
+  border-radius: 10px;
+  border-color: #0d9eff;
+  font-size: 15px;
+  height: 22px;
+  width: 100%;
+  text-align: center;
+}
+
+#recibo-input:hover{
+  cursor: pointer;
+}
+
+#impresion-clientes-recibo{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  list-style: none;
+  width: 450px;
+  background-color: #f0f2f5;
+}
+
+#impresion-clientes-recibo li:hover{
+  cursor: pointer;
+  color: white;
+  background-color: #0d9eff;
+}
+
+#input-ul-recibo{
+  width: 450px;
+}
+
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
