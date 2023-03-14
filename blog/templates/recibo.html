@@ -3,6 +3,22 @@
 
 <div id="htmlrecibo">
     <div id="contenido-recibo">
+        <h2 id="titulo-crear-recibo">CREAR RECIBOS</h2>
+        <div id="input-ul-recibo">
+            
+            <input type="text" id="recibo-input" placeholder="Click aquí para mostrar sus clientes" onclick="ul_imp();" onkeyup="buscar();">
+            <ul id="impresion-clientes-recibo">
+            </ul>
+
+        </div>
+        <div id="inicio-recibo">
+            
+            <p class="cont-irecibo">FECHA RECIBO: <input type="text" class="input-irecibo" name="fecha_recibo" id="fecha_recibo" readonly></p>
+            <p class="cont-irecibo">ID RECIBO: <input type="text" class="input-irecibo" name="idrecibo" id="idrecibo" value="{{id}}" readonly></p>
+            <p class="cont-irecibo">ID CLIENTE: <input type="text" class="input-irecibo" name="id-cliente-recibo" id="id-cliente-recibo" readonly></p> 
+        
+        </div>
+
         <div id="mensaje-pago">
             
             <p>¿Has recibido la suma de RD$:?</p>
@@ -25,32 +41,27 @@
             
             <input type="button" id="mensaje-cancelar-abono" value="CANCELAR">
         </div>
-        <div id="input-ul-recibo">
-            <input type="text" id="recibo-input" placeholder="Click aquí para mostrar sus clientes" onclick="ul_imp();" onkeyup="buscar();">
-            <ul id="impresion-clientes-recibo">
-            </ul>
+        
+        
+       
+        
+       <div id="contenedor-trecibo">
+        
+        <div id="div-timpresion">
+            <h4 id="titulo-fpendiente">FACTURAS PENDIENTES</h4>
+            <table id="tabla-impresion-recibo">
+                <tr>
+                    <th>ID</th>
+                    <th>FECHA</th>
+                    <th>MONTO ORIGINAL</th>
+                    <th>MONTO ACTUAL</th>
+                    <th>SELECCIONAR</th>
+                </tr>
+            </table>
 
         </div>
-        
-        <input type="text" name="id-cliente-recibo" id="id-cliente-recibo" readonly>
-        <input type="text" name="fecha_recibo" id="fecha_recibo" readonly>
-        <input type="text" name="idrecibo" id="idrecibo" value="{{id}}" readonly>
-       
-            
-        
-        
-
-        <table id="tabla-impresion-recibo">
-            <tr>
-                <th>ID</th>
-                <th>FECHA</th>
-                <th>MONTO ORIGINAL</th>
-                <th>MONTO ACTUAL</th>
-                <th>SELECCIONAR</th>
-            </tr>
-        </table>
-
-        <h2>FACTURAS PROCESADAS</h2>
+        <div id="t-frecibo">
+            <h4 id="titulo-fprocesada">FACTURAS PROCESADAS</h4>
 
         <table id="tabla-facturas-pagar">
             <tr>
@@ -62,12 +73,20 @@
             </tr>
         </table>
 
-        <label >TOTAL: <input type="text" value="0" id="input-total" readonly> </label>
+        </div>
+       </div>
+ 
+        
+       <div id="organizar-t-b-recibo">
+        <label id="t-total-recibo">TOTAL: <input type="text" value="0" id="input-total" readonly> </label>
         <div id="boton-error-recibo">
             <p id="error-procesar-facturas">FAVOR PROCESAR FACTURAS</p>
             <input type="button" id="boton-guardar-recibo" value="GRABAR PAGO" onclick="comprobar();">
 
         </div>
+
+       </div>
+       
         
         <div>
             <p>INGRESE LA CANTIDAD A ABONAR</p>
@@ -190,6 +209,7 @@
             let td_seleccionar = document.createElement('td');
             let boton_seleccionar = document.createElement("button");
             
+            boton_seleccionar.id = "boton-fpseleccionar";
             td_id.innerHTML = datos_facturas[p][0];
             td_fecha.innerHTML = datos_facturas[p][3];
             td_monto_original.innerHTML =  new Intl.NumberFormat('en-US').format(datos_facturas[p][4]);
@@ -240,6 +260,7 @@
                 td_monto_originalr.innerHTML = new Intl.NumberFormat('en-US').format(recibidas[4]);
                 td_monto_actualr.innerHTML = new Intl.NumberFormat('en-US').format(recibidas[5]);
                 boton_remover.innerHTML = "REMOVER";
+                boton_remover.id = "boton-fpremover";
                 boton_remover.addEventListener("click", function(){
                     let  remover_elemento = document.getElementById(recibidas[0]);
                     let input_total_resta = document.getElementById("input-total");

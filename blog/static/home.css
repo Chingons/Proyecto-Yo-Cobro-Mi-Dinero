@@ -1003,7 +1003,7 @@ border-radius: 5px;
 }
 
 #htmlrecibo{
-  margin-top: 200px;
+  margin-top: 170px;
   display: flex;
   justify-content: center;
 }
@@ -1074,8 +1074,188 @@ border-radius: 5px;
 
 #input-ul-recibo{
   width: 450px;
+ margin: 20px;
 }
 
+#contenido-recibo{
+  width: 80%;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#titulo-crear-recibo{
+  color: #0d9eff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#inicio-recibo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cont-irecibo{
+  font-size: 18px;
+  color: #0d0391;
+  margin: 20px;
+}
+.input-irecibo{
+  font-size: 16px;
+  justify-content: center;
+  text-align: center;
+  border-radius: 7px;
+  border-color: #0d9eff;
+}
+
+#contenedor-trecibo{
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+  
+}
+
+#titulo-fpendiente{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#titulo-fprocesada{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tabla-impresion-recibo{
+  font-size: 14px;
+  border: solid #0d0391 1px; 
+  border-collapse: collapse;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  margin-bottom: 70px;
+  width: 550px;
+  max-width: 550px;
+}
+
+#tabla-impresion-recibo th, td{
+  font-size: 14px;
+  border: 1px solid black;
+}
+
+#tabla-impresion-recibo th{
+  background-color: #0d0391;
+  color: white;
+}
+
+#tabla-impresion-recibo tr:hover{
+  background-color: #bebed2;
+  
+}
+#titulo-fpendiente{
+  color: #0d0391;
+}
+
+#tabla-facturas-pagar{
+  font-size: 14px;
+  margin-left: 60px;
+  border: solid #0d0391 1px; 
+  border-collapse: collapse;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  margin-bottom: 70px;
+  width: 550px;
+  max-width: 550px;
+}
+
+#tabla-facturas-pagar th, td{
+  
+  font-size: 14px;
+  border: 1px solid black;
+}
+
+#tabla-facturas-pagar th{
+  background-color: #b60b0b;
+  color: white;
+}
+
+#tabla-facturas-pagar tr:hover{
+  background-color: #bebed2;
+  
+}
+
+#titulo-fprocesada{
+  color: #b60b0b;
+}
+
+#boton-fpremover{
+  background-color: #c20d0d;
+  color: white;
+  font-size: 14px;
+  padding: 2px;
+  border: none;
+  border-radius: 3px;
+}
+
+#boton-fpremover:hover{
+  cursor: pointer;
+}
+
+#boton-fpseleccionar{
+  background-color: #003785;
+  color: white;
+  font-size: 14px;
+  padding: 2px;
+  border: none;
+  border-radius: 3px;
+}
+
+#boton-fpseleccionar:hover{
+  cursor: pointer;
+}
+
+#input-total{
+font-size: 18px;
+border-radius: 10px;
+border-color: #b60b0b;
+justify-content: center;
+text-align: center;
+}
+#t-total-recibo{
+  font-size: 18px;
+  color: #b60b0b;
+}
+
+#organizar-t-b-recibo{
+  display: flex;
+  width: 100%;
+  justify-content: end;
+  align-items: end;
+  flex-direction: column;
+  margin-right: 70px;
+}
+
+#boton-error-recibo{
+  margin-top: 10px;
+}
+
+#boton-guardar-recibo{
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #0d9eff;
+  color: white;
+}
+
+#boton-guardar-recibo:hover{
+  cursor: pointer;
+}
 
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
