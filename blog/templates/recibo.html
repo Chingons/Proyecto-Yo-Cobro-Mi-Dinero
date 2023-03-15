@@ -88,15 +88,17 @@
        </div>
        
         
-        <div>
-            <p>INGRESE LA CANTIDAD A ABONAR</p>
+        <div id="items-abono">
+            <input type="button" value="ACTIVAR ABONO" id="boton-activar-abono" onclick="activar_abono();">
+            <p id="ingrese-cantidad">INGRESE LA CANTIDAD A ABONAR: <input type="number" disabled id="cantidad-abonar"></p>
             <p id="error-abono-0"></p>
-            <input type="number" disabled id="cantidad-abonar">
+            
             <p id="error-abono">SOLO ABONAR 1 FACTURA A LA VEZ</p>
             <p id="error-procesar-abono">FAVOR PROCESAR FACTURAS</p>
-            <input type="button" id="boton-guardar-abono" value="GUARDAR ABONO" onclick="guadar_abono();" disabled>
+            <input type="button" id="boton-guardar-abono" value="GUARDAR ABONO" onclick="guadar_abono();" disabled> 
             <input type="button" id="boton-cancelar-abono" onclick="cancelar_abono();" value="CANCELAR ABONO" disabled>
-            <input type="button" value="ACTIVAR ABONO" id="boton-activar-abono" onclick="activar_abono();">
+            
+            
 
         </div>
         
@@ -336,11 +338,24 @@
         let boton_pagar = document.getElementById("boton-guardar-recibo");
         let input_total = document.getElementById("input-total");
         boton_activar.disabled = true;
+        boton_activar.style.backgroundColor = "#bebed2";
+        boton_activar.style.pointerEvents = "none";
         boton_pagar.disabled = true;
+        boton_pagar.style.backgroundColor = "#bebed2";
+        boton_pagar.style.pointerEvents = "none";
         input_total.disabled = true;
+        
         boton_cancelar.disabled = false;
+        boton_cancelar.style.backgroundColor = "#b60b0b";
+        boton_cancelar.style.cursor = "pointer";
+
         boton_guardar.disabled = false;
+        boton_guardar.style.backgroundColor = "#0d9eff";
+        boton_guardar.style.cursor = "pointer";
+
         input_abonar.disabled = false;
+        input_abonar.style.backgroundColor = "white";
+        input_abonar.style.borderColor = "#0d0391";
         input_abonar.focus();
     }
 
@@ -352,11 +367,24 @@
         let boton_pagar2 = document.getElementById("boton-guardar-recibo");
         let input_total2 = document.getElementById("input-total");
         boton_activar2.disabled = false;
+        boton_activar2.style.backgroundColor = "#0d0391";
+        boton_activar2.style.pointerEvents = "auto";
+        
         boton_cancelar2.disabled = true;
+        boton_cancelar2.style.cursor= "";
+        boton_cancelar2.style.backgroundColor = "#bebed2";
+        
         boton_guardar2.disabled = true;
+        boton_guardar2.style.cursor = "";
+        boton_guardar2.style.backgroundColor = "#bebed2";
+        
         input_abonar2.disabled = true;
+        input_abonar2.style.backgroundColor = "#bebed2";
+        input_abonar2.style.borderColor = "#bebed2";
         input_abonar2.value = "";
         boton_pagar2.disabled = false;
+        boton_pagar2.style.backgroundColor = "#0d9eff";
+        boton_pagar2.style.pointerEvents = "auto";
         input_total2.disabled = false;
     }
 

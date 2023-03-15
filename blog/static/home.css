@@ -1257,6 +1257,70 @@ text-align: center;
   cursor: pointer;
 }
 
+#items-abono{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  width: 100%;
+  margin-left: 70px;
+}
+
+#ingrese-cantidad{
+  margin-top: 5px;
+  font-size: 18px;
+  color: #0d0391;
+}
+
+#cantidad-abonar{
+  font-size: 15px;
+  width: 200px;
+  background-color: #bebed2;
+  border-radius: 5px;
+
+}
+
+#boton-activar-abono{
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #0d0391;
+  color: white;
+  border: none;
+}
+
+#boton-activar-abono:hover{
+  cursor: pointer;
+}
+
+#boton-guardar-abono{
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  background-color: #bebed2;
+  color: white;
+  border: none;
+}
+
+
+
+
+#boton-cancelar-abono{
+  font-size: 15px;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #bebed2;
+  color: white;
+  border: none;
+  margin-bottom: 30px;
+}
+
+
+
+
+
 @media screen and (min-width:1200px) and (max-width: 1500px){
   #facturador{
     width: 250px;
