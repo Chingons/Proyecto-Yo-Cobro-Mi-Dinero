@@ -491,21 +491,26 @@ border-radius: 10px;
   width: 90%;
   margin: auto;
   border: solid #0d0391 1px; 
-  -moz-border-radius: 10px; 
-  -webkit-border-radius: 10px; 
-  border-radius: 10px; 
-  -webkit-box-shadow: 0 3px #0d0391; 
-  -moz-box-shadow: 0 3px #0d0391; 
-  box-shadow: 0 3px #0d0391;
-  
-  
+  border-collapse: collapse;
+  border-top: solid #0d0391 1px;
 }
 
-#elementos-factura tr{
+#elementos-factura td, tr{
    text-align: center;
    justify-content: center;
    vertical-align: top;
+   border:solid #0d0391 1px;
+   
 }
+
+.tr-factura{
+  border:solid #0d0391 1px;
+}
+
+.tr-factura:hover{
+  background-color: #0d9effa2;
+}
+
 
 #elementos-factura th{
   color: #003785;
@@ -1014,8 +1019,46 @@ border-radius: 5px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 150px;
+  padding: 10px;
   width: 300px;
+  font-size: 17px;
+  background-color: #37a6f0;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+#mensaje-total{
+  font-size: 19px;
+  color: white;
+}
+
+#bpag-bcac{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+#mensaje-total-pagar{
+  margin-right: 20px;
+  font-size: 17px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #003785;
+  color: white;
+  border: none;
+}
+
+#mensaje-total-cancelar{
+  font-size: 17px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #b60b0b;
+  color: white;
+  border: none;
+}
+
+#mensaje-total-pagar:hover, #mensaje-total-cancelar:hover{
+  cursor: pointer;
 }
 
 #mensaje-abono{
@@ -1024,8 +1067,46 @@ border-radius: 5px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 150px;
+  padding: 10px;
   width: 300px;
+  font-size: 17px;
+  background-color: #37a6f0;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+#b-mab-mcab{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+#mensaje-total-abonar{
+  margin-right: 20px;
+  font-size: 17px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #003785;
+  color: white;
+  border: none;
+}
+
+#mensaje-cancelar-abono{
+  font-size: 17px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #b60b0b;
+  color: white;
+  border: none;
+}
+
+#mensaje-total-abonar:hover, #mensaje-cancelar-abono:hover{
+  cursor: pointer;
+}
+
+#mensaje-abonar{
+  font-size: 19px;
+  color: white;
 }
 
 #boton-error-recibo{
@@ -1085,6 +1166,7 @@ border-radius: 5px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 #titulo-crear-recibo{
@@ -1317,6 +1399,22 @@ text-align: center;
   margin-bottom: 30px;
 }
 
+#error-procesar-facturas{
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 160px;
+  margin-right: 180px;
+  font-size: 18px;
+  color:#b60b0b;
+ 
+}
+
+#error-abono, #error-procesar-abono, #error-abono-0{
+  font-size: 18px;
+  background-color: #b60b0b;
+  color: white;
+}
 
 
 
@@ -1672,8 +1770,122 @@ text-align: center;
     #tabla-facturas td{
       font-size: 13px;
     }
-    
 
+    #htmlrecibo{
+      margin-top: 130px;
+    }
+
+    #contenido-recibo{
+
+      width: 90%;
+    }
+
+    #input-ul-recibo, #impresion-clientes-recibo{
+      width: 300px;
+      font-size: 15px;
+    }
+    #inicio-recibo{
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      margin-top: 20px;
+      
+    }
+    .input-irecibo{
+      
+      width: 150px;
+    }
+    .cont-irecibo{
+      margin: 5px;
+      
+    }
+
+    #tabla-impresion-recibo th {
+      display: none;
+    }
+
+    #tabla-impresion-recibo{
+      width: 300px;
+    }
+
+    #tabla-impresion-recibo td[title]{
+      display: flex;
+      font-size: 17px;
+    }
+
+    #tabla-impresion-recibo td[title]::before{
+      content: attr(title);
+      color: #0d0391;
+    }
+
+    #tabla-impresion-recibo tr{
+      display: flex;
+      flex-direction: column;
+      border: 1px solid gray;
+      border-bottom:1px solid gray;
+      margin-bottom: 5px;
+      padding: 5px;
+    }
+    
+    #contenedor-trecibo{
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #tabla-facturas-pagar th{
+      display: none;
+    }
+
+    #tabla-facturas-pagar{
+      width: 300px;
+      margin: 0%;
+      padding: 0%;
+    }
+
+    #tabla-facturas-pagar td[title]{
+      display: flex;
+      font-size: 17px;
+    }
+
+    #tabla-facturas-pagar td[title]::before{
+      content: attr(title);
+      color: #b60b0b;
+    }
+
+    #tabla-facturas-pagar tr{
+      display: flex;
+      flex-direction: column;
+      border: 1px solid gray;
+      border-bottom:1px solid gray;
+      margin-bottom: 5px;
+      padding: 5px;
+    }
+
+    #organizar-t-b-recibo{
+      margin-top: 40px;
+      justify-content: center;
+      align-items: center;
+    }
+    #input-total{
+      width: 150px;
+    }
+
+    #items-abono{
+      margin-top: 30px;
+    }
+
+    #error-procesar-facturas{
+      font-size: 14px;
+      
+    }
+
+    #mensaje-pago, #mensaje-abono{
+      position: fixed;
+          top: 150px;
+      z-index: 9999;
+      
+    }
 
   }
   

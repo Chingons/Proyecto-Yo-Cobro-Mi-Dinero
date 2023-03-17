@@ -1,7 +1,7 @@
 {% extends "home.html"%}
 {% block content %}
 
-<div id="htmlrecibo">
+<div id="htmlrecibo" data-aos="fade-down" data-aos-duration="1500">
     <div id="contenido-recibo">
         <h2 id="titulo-crear-recibo">CREAR RECIBOS</h2>
         <div id="input-ul-recibo">
@@ -24,22 +24,30 @@
             <p>¿Has recibido la suma de RD$:?</p>
             <p id="mensaje-total"></p>
             <p>Si no es así presione "CANCELAR", de lo contrario presione "PAGAR"</p>
-            <a href="{{ url_for('pagar') }}">
-                <input type="button" id="mensaje-total-pagar" value="PAGAR"> 
-            </a>
+            <div id="bpag-bcac">
+                <a href="{{ url_for('pagar') }}">
+                    <input type="button" id="mensaje-total-pagar" value="PAGAR"> 
+                </a>
+                
+                <input type="button" id="mensaje-total-cancelar" value="CANCELAR">
+
+            </div>
             
-            <input type="button" id="mensaje-total-cancelar" value="CANCELAR">
         </div>
 
         <div id="mensaje-abono">
             <p>¿Quieres abonar la suma de RD$:?</p>
             <p id="mensaje-abonar"></p>
             <p>Si no desea abonar presione "CANCELAR", de lo contrario presione "ABONAR"</p>
-            <a href="{{ url_for('abonar') }}">
-                <input type="button" id="mensaje-total-abonar" value="ABONAR"> 
-            </a>
+            <div id="b-mab-mcab">
+                <a href="{{ url_for('abonar') }}">
+                    <input type="button" id="mensaje-total-abonar" value="ABONAR"> 
+                </a>
+                
+                <input type="button" id="mensaje-cancelar-abono" value="CANCELAR">
+
+            </div>
             
-            <input type="button" id="mensaje-cancelar-abono" value="CANCELAR">
         </div>
         
         
@@ -211,6 +219,12 @@
             let td_seleccionar = document.createElement('td');
             let boton_seleccionar = document.createElement("button");
             
+            td_id.title = "ID: ";
+            td_fecha.title = "FECHA: ";
+            td_monto_original.title = "MONTO ORIGINAL: ";
+            td_monto_actual.title = "MONTO ACTUAL: ";
+            td_seleccionar.title = "SELECCIONAR: ";
+
             boton_seleccionar.id = "boton-fpseleccionar";
             td_id.innerHTML = datos_facturas[p][0];
             td_fecha.innerHTML = datos_facturas[p][3];
@@ -255,6 +269,11 @@
                 let remover = document.createElement("td");
                 let boton_remover = document.createElement("button");
 
+                td_idr.title = "ID: ";
+                td_fechar.title = "FECHA: ";
+                td_monto_originalr.title = "MONTO ORIGINAL: ";
+                td_monto_actualr.title = "MONTO ACTUAL: ";
+                remover.title = "REMOVER: ";
 
                 tr.id = recibidas[0];
                 td_idr.innerHTML = recibidas[0];
