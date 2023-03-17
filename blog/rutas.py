@@ -372,7 +372,7 @@ def nuevocliente():
             
 
         
-        return render_template('addcliente.html', title="Nuevo Cliente")
+        return render_template('addcliente.html', title="NUEVO CLIENTE")
     else:
             return redirect(url_for('login'))
     
@@ -438,7 +438,7 @@ def inicio(id):
             
            
 
-        return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura)
+        return render_template('inicio.html',nombre=session['nombres'], apellido=session['apellidos'], cliente = clientes, facturarclientes = campos_cliente, factura = no_factura, title="NUEVA FACTURA")
 
     else:
         return render_template('login.html')
@@ -451,7 +451,7 @@ def clientes():
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM clientes WHERE idcreador = %s order by id asc', (session['id'],))
         nuestros_clientes = cursor.fetchall()
-        return render_template('clientes.html', clientes_usuario=nuestros_clientes)
+        return render_template('clientes.html', clientes_usuario=nuestros_clientes, title="EDITAR O ELIMINAR CLIENTES")
     
     else:
         return render_template('login.html')
@@ -470,7 +470,7 @@ def editar_clientes(idcliente):
             
             return redirect(url_for('clientes'))
 
-        return render_template('editarcliente.html', datos_clientes=cliente_editar)
+        return render_template('editarcliente.html', datos_clientes=cliente_editar, title="EDITAR CLIENTE")
     
     else:
         return render_template('login.html')
@@ -534,7 +534,7 @@ def estadoscuentas():
             estado_clientes[contador].append(insertar)
             contador +=1
             
-        return render_template('clientes_estados.html', clientes_estado=estado_clientes)
+        return render_template('clientes_estados.html', clientes_estado=estado_clientes, title="ESTADOS DE CUENTAS")
     
     
     else:
@@ -556,7 +556,7 @@ def facturas(clientedeuda):
             tomar[5] = cambiar
             facturas_deuda.append(tomar)
         
-        return render_template('facturas.html', facturas=facturas_deuda)
+        return render_template('facturas.html', facturas=facturas_deuda, title="FACTURAS")
     
     else:
         return render_template('login.html')
@@ -584,7 +584,7 @@ def articulos(articulos):
             articulo[4] = subtotal
             articulos_finales.append(articulo)
         
-        return render_template('articulos.html', articulos=articulos_finales)
+        return render_template('articulos.html', articulos=articulos_finales, title="ARTICULOS")
     
     else:
         return render_template('login.html')
@@ -620,7 +620,7 @@ def recibo():
         datos = open('blog/static/recibo.json', "w")
         json.dump(enviar_factura, datos)
         datos.close()
-        return render_template('recibo.html', id=idrecibo)
+        return render_template('recibo.html', id=idrecibo, title="RECIBOS")
 
    
     else:
