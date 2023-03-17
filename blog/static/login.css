@@ -179,6 +179,9 @@ html, body{
     width: 300px;
 }
 
+#contenido_login{
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
 
 
 @media (max-width: 800px){
