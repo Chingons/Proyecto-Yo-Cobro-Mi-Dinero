@@ -1886,6 +1886,9 @@ text-align: center;
       z-index: 9999;
       
     }
+    #ingrese-cantidad{
+      font-size: 14px;
+    }
 
   }
   
