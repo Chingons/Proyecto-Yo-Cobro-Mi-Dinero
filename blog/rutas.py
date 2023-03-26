@@ -650,10 +650,8 @@ def pagar():
             conn.commit()
             cursor.execute("insert into recibos (idcreador_recibo, idcliente_recibo, facturas, fecha_facturas, montos_originales_facturas, monto_pago_facturas, monto_total_recibo, fecha_recibo) values (%s, %s, %s, %s, %s, %s, %s, %s)",(session['id'], int(pago['idcliente']), idfacturas, fechafacturas,montos_originales, montos_actuales, pago['monto_recibo'], pago['fecha_recibo']))
             conn.commit()
-            
-            
-            
-            
+        
+        time.sleep(3)
         return redirect(url_for('recibo'))
     
     else:
@@ -676,6 +674,8 @@ def abonar():
             conn.commit()
             cursor.execute("insert into recibos (idcreador_recibo, idcliente_recibo, facturas, fecha_facturas, montos_originales_facturas, monto_pago_facturas, monto_total_recibo, fecha_recibo) values (%s, %s, %s, %s, %s, %s, %s, %s)",(session['id'], int(abonar['idcliente']), idfactura, fecha_factura,monto_original, abonar['monto_abono'], abonar['monto_abono'], abonar['fecha_abono']))
             conn.commit()
+        
+        time.sleep(3)
         return redirect(url_for('recibo'))
     
     else:
