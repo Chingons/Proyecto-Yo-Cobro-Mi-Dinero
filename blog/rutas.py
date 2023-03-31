@@ -6,9 +6,6 @@ import re
 import time
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
-from email.message import EmailMessage
-import ssl
-import smtplib
 from decouple import config
 import json
 import yagmail
@@ -150,7 +147,7 @@ def registro():
             
             
             email_emisor = 'noresponderyocobrotudinero@gmail.com'
-            email_password = 'kqwftczwtmxjwoez'
+            email_password = 'elilrwrvczkmzziw'
             email_receptor = datos_registro['email']
 
             yag = yagmail.SMTP(email_emisor,email_password)
@@ -237,43 +234,28 @@ def recuperar():
       if account:
          codigo_otp = random.randint(0000000, 9999999)
          datos_recuperar[formularios_recuperar['email']] = codigo_otp
-         datos_recuperar['nombres'] = account[2]
-         datos_recuperar['apellidos'] = account[3]
+         datos_recuperar['nombres'] = account[1]
+         datos_recuperar['apellidos'] = account[2]
          email_recuperar[codigo_otp] = formularios_recuperar['email']
          email_emisor = 'noresponderyocobrotudinero@gmail.com'
-         email_password = 'kqwftczwtmxjwoez'
+         email_password = 'elilrwrvczkmzziw'
+         yag = yagmail.SMTP(email_emisor,email_password)
          email_receptor = formularios_recuperar['email'] 
          asunto= 'CAMBIAR CONTRASEÑA CUENTA YO COBRO TU DINERO'
-         cuerpo =  """
-                                    <!DOCTYPE html>
-                    <html lang="es">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title></title>
-                    </head>
-                    <body style="margin:0; padding:0;">
-                        <section style="display:flex; justify-content:center; align-items:center;">
-                            <div>
+         cuerpo =  """<html><body>
                                 <img src="https://drive.google.com/uc?export=download&id=1Pg9dWp_bO4vlVm55cCaHbtoRZwdmWD46" alt="yocobo" width="300px">
                                 <h2>HOLA! {} {}, GRACIAS POR UTILIZAR NUESTROS SERVICIOS.</h2>
                                 <h3>EL CODIGO PARA RESTABLECER LA CONTRASEÑA DE TU CUENTA <span style="color:#2EC640 ;"> YO COBRO </span> <span style="color: #F3C538;">MI DINERO </span> ES:</h3>
                                 <h1> {} </h1>
                                 <h4>MUCHAS GRACIAS, ATENTAMENTE: EL EQUIPO YO COBRO MI DINERO</h4>
-                            </div>
-                        </section>
                     </body>
                     </html> """.format(datos_recuperar['nombres'], datos_recuperar['apellidos'],datos_recuperar[formularios_recuperar['email']]) 
-         em = EmailMessage()
-         em ['From'] = email_emisor
-         em ['To'] = email_receptor
-         em['Subject'] = asunto
-         em.add_alternative(cuerpo, subtype = "html")
-         context = ssl.create_default_context()
-         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-              smtp.login(email_emisor,email_password)
-              smtp.sendmail(email_emisor,email_receptor, em.as_string())
+         
+         yag.send(
+                to=email_receptor,
+                subject=asunto,
+                contents=cuerpo,
+                headers={'Content-Type': 'text/html'})     
          flash ('HEMOS ENVIADO UN CODIGO A TU CORREO', 'aprobado')
          actualizar_ps.append('confirmado')
          return redirect(url_for('actualizar'))
