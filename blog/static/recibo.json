@@ -1,1 +1,1 @@
-{"0": {"idcliente": 1, "nombre": "Juan Carlos Magarin", "telefono": "8295400000", "identificacion": "402336266999", "direccion": "en jarabacoa", "facturas": []}}
+{"0": {"idcliente": 2, "nombre": "Juan  Perez", "telefono": "8295601230", "identificacion": "4025895120", "direccion": "Santiago", "facturas": [[1, 1, 2, "28/3/2023", 1800, 1800, "ACTIVO", "NO"]]}}

@@ -11,6 +11,7 @@ import ssl
 import smtplib
 from decouple import config
 import json
+import yagmail
 
 
 verificar_cuenta = []
@@ -147,51 +148,24 @@ def registro():
             hashed_password = generate_password_hash(datos_registro['confirmar_contraseña_registro'])
             enviar_datos[datos_registro['email']] = {'nombres':datos_registro['nombres'], 'apellidos':datos_registro['apellidos'], 'email':datos_registro['email'], 'contraseña':hashed_password}
             
+            
             email_emisor = 'noresponderyocobrotudinero@gmail.com'
             email_password = 'kqwftczwtmxjwoez'
             email_receptor = datos_registro['email']
-            
-            asunto= 'ACTIVACION DE CUENTA YO COBRO TU DINERO'
-           
-            cuerpo =  """ 
-                <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body style="width:100%;">
-    <section style="display:flex; justify-content:center; align-items:center;">
-        <div>
-            <img src="https://drive.google.com/uc?export=download&id=1Pg9dWp_bO4vlVm55cCaHbtoRZwdmWD46" alt="yocobo" width="300px">
-            <h2>HOLA! {} {}, GRACIAS POR UTILIZAR NUESTROS SERVICIOS.</h2>
-            <h3>EL CODIGO PARA ACTIVAR TU CUENTA <span style="color:#2EC640 ;"> YO COBRO </span> <span style="color: #F3C538;">MI DINERO </span> ES:</h3>
-            <h1> {} </h1>
 
-            <h4>MUCHAS GRACIAS, ATENTAMENTE: EL EQUIPO YO COBRO MI DINERO</h4>
-
-        </div>
-
-    </section>
-    
-    
-</body>
-</html> """.format(datos_registro['nombres'], datos_registro['apellidos'],(email_verificar[datos_registro['email']]) ) 
-                
-        
-            em = EmailMessage()
-            em ['From'] = email_emisor
-            em ['To'] = email_receptor
-            em['Subject'] = asunto
-            em.add_alternative(cuerpo, subtype = "html")
+            yag = yagmail.SMTP(email_emisor,email_password)
             
-            context = ssl.create_default_context()
+            cuerpo =  """<html><body>
+    <img src="https://drive.google.com/uc?export=download&id=1Pg9dWp_bO4vlVm55cCaHbtoRZwdmWD46" alt="yocobo" width="300px">
+    <h2>HOLA! {} {}, GRACIAS POR UTILIZAR NUESTROS SERVICIOS.</h2>
+    <h3>EL CODIGO PARA ACTIVAR TU CUENTA <span style="color:#2EC640 ;"> YO COBRO </span> <span style="color: #F3C538;">MI DINERO </span> ES:</h3><h1> {} </h1><h4>MUCHAS GRACIAS, ATENTAMENTE: EL EQUIPO YO COBRO MI DINERO</h4>   
+</body></html> """.format(datos_registro['nombres'], datos_registro['apellidos'],(email_verificar[datos_registro['email']]) ) 
             
-            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-                smtp.login(email_emisor,email_password)
-                smtp.sendmail(email_emisor,email_receptor, em.as_string())
+            yag.send(
+                to=email_receptor,
+                subject='ACTIVACIÓN DE CUENTA YO COBRO TU DINERO',
+                contents=cuerpo,
+                headers={'Content-Type': 'text/html'})
             
             if 'verificar' in verificar_cuenta:
                 flash('HEMOS ENVIADO UN CODIGO DE ACTIVACION A TU EMAIL','aprobado')
