@@ -9,6 +9,7 @@ import random
 from decouple import config
 import json
 import yagmail
+import asyncio
 
 
 verificar_cuenta = []
@@ -25,16 +26,13 @@ email_recuperar = {}
 formularios_recuperar = {}
 imprimir_clientes = {}
 
-
 mysql_port = config("DATABASE_PORT")
 mysql_host = config("DATABASE_HOST")
 mysql_user = config("DATABASE_USER")
 mysql_password = config("DATABASE_PASSWORD")
 mysql_db = config("DATABASE")
 
-
 conn = psycopg2.connect(dbname=mysql_db, user=mysql_user, password=mysql_password, host=mysql_host, port = mysql_port)
-
 session
 
 
@@ -590,15 +588,12 @@ def pagar():
             fechafacturas=[]
             montos_originales=[]
             montos_actuales=[]
-            
             pago = request.get_json()
-            
             for fc in pago["facturas"]:
                 idfacturas.append(pago["facturas"][fc]['idfactura']) 
                 fechafacturas.append(pago["facturas"][fc]['fecha'])
                 montos_originales.append(pago["facturas"][fc]['monto_original'])
                 montos_actuales.append(pago["facturas"][fc]['monto_actual'])
-            
             parar = len(idfacturas)
             cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
             for num in range(0, parar):
@@ -606,12 +601,12 @@ def pagar():
             conn.commit()
             cursor.execute("insert into recibos (idcreador_recibo, idcliente_recibo, facturas, fecha_facturas, montos_originales_facturas, monto_pago_facturas, monto_total_recibo, fecha_recibo) values (%s, %s, %s, %s, %s, %s, %s, %s)",(session['id'], int(pago['idcliente']), idfacturas, fechafacturas,montos_originales, montos_actuales, pago['monto_recibo'], pago['fecha_recibo']))
             conn.commit()
-        
-        time.sleep(3)
+        time.sleep(5)
         return redirect(url_for('recibo'))
     
     else:
-        return render_template('login.html')
+        return render_template('login.html')   
+        
 
 @app.route('/abonar', methods=['GET','POST'])
 def abonar():
@@ -631,8 +626,10 @@ def abonar():
             cursor.execute("insert into recibos (idcreador_recibo, idcliente_recibo, facturas, fecha_facturas, montos_originales_facturas, monto_pago_facturas, monto_total_recibo, fecha_recibo) values (%s, %s, %s, %s, %s, %s, %s, %s)",(session['id'], int(abonar['idcliente']), idfactura, fecha_factura,monto_original, abonar['monto_abono'], abonar['monto_abono'], abonar['fecha_abono']))
             conn.commit()
         
-        time.sleep(3)
+        time.sleep(5)
         return redirect(url_for('recibo'))
     
     else:
         return render_template('login.html')
+    
+
